@@ -17,14 +17,11 @@ INDEX = BASE / "painel" / "index.html"
 DATA = BASE / "data"
 DIST = BASE / "dist"
 
-# Cache curto no HTML (para o painel atualizar logo depois de um deploy) e
-# mais longo nos dados, que só mudam quando o processamento roda de novo.
+# O Cloudflare já serve o HTML com must-revalidate (o painel atualiza no deploy
+# seguinte); aqui só damos cache aos dados, que mudam quando o processamento roda.
 HEADERS = """/*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
-
-/index.html
-  Cache-Control: public, max-age=300
 
 /data/*
   Cache-Control: public, max-age=3600
@@ -33,9 +30,12 @@ HEADERS = """/*
 if not INDEX.exists():
     raise SystemExit("painel/index.html não existe — rode scripts/montar_painel.py antes.")
 
-if DIST.exists():
-    shutil.rmtree(DIST)
-(DIST / "data").mkdir(parents=True)
+# Apaga os arquivos antigos sem remover as pastas: no Windows o OneDrive costuma
+# manter o diretório aberto e um rmtree falha com "Acesso negado".
+(DIST / "data").mkdir(parents=True, exist_ok=True)
+for antigo in DIST.rglob("*"):
+    if antigo.is_file():
+        antigo.unlink()
 
 html = INDEX.read_text(encoding="utf-8")
 assert "'../data/" in html, "caminhos '../data/ não encontrados no index.html"
