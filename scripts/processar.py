@@ -499,7 +499,15 @@ def cargo_limpo(cargo):
 
 
 def secretaria_curta(s):
-    s = (s or "").replace("Secretaria Municipal de ", "").replace("Secretaria Municipal da ", "").strip()
+    s = (s or "").strip()
+    extinta = False
+    if s.upper().startswith("(NÃO USAR)") or s.upper().startswith("(NAO USAR)"):
+        # marcação do RH da prefeitura para secretarias extintas (reforma administrativa de mar/2025)
+        s = s.split(")", 1)[1].strip()
+        extinta = True
+    s = s.replace("Secretaria Municipal de ", "").replace("Secretaria Municipal da ", "").strip()
+    if extinta:
+        return s + " (extinta em 2025)"
     return {"Encargos Gerais do Município": "Encargos gerais (aposentados)",
             "Chefia de Gabinete do Prefeito": "Gabinete do Prefeito",
             "Procuradoria Geral do Municipio": "Procuradoria"}.get(s, s)

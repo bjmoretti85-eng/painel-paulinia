@@ -49,6 +49,7 @@ dist/                     o que vai para o ar (gerado por publicar.py, versionad
   Novembro costuma não ter folha mensal carregada; o mês de referência é escolhido automaticamente (último mês completo).
   Custo médio por servidor (portal) = média das folhas mensais + extras do ano/12, por pessoa; custo completo (TCE) = folha de ativos
   da Prefeitura no TCE / headcount médio do ano / 12. Não dividir totais anuais pelo headcount de dezembro (dezembro/2024 caiu 6%).
+  Secretarias com prefixo "(NÃO USAR)" são extintas (reforma de mar/2025: Esportes/Cultura separadas; Governo renomeada) — secretaria_curta() limpa o prefixo.
   Headcount é por matrícula (~40 pessoas com dois vínculos ativos). Folha mensal de janeiro dos professores é parcial (férias saem como tipo 3).
   NUNCA expor nomes no painel: só agregados por cargo, secretaria e vínculo.
 - Portal da Transparência federal (repasses da União): https://portaldatransparencia.gov.br/localidades/3536505-paulinia
@@ -90,5 +91,5 @@ O painel tem 4 abas (navegação por hash: #geral, #pessoal, #detalhe, #entenda)
 - Repositório público: `data/raw/servidores_*.csv.gz` tem nome/matrícula/salário individual e fica no .gitignore.
 - Depois de mexer no template ou nos dados: `montar_painel.py` e depois `publicar.py`, senão o site sai desatualizado.
 - Publicado em painel-paulinia.bj-moretti85.workers.dev (Cloudflare Worker ligado ao GitHub; `git push` republica).
-- As linhas acima sobre publicar.py, dist/ e sigilo do CSV já se perderam 3x em edições — preserve-as (publicar.py avisa se sumirem).
+- As linhas acima já se perderam 4x em edições externas — preserve-as (publicar.py avisa se sumirem).
 - Nomes de subfunção usam .capitalize() nos dois arquivos (painel.json e detalhe) — o painel navega por nome.
