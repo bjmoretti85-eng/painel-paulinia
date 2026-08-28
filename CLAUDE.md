@@ -42,7 +42,7 @@ dist/                     o que vai para o ar (gerado por publicar.py, versionad
   - Página: https://transparencia.tce.sp.gov.br/municipio/paulinia/2024/despesas
 - Portal oficial da prefeitura (SMARAPD): https://transparencia-paulinia.smarapd.com.br/ — app JS, mas o backend responde a
   POST JSON em `/paiportalserver/modulovisao/filter` (ver baixar_servidores.py). Visão "Pagamentos a Servidores":
-  uma linha por servidor x mês x tipo de folha (9 = mensal, 8 = adiantamento já incluído na mensal, 6 = 13º em dezembro, 3 = folha de férias em janeiro, 5 = abono 1/3 de férias em junho, 1 = rescisão, 10 = complementar, 14 = complementar sem descontos; os tipos 8 e 9 do mesmo mês somados dão o líquido recebido),
+  uma linha por servidor x mês x tipo de folha (9 = mensal, 8 = adiantamento salarial já incluído no bruto da mensal, 6 = 13º integral em dezembro, 5 = 1ª parcela do 13º sem descontos, paga em junho (set/2023) e já incluída no bruto do tipo 6, 3 = férias (professores em janeiro), 1 = rescisão, 10 = complementar, 14 = complementar sem descontos). Bruto anual = todos os tipos EXCETO 8 e 5 (senão conta duas vezes); líquido anual = líquido de todos os tipos, inclusive 8 e 5,
   com matrícula, nome, cargo, secretaria (campo Funcao), admissão, rescisão, vencimentos brutos, descontos, líquido.
   Cargo carrega o vínculo: "LC 66/2017"/"LC 65/2017" = efetivos, "(CTD)" = temporários, "Inativo"/"Pensionista" = aposentados
   (na secretaria "Encargos Gerais do Município"), sem sufixo = comissionados/agentes políticos. Ver vinculo() em processar.py.
@@ -90,5 +90,5 @@ O painel tem 4 abas (navegação por hash: #geral, #pessoal, #detalhe, #entenda)
 - Repositório público: `data/raw/servidores_*.csv.gz` tem nome/matrícula/salário individual e fica no .gitignore.
 - Depois de mexer no template ou nos dados: `montar_painel.py` e depois `publicar.py`, senão o site sai desatualizado.
 - Publicado em painel-paulinia.bj-moretti85.workers.dev (Cloudflare Worker ligado ao GitHub; `git push` republica).
-- ESTAS TRÊS LINHAS E AS DUAS DE publicar.py/dist/ ACIMA JÁ SE PERDERAM DUAS VEZES EM EDIÇÕES DO ARQUIVO — preserve-as.
+- As linhas acima sobre publicar.py, dist/ e sigilo do CSV já se perderam 3x em edições — preserve-as (publicar.py avisa se sumirem).
 - Nomes de subfunção usam .capitalize() nos dois arquivos (painel.json e detalhe) — o painel navega por nome.

@@ -49,5 +49,13 @@ for arquivo in sorted(DATA.glob("*.js")):
     shutil.copy2(arquivo, DIST / "data" / arquivo.name)
     copiados += 1
 
+# O CLAUDE.md ja voltou 3x de edicoes externas sem as linhas de publicacao e sigilo.
+# Como este script roda antes de todo deploy, ele e um bom lugar para avisar.
+ESSENCIAIS = ["scripts/publicar.py", "servidores_*.csv.gz", "workers.dev"]
+contexto = (BASE / "CLAUDE.md").read_text(encoding="utf-8")
+sumiram = [e for e in ESSENCIAIS if e not in contexto]
+if sumiram:
+    print(f"AVISO: CLAUDE.md esta sem: {', '.join(sumiram)} — restaure antes de commitar.")
+
 total = sum(f.stat().st_size for f in DIST.rglob("*") if f.is_file())
 print(f"-> {DIST} ({copiados + 2} arquivos, {total/1024/1024:.1f} MB)")

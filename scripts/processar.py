@@ -474,8 +474,8 @@ def gerar_detalhe(ano):
 # ---------------------------------------------------------------------------
 # Servidores (portal da prefeitura / SMARAPD) — data/raw/servidores_{ano}.csv.gz
 # ---------------------------------------------------------------------------
-TIPO_FOLHA = {"9": "Folha mensal (bruto, já inclui o adiantamento)", "8": "Adiantamento (incluído na mensal)", "3": "Férias (folha de janeiro)", "5": "Abono de férias (1/3)",
-              "6": "13º salário", "1": "Rescisão (desligados; pico em julho, fim dos contratos temporários)", "10": "Complementar (diferenças)", "14": "Complementar sem descontos (indenizatória)", "2": "Outros"}
+TIPO_FOLHA = {"9": "Folha mensal (bruto, já inclui o adiantamento)", "8": "Adiantamento (incluído na mensal)", "3": "Férias", "5": "13º - 1ª parcela (adiantada em junho; em 2023 foi em setembro; já incluída no bruto do tipo 6)",
+              "6": "13º salário (bruto integral em dezembro; desconta a 1ª parcela)", "1": "Rescisão (desligados; pico em julho, fim dos contratos temporários)", "10": "Complementar (diferenças)", "14": "Complementar sem descontos (indenizatória)", "2": "Outros"}
 APOSENTADOS = ("Inativo", "Pensionista")
 
 
@@ -535,15 +535,16 @@ def processar_servidores(ano):
         r["l"] = r["l"] + adiant.get(m, 0)
     ativos = {m: r for m, r in ref.items() if vinculo(r["cargo"]) != "Aposentados e pensionistas"}
 
-    # Bruto no ano por matrícula. O adiantamento (tipo 8) já está dentro do bruto da folha mensal
-    # (tipo 9) e é descontado dela, então NÃO entra na soma — senão conta duas vezes (~12%).
+    # Bruto no ano por matrícula. O adiantamento (tipo 8) já está dentro do bruto da folha mensal (tipo 9)
+    # e a 1ª parcela do 13º (tipo 5) já está dentro do 13º integral (tipo 6): ambos são descontados depois,
+    # então NÃO entram na soma — senão contam duas vezes.
     total_ano = defaultdict(float)
     mensal_de = defaultdict(float)  # soma das folhas mensais (tipo 9) por matrícula
     meses_de = defaultdict(set)   # meses com folha mensal por matrícula
     cargo_de = {}
     sec_de = {}
     for r in linhas:
-        if r["tipo_folha"] != "8":
+        if r["tipo_folha"] not in ("8", "5"):   # 8 = adiantamento (dentro da mensal); 5 = 1ª parcela do 13º (dentro do tipo 6)
             total_ano[r["matricula"]] += r["v"]
         if r["tipo_folha"] == "9":
             meses_de[r["matricula"]].add(r["mes"])
@@ -674,13 +675,15 @@ def gerar_servidores_detalhe(ano):
                 m["mensal"][mes] = m["mensal"].get(mes, 0) + v; m["meses"].add(mes); por_mes9[mes] += 1
             if t in ("9", "8"):  # líquido recebido no mês = folha mensal + adiantamento (já descontado da mensal)
                 m["liq"][mes] = m["liq"].get(mes, 0) + float(r["liquido"] or 0)
-            if t != "8":
+            if t not in ("8", "5"):   # 8 e 5 são adiantamentos já contidos nos tipos 9 e 6
                 m["anual"] += v
             liq = float(r["liquido"] or 0)
             m["lano"] += liq      # líquido de todos os lançamentos (inclusive adiantamentos) = dinheiro depositado no ano
-            if t == "6":          # 13º (dezembro)
-                m["d13"] += v; m["l13"] += liq
-            if t in ("3", "5"):   # férias: tipo 3 = folha de férias (janeiro, professores) / tipo 5 = abono de férias (junho)
+            if t == "6":          # 13º integral (dezembro); bruto conta uma vez
+                m["d13"] += v
+            if t in ("5", "6"):   # líquido do 13º = 1ª parcela (junho/setembro) + acerto de dezembro
+                m["l13"] += liq
+            if t == "3":          # férias (professores concentradas em janeiro)
                 m["ferias"] += v; m["lferias"] += liq
     maximo = max(por_mes9.values())
     mes_ref = max(mm for mm, n in por_mes9.items() if n >= 0.9 * maximo)
