@@ -15,7 +15,7 @@ scripts/baixar_servidores.py  baixa a folha por servidor do portal SMARAPD (POST
                           visão servidor/pagamentoaservidores, 5000 registros/página, retomável) -> data/raw/servidores_{ano}.csv.gz
 scripts/processar.py      agrega e gera data/painel.json e data/detalhe_{ano}.js (funil até o empenho)
 scripts/montar_painel.py  embute painel.json no template -> painel/index.html
-scripts/publicar.py       monta dist/ para o Cloudflare Pages (index.html na raiz, '../data/' -> 'data/')
+scripts/publicar.py       monta dist/ para o Cloudflare ('../data/' -> 'data/', index na raiz)
 data/raw/                 CSVs filtrados de Paulínia (despesas e receitas por ano)
 data/painel.json          dados agregados, embutidos no index.html
 data/servidores_{ano}.js  secretaria > vínculo > cargo > servidores anônimos [ano adm, bruto mês ref, total ano, 13º, férias, meses, saiu]
@@ -23,7 +23,7 @@ data/detalhe_{ano}.js     hierarquia área > subfunção > elemento > fornecedor
                           carregada sob demanda via <script src="../data/detalhe_{ano}.js"> (funciona em file://)
 painel/template.html      fonte do painel — EDITE ESTE, nunca o index.html (gerado)
 painel/index.html         painel (HTML único, gráficos inline; abre direto no navegador)
-dist/                     o que vai para o ar (gerado por publicar.py, versionado; Pages serve sem build)
+dist/                     o que vai para o ar (gerado por publicar.py, versionado; o Worker serve sem build)
 ```
 
 ## Fontes de dados
@@ -42,7 +42,7 @@ dist/                     o que vai para o ar (gerado por publicar.py, versionad
   - Página: https://transparencia.tce.sp.gov.br/municipio/paulinia/2024/despesas
 - Portal oficial da prefeitura (SMARAPD): https://transparencia-paulinia.smarapd.com.br/ — app JS, mas o backend responde a
   POST JSON em `/paiportalserver/modulovisao/filter` (ver baixar_servidores.py). Visão "Pagamentos a Servidores":
-  uma linha por servidor x mês x tipo de folha (9 = mensal, 8 = adiantamento, 3/6 = 13º, 5 = férias, 10 = rescisão),
+  uma linha por servidor x mês x tipo de folha (9 = mensal, 8 = adiantamento já incluído na mensal, 6 = 13º em dezembro, 3 = folha de férias em janeiro, 5 = abono 1/3 de férias em junho, 1/14 = complementares, 10 = rescisão),
   com matrícula, nome, cargo, secretaria (campo Funcao), admissão, rescisão, vencimentos brutos, descontos, líquido.
   Cargo carrega o vínculo: "LC 66/2017"/"LC 65/2017" = efetivos, "(CTD)" = temporários, "Inativo"/"Pensionista" = aposentados
   (na secretaria "Encargos Gerais do Município"), sem sufixo = comissionados/agentes políticos. Ver vinculo() em processar.py.
@@ -85,5 +85,6 @@ O painel tem 4 abas (navegação por hash: #geral, #pessoal, #detalhe, #entenda)
 - O painel é um HTML único, sem build step; dados embutidos ou carregados de `data/painel.json`.
 - Não commitar os ZIPs brutos do TCE (grandes); só os CSVs filtrados de Paulínia (gzip).
 - Repositório público: `data/raw/servidores_*.csv.gz` tem nome/matrícula/salário individual e fica no .gitignore.
-- Depois de mexer no template ou nos dados: `montar_painel.py` e depois `publicar.py` (senão o site sai desatualizado).
+- Depois de mexer no template ou nos dados: `montar_painel.py` e depois `publicar.py`, senão o site sai desatualizado.
+- Publicado em painel-paulinia.bj-moretti85.workers.dev (Cloudflare Worker ligado ao GitHub; `git push` republica).
 - Nomes de subfunção usam .capitalize() nos dois arquivos (painel.json e detalhe) — o painel navega por nome.

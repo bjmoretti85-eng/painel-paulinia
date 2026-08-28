@@ -473,8 +473,8 @@ def gerar_detalhe(ano):
 # ---------------------------------------------------------------------------
 # Servidores (portal da prefeitura / SMARAPD) — data/raw/servidores_{ano}.csv.gz
 # ---------------------------------------------------------------------------
-TIPO_FOLHA = {"9": "Folha mensal (bruto, já inclui o adiantamento)", "8": "Adiantamento (incluído na mensal)", "3": "13º salário", "5": "Férias",
-              "6": "13º (2ª parcela)", "1": "Complementar", "10": "Rescisão", "14": "Complementar", "2": "Outros"}
+TIPO_FOLHA = {"9": "Folha mensal (bruto, já inclui o adiantamento)", "8": "Adiantamento (incluído na mensal)", "3": "Férias (folha de janeiro)", "5": "Abono de férias (1/3)",
+              "6": "13º salário", "1": "Complementar", "10": "Rescisão", "14": "Complementar", "2": "Outros"}
 APOSENTADOS = ("Inativo", "Pensionista")
 
 
@@ -644,9 +644,9 @@ def gerar_servidores_detalhe(ano):
                 m["liq"][mes] = m["liq"].get(mes, 0) + float(r["liquido"] or 0)
             if t != "8":
                 m["anual"] += v
-            if t in ("3", "6"):
+            if t == "6":          # 13º (dezembro)
                 m["d13"] += v
-            if t == "5":
+            if t in ("3", "5"):   # férias: tipo 3 = folha de férias (janeiro, professores) / tipo 5 = abono de férias (junho)
                 m["ferias"] += v
     maximo = max(por_mes9.values())
     mes_ref = max(mm for mm, n in por_mes9.items() if n >= 0.9 * maximo)
