@@ -1,0 +1,10 @@
+__pycache__/
+*.zip
+.DS_Store
+
+# Cache de download da folha (páginas JSON soltas)
+data/raw/servidores_*/
+
+# CSV bruto da folha: tem nome, matrícula e salário individual.
+# O painel publica só agregados anônimos; refaça com scripts/baixar_servidores.py.
+data/raw/servidores_*.csv.gz

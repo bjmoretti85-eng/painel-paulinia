@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contas de Paulínia</title>
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f6f5f2; --surface:#ffffff; --surface-2:#f0efec; --line:#e4e2dc;
+  --text:#1a1a19; --text-2:#52514e; --text-3:#7d7b75;
+  --accent:#2a78d6; --accent-soft:#cde2fb;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4;
+  --good:#0ca30c; --critical:#d03b3b;
+  --radius:14px; --shadow:0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#121211; --surface:#1a1a19; --surface-2:#242422; --line:#33332f;
+    --text:#ffffff; --text-2:#c3c2b7; --text-3:#8f8e87;
+    --accent:#3987e5; --accent-soft:#1c3a5e;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181;
+    --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#121211; --surface:#1a1a19; --surface-2:#242422; --line:#33332f;
+  --text:#ffffff; --text-2:#c3c2b7; --text-3:#8f8e87;
+  --accent:#3987e5; --accent-soft:#1c3a5e;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181;
+  --shadow:none;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font:16px/1.5 -apple-system,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+.wrap{max-width:1080px;margin:0 auto;padding:24px 20px 80px}
+header{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;margin-bottom:28px}
+h1{font-size:30px;line-height:1.15;margin:0;letter-spacing:-.01em}
+h1 small{display:block;font-size:15px;font-weight:400;color:var(--text-2);margin-top:6px}
+h2{font-size:21px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--text-2);margin:0 0 18px;font-size:15px}
+.years{display:flex;gap:6px;background:var(--surface-2);padding:4px;border-radius:999px}
+.years button{border:0;background:transparent;color:var(--text-2);font:600 15px inherit;padding:8px 16px;border-radius:999px;cursor:pointer}
+.years button[aria-pressed="true"]{background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:20px;box-shadow:var(--shadow)}
+.hero{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:20px}
+@media (max-width:980px){.hero{grid-template-columns:repeat(3,1fr)}}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
+.tile .lbl{font-size:13px;color:var(--text-2);text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+.tile .val{font-size:30px;font-weight:700;letter-spacing:-.02em;margin:6px 0 2px;font-variant-numeric:tabular-nums}
+.tile .ctx{font-size:14px;color:var(--text-2)}
+.delta{font-size:13px;font-weight:600;margin-left:6px}
+.delta{color:var(--text-3)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}.hero{grid-template-columns:1fr 1fr}h1{font-size:24px}}
+/* horizontal bar list */
+.bars{display:flex;flex-direction:column;gap:2px}
+.bar{display:grid;grid-template-columns:minmax(150px,220px) 1fr 120px;align-items:center;gap:12px;padding:7px 8px;border-radius:8px;cursor:pointer;min-height:40px}
+.bar:hover{background:var(--surface-2)}
+.bar .nm{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .nm span{display:inline-block;width:26px}
+.bar .tr{height:14px;background:transparent;border-radius:0 4px 4px 0;position:relative}
+.bar .fl{height:100%;background:var(--s1);border-radius:0 4px 4px 0;min-width:2px}
+.bar .vl{text-align:right;font-variant-numeric:tabular-nums;font-size:14px;white-space:nowrap}
+.bar .vl small{display:block;color:var(--text-3);font-size:12px}
+.detail{grid-column:1/-1;background:var(--surface-2);border-radius:10px;padding:12px 16px;margin:2px 0 8px;font-size:14px;display:none}
+.detail p{margin:0 0 8px;color:var(--text-2)}
+.detail ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:4px 16px}
+.detail li{display:flex;justify-content:space-between;gap:8px;font-variant-numeric:tabular-nums}
+.detail li span:last-child{color:var(--text-2);white-space:nowrap}
+.detail li button{all:unset;cursor:pointer;color:var(--accent);text-decoration:underline dotted;text-underline-offset:3px}
+.detail .goexp{margin-top:10px;font-size:14px}
+/* explorador */
+.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:15px;margin:0 0 14px}
+.crumbs button{all:unset;cursor:pointer;color:var(--accent);padding:4px 8px;border-radius:6px}
+.crumbs button:hover{background:var(--surface-2)}
+.crumbs span.sep{color:var(--text-3)}
+.crumbs b{padding:4px 8px}
+.lvl{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.lvl .t{font-weight:600}
+.lvl .t small{font-weight:400;color:var(--text-2);margin-left:8px}
+.bar .vl small{display:block}
+.bar.leaf{cursor:default}.bar.leaf:hover{background:transparent}
+.bar.wide{grid-template-columns:minmax(220px,2fr) 3fr 120px}
+.grp{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:18px 8px 6px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.grp:first-child{margin-top:4px}
+.grp b{font-size:15px}
+.grp b small{font-weight:400;color:var(--text-2);margin-left:8px}
+.grp span{font-variant-numeric:tabular-nums;color:var(--text-2);font-size:14px;white-space:nowrap}
+.grp span b{color:var(--text);font-size:14px}
+.bar.wide .nm{white-space:normal;line-height:1.25}
+.bar .nm em{display:block;font-style:normal;color:var(--text-3);font-weight:400;font-size:12px;margin-top:2px}
+.emp td.hist{color:var(--text-2);font-size:13px;max-width:520px}
+.emp td.hist .path{display:block;color:var(--text-3);font-size:12px;margin-top:2px}
+.empty{color:var(--text-3);padding:16px 0}
+.badge{display:inline-block;background:var(--accent-soft);color:var(--text);font-size:12px;padding:2px 8px;border-radius:999px;margin-left:6px}
+.moreBtn{border:1px solid var(--line);background:var(--surface);color:var(--text-2);font:600 13px inherit;padding:8px 14px;border-radius:999px;cursor:pointer;margin-top:10px}
+.bar.open + .detail{display:block}
+/* navegação por abas */
+.topnav{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:-8px 0 22px;overflow-x:auto}
+.topnav button{border:0;background:transparent;color:var(--text-2);font:600 15px inherit;padding:12px 16px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.topnav button:hover{color:var(--text)}
+.topnav button[aria-pressed="true"]{color:var(--text);border-bottom-color:var(--accent)}
+.tab{display:none}.tab.on{display:block}
+#evolTab td,#evolTab th{padding:8px}
+#evolTab .d{color:var(--text-3);font-size:12px;display:block}
+/* servidores */
+.vinc{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:6px 0 4px}
+.vinc .card{border:1px solid var(--line);border-radius:10px;padding:12px 14px;border-left:4px solid var(--s1)}
+.vinc .card b{display:block;font-size:22px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.vinc .card span{display:block;font-size:13px;color:var(--text-2)}
+.vinc .card .t{font-weight:600;color:var(--text);font-size:14px;margin-bottom:4px}
+/* folha */
+.mini{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:4px 0 18px}
+.mini .tile{padding:14px 16px}
+.mini .tile .val{font-size:24px}
+.hbar{display:grid;grid-template-columns:minmax(130px,190px) 1fr 110px;align-items:center;gap:12px;padding:6px 8px;border-radius:8px}
+.hbar:hover{background:var(--surface-2)}
+.hbar .nm{font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hbar .seg{display:flex;height:16px;gap:2px}
+.hbar .seg div{height:100%;border-radius:2px}
+.hbar .seg div:first-child{border-radius:4px 2px 2px 4px}.hbar .seg div:last-child{border-radius:2px 4px 4px 2px}
+.hbar .vl{text-align:right;font-variant-numeric:tabular-nums;font-size:14px;white-space:nowrap}
+.hbar .vl small{display:block;color:var(--text-3);font-size:12px}
+h3{font-size:16px;margin:22px 0 6px}
+h3 small{font-weight:400;color:var(--text-2);margin-left:8px;font-size:14px}
+/* stacked 100% bar */
+.stack{display:flex;height:34px;border-radius:8px;overflow:hidden;gap:2px;margin:10px 0 12px}
+.stack div{height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--text-2);margin:8px 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.legend b{color:var(--text);font-variant-numeric:tabular-nums}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.axis{stroke:var(--line);stroke-width:1}
+.tick{fill:var(--text-3);font-size:12px}
+.chart-wrap{position:relative}
+.tip{position:fixed;pointer-events:none;background:var(--text);color:var(--bg);padding:8px 12px;border-radius:8px;font-size:13px;line-height:1.4;z-index:10;display:none;max-width:280px;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.tip b{display:block;font-size:14px}
+/* table */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-2);font-weight:600}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td .id{color:var(--text-3);font-size:12px;display:block}
+.pill{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;background:var(--surface-2);color:var(--text-2);white-space:nowrap}
+input[type=search]{width:100%;font:15px inherit;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);color:var(--text);margin:8px 0 12px}
+input[type=search]:focus{outline:2px solid var(--accent);border-color:transparent}
+.note{font-size:13px;color:var(--text-3);margin-top:12px}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.tabs button{border:1px solid var(--line);background:var(--surface);color:var(--text-2);font:600 13px inherit;padding:6px 12px;border-radius:999px;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--accent-soft);color:var(--text);border-color:transparent}
+details{border-top:1px solid var(--line);padding:10px 0}
+details summary{cursor:pointer;font-weight:600}
+details p{margin:8px 0 0;color:var(--text-2);font-size:15px}
+.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0 24px}
+footer{color:var(--text-3);font-size:13px;margin-top:24px;line-height:1.6}
+.sr{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Para onde vai o dinheiro de Paulínia?<small>As contas da prefeitura explicadas para quem mora na cidade, com dados oficiais do Tribunal de Contas (TCE-SP).</small></h1>
+  <div class="years" id="years" role="group" aria-label="Escolha o ano"></div>
+</header>
+
+<nav class="topnav" id="topnav" aria-label="Seções do painel">
+  <button data-tab="geral">Visão geral</button>
+  <button data-tab="pessoal">Pessoal</button>
+  <button data-tab="detalhe">Gasto a gasto</button>
+  <button data-tab="entenda">Entenda</button>
+</nav>
+<div class="tab" data-tab="geral">
+<div class="hero" id="hero"></div>
+
+<section>
+  <h2>Para onde vai o dinheiro</h2>
+  <p class="sub" id="funcSub"></p>
+  <div class="tabs" id="funcTabs"></div>
+  <div class="bars" id="funcBars"></div>
+  <p class="note">Clique em uma área para ver o detalhe. Valores efetivamente pagos no ano. "Por morador" divide pelo número de habitantes (IBGE).</p>
+</section>
+
+<div class="grid2">
+<section>
+  <h2>Como o dinheiro é gasto</h2>
+  <p class="sub">Salários, contratos ou obras?</p>
+  <div id="natureza"></div>
+  <p class="note">Pessoal inclui aposentadorias pagas pela Paulínia Previ. Investimentos são obras e equipamentos: é a parte que "fica" para a cidade.</p>
+</section>
+<section>
+  <h2>Quem gasta</h2>
+  <p class="sub">Divisão entre os órgãos do município</p>
+  <div id="orgaos"></div>
+  <p class="note">A Paulínia Previ paga as aposentadorias dos servidores; a Câmara é o Legislativo.</p>
+</section>
+</div>
+
+<section>
+  <h2>Mês a mês</h2>
+  <p class="sub">Quanto foi pago em cada mês, comparando os anos</p>
+  <div class="chart-wrap" id="mensal"></div>
+  <p class="note">Dezembro costuma concentrar pagamentos (13º salário, fechamento de contratos).</p>
+</section>
+
+<section>
+  <h2>De onde vem o dinheiro</h2>
+  <p class="sub" id="recSub"></p>
+  <div class="bars" id="recBars"></div>
+  <p class="note" id="recNote"></p>
+</section>
+
+<section>
+  <h2>Entra mais do que sai?</h2>
+  <p class="sub">Receitas arrecadadas e despesas pagas, por ano</p>
+  <div class="chart-wrap" id="balanco"></div>
+  <p class="note">Não exclui repasses internos entre órgãos do lado da despesa (as contribuições da Prefeitura à Paulínia Previ aparecem nos dois). Trata-se de uma visão simplificada de caixa, não do resultado contábil oficial.</p>
+</section>
+</div>
+
+<div class="tab" data-tab="pessoal">
+<section id="folha">
+  <h2>Folha de pagamento</h2>
+  <p class="sub" id="folhaSub"></p>
+  <div class="mini" id="folhaTiles"></div>
+  <h3>Do que é feita a folha<small>tudo o que foi pago a servidores, aposentados e encargos</small></h3>
+  <div class="bars" id="folhaComp"></div>
+  <h3>Folha por área<small>salário-base, adicionais e encargos de cada área</small></h3>
+  <div class="legend" id="folhaLeg"></div>
+  <div id="folhaFunc"></div>
+  <h3>Mês a mês<small>servidores ativos, sem aposentadorias</small></h3>
+  <div class="chart-wrap" id="folhaMes"></div>
+  <p class="note" id="folhaNote"></p>
+</section>
+
+<section id="servidores">
+  <h2>Quem são os servidores</h2>
+  <p class="sub" id="servSub"></p>
+  <div class="mini" id="servTiles"></div>
+  <h3>Por tipo de vínculo<small>quantos são e quanto ganham por mês, em média</small></h3>
+  <div id="servVinc"></div>
+  <h3>Por secretaria<small>número de servidores e remuneração média bruta mensal</small></h3>
+  <div class="tabs" id="servSecTabs"></div>
+  <div class="bars" id="servSec"></div>
+  <h3>Por cargo<small id="cargoSub">os cargos com mais servidores</small></h3>
+  <div class="tabs" id="cargoTabs"></div>
+  <input type="search" id="buscaCargo" placeholder="Buscar cargo: professor, médico, guarda, motorista…" aria-label="Buscar cargo">
+  <div style="overflow-x:auto"><table id="cargoTab"><thead><tr><th>#</th><th>Cargo</th><th class="num">Servidores</th><th class="num">Média bruta</th><th class="num">Média líquida</th><th class="num">Maior salário</th><th class="num">Custo médio*</th></tr></thead><tbody></tbody></table></div>
+  <h3>As 20 maiores remunerações<small>servidores ativos, média mensal bruta no ano, identificados só pelo cargo</small></h3>
+  <div style="overflow-x:auto"><table id="top20Tab"><thead><tr><th>#</th><th>Cargo</th><th>Secretaria</th><th>Vínculo</th><th>Admissão</th><th class="num">Média bruta</th><th class="num">Média líquida</th><th class="num">Total bruto no ano</th></tr></thead><tbody></tbody></table></div>
+  <h3>Quanto ganham<small>servidores ativos por faixa de remuneração bruta mensal</small></h3>
+  <div class="chart-wrap" id="servDist"></div>
+  <p class="note" id="servNote"></p>
+</section>
+
+<section id="servExp">
+  <h2>Servidor a servidor</h2>
+  <p class="sub">Secretaria › vínculo › cargo › cada servidor, sem nome nem matrícula: só ano de admissão, o que recebeu no mês e no ano.</p>
+  <div id="servExpBody"></div>
+  <p class="note">Inclui todos que receberam algum pagamento no ano (quem entrou ou saiu no meio do ano aparece com menos meses). Total no ano = folhas mensais + 13º + férias + folhas complementares (retroativos, acertos) + verbas de rescisão, sem o adiantamento (que já está na mensal); por isso pode ser maior que média mensal × meses + 13º + férias. Média bruta e líquida = médias das folhas mensais nos meses em que a pessoa recebeu (sem 13º e férias); o líquido já desconta adiantamento, previdência, IR e o corte do teto. O portal não carregou a folha mensal de novembro, por isso o máximo é 11 meses. Não inclui vale-alimentação e outros benefícios pagos fora da folha.</p>
+</section>
+
+<section id="evolucao">
+  <h2>Ativos e aposentados, ano a ano</h2>
+  <p class="sub">Quanto cresceu o gasto com servidores na ativa e com aposentadorias e pensões</p>
+  <div class="chart-wrap" id="evolChart"></div>
+  <div style="overflow-x:auto"><table id="evolTab"></table></div>
+  <p class="note">Valores nominais (sem descontar a inflação). Aposentadorias incluem pensões e o 13º dos inativos, pagos pela Paulínia Previ. "% das receitas" compara a folha com tudo o que a cidade arrecadou no ano.</p>
+</section>
+</div>
+
+<div class="tab" data-tab="detalhe">
+<section id="explorador">
+  <h2>Explore gasto a gasto</h2>
+  <p class="sub">Da área até a nota: área › serviço › tipo de gasto › fornecedor › cada pagamento, com a descrição do que foi comprado.</p>
+  <input type="search" id="buscaExp" placeholder="Ou procure em todos os pagamentos do ano: ex. asfalt, merenda, medicamento, iluminação, creche…" aria-label="Buscar em todos os pagamentos">
+  <div id="expBody"></div>
+  <p class="note">Somente valores pagos. Um pagamento pode ter várias parcelas no ano; aqui estão somadas por empenho. A descrição é o texto registrado pela própria prefeitura, sem edição.</p>
+</section>
+
+<section>
+  <h2>Para quem a prefeitura paga</h2>
+  <p class="sub" id="fornSub"></p>
+  <input type="search" id="busca" placeholder="Buscar empresa ou CNPJ…" aria-label="Buscar fornecedor">
+  <div style="overflow-x:auto"><table id="fornTab"><thead><tr><th>#</th><th>Fornecedor</th><th>Área principal</th><th class="num">Empenhos</th><th class="num">Pago no ano</th></tr></thead><tbody></tbody></table></div>
+  <p class="note" id="fornNote"></p>
+</section>
+</div>
+
+<div class="tab" data-tab="entenda">
+<section>
+  <h2>Entenda os termos</h2>
+  <div class="gloss">
+    <details><summary>Empenhado</summary><p>A prefeitura reservou o dinheiro para uma compra ou contrato. É um compromisso, mas o dinheiro ainda não saiu.</p></details>
+    <details><summary>Liquidado</summary><p>O produto foi entregue ou o serviço foi prestado e conferido. A dívida está reconhecida.</p></details>
+    <details><summary>Pago</summary><p>O dinheiro efetivamente saiu do caixa. É o número que este painel usa para "quanto foi gasto".</p></details>
+    <details><summary>Anulação</summary><p>Um empenho cancelado, total ou parcialmente. É descontado do valor empenhado.</p></details>
+    <details><summary>Função de governo</summary><p>A área de atuação (Saúde, Educação, Urbanismo…). É uma classificação padrão de todo o Brasil, o que permite comparar cidades.</p></details>
+    <details><summary>Pessoal, custeio e investimento</summary><p>Pessoal: salários e aposentadorias. Custeio: o dia a dia (contratos, materiais, serviços). Investimento: obras, equipamentos e imóveis.</p></details>
+    <details><summary>Cota-parte do ICMS</summary><p>Do ICMS arrecadado pelo Estado, 25% volta aos municípios, e a divisão depende do valor gerado em cada cidade. Como Paulínia tem a refinaria e um polo industrial, esse repasse é muito maior do que o de cidades do mesmo tamanho.</p></details>
+    <details><summary>Precatórios</summary><p>Dívidas reconhecidas pela Justiça que a prefeitura precisa pagar. Aparecem em "Dívidas e precatórios".</p></details>
+    <details><summary>Receitas intra-orçamentárias</summary><p>Dinheiro que circula entre órgãos do próprio município (por exemplo, a contribuição da prefeitura para a previdência dos servidores). Foi excluído das receitas para não contar duas vezes.</p></details>
+  </div>
+</section>
+</div>
+
+<footer id="rodape"></footer>
+</div>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script>
+const DADOS = /*__DADOS__*/null;
+</script>
+<script>
+(function(){
+const D = DADOS;
+const anos = D.anos.map(String);
+let ano = anos[anos.length-1];
+let funcMode = 'valor';
+const $ = s => document.querySelector(s);
+const tip = $('#tip');
+
+const fmtBRL = v => v.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
+const fmtN = v => v.toLocaleString('pt-BR',{maximumFractionDigits:0});
+function abrev(v){
+  const a=Math.abs(v);
+  if(a>=1e9) return 'R$ '+(v/1e9).toLocaleString('pt-BR',{maximumFractionDigits:2})+' bi';
+  if(a>=1e6) return 'R$ '+(v/1e6).toLocaleString('pt-BR',{maximumFractionDigits:1})+' mi';
+  if(a>=1e3) return 'R$ '+(v/1e3).toLocaleString('pt-BR',{maximumFractionDigits:0})+' mil';
+  return fmtBRL(v);
+}
+function nice(v){const p=Math.pow(10,Math.floor(Math.log10(v)));const f=v/p;const n=f<=1?1:f<=1.5?1.5:f<=2?2:f<=2.5?2.5:f<=3?3:f<=4?4:f<=5?5:f<=6?6:f<=8?8:10;return n*p;}
+const pct = v => v.toLocaleString('pt-BR',{maximumFractionDigits:1})+'%';
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function delta(cur,prev,inv){
+  if(!prev) return '';
+  const d=(cur-prev)/prev*100; const cls=d>0.5?'up':d<-0.5?'down':'neutral';
+  return `<span class="delta ${cls}${inv?' inv':''}" title="em relação ao ano anterior">${d>0?'▲':d<0?'▼':'•'} ${Math.abs(d).toLocaleString('pt-BR',{maximumFractionDigits:1})}%</span>`;
+}
+const yearColor = {}; anos.forEach((a,i)=>yearColor[a]=['var(--s3)','var(--s2)','var(--s1)','var(--s4)','var(--s5)'][i]||'var(--s1)');
+const yearColorPref=(a)=>yearColor[a];
+
+/* tooltip */
+function showTip(html,e){ tip.innerHTML=html; tip.style.display='block'; moveTip(e); }
+function moveTip(e){ const x=e.clientX,y=e.clientY; const w=tip.offsetWidth,h=tip.offsetHeight; tip.style.left=Math.min(x+14,innerWidth-w-8)+'px'; tip.style.top=(y-h-14<8? y+16 : y-h-14)+'px'; }
+function hideTip(){ tip.style.display='none'; }
+function bindTips(root){
+  root.querySelectorAll('[data-tip]').forEach(el=>{
+    el.addEventListener('mouseenter',e=>showTip(el.dataset.tip,e));
+    el.addEventListener('mousemove',moveTip);
+    el.addEventListener('mouseleave',hideTip);
+  });
+}
+
+/* year selector */
+function renderYears(){
+  $('#years').innerHTML = anos.map(a=>`<button aria-pressed="${a===ano}" data-ano="${a}">${a}</button>`).join('');
+  $('#years').querySelectorAll('button').forEach(b=>b.onclick=()=>{ano=b.dataset.ano;renderAll();});
+}
+
+function renderHero(){
+  const d=D.despesas[ano], r=D.receitas[ano];
+  const prev=D.despesas[String(+ano-1)], rprev=D.receitas[String(+ano-1)];
+  const inv=d.por_natureza.find(x=>x.nome==='Investimentos')||{valor:0,pct:0};
+  const pes=d.por_natureza.find(x=>x.nome==='Pessoal')||{valor:0,pct:0};
+  const parcial = d.meses_disponiveis<12 ? ` <span class="pill">até ${D.meses[d.meses_disponiveis-1]}</span>`:'';
+  $('#hero').innerHTML = `
+  <div class="tile"><div class="lbl">Gasto em ${ano}${parcial}</div><div class="val">${abrev(d.totais.pago)}</div><div class="ctx">pago pela prefeitura, Câmara e Paulínia Previ ${delta(d.totais.pago,prev&&prev.totais.pago)}</div></div>
+  <div class="tile"><div class="lbl">Por morador</div><div class="val">${fmtBRL(d.totais.pago_por_habitante)}</div><div class="ctx">${fmtN(d.populacao)} habitantes (IBGE)</div></div>
+  <div class="tile"><div class="lbl">Arrecadado em ${ano}</div><div class="val">${abrev(r.total)}</div><div class="ctx">impostos, repasses e outras receitas ${delta(r.total,rprev&&rprev.total,true)}</div></div>
+  <div class="tile"><div class="lbl">Foi para salários</div><div class="val">${pct(pes.pct)}</div><div class="ctx">${abrev(pes.valor)} com servidores e aposentados</div></div>
+  <div class="tile"><div class="lbl">Virou obra e equipamento</div><div class="val">${pct(inv.pct)}</div><div class="ctx">${abrev(inv.valor)} em investimentos</div></div>`;
+}
+
+function renderFuncoes(){
+  const d=D.despesas[ano]; const prev=D.despesas[String(+ano-1)];
+  $('#funcSub').textContent = `Em ${ano}, ${abrev(d.totais.pago)} foram pagos. Veja quanto cada área recebeu.`;
+  $('#funcTabs').innerHTML = [['valor','Em reais'],['pct','Em % do total'],['hab','Por morador']].map(([k,l])=>`<button aria-pressed="${funcMode===k}" data-m="${k}">${l}</button>`).join('');
+  $('#funcTabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{funcMode=b.dataset.m;renderFuncoes();});
+  const max=d.por_funcao[0].valor;
+  const rows = d.por_funcao.map(f=>{
+    const w=100*f.valor/max;
+    const pf=prev&&prev.por_funcao.find(x=>x.nome===f.nome);
+    const main = funcMode==='valor'?abrev(f.valor):funcMode==='pct'?pct(f.pct):fmtBRL(f.por_habitante);
+    const sec = funcMode==='valor'?pct(f.pct)+' do total':funcMode==='pct'?abrev(f.valor):'por habitante';
+    const tipHtml=`<b>${f.icone} ${esc(f.nome)}</b>${esc(f.descricao)}<br>${fmtBRL(f.valor)} · ${pct(f.pct)} · ${fmtBRL(f.por_habitante)}/morador`;
+    return `<div class="bar" data-tip="${esc(tipHtml)}" role="button" tabindex="0" aria-expanded="false">
+      <div class="nm"><span>${f.icone}</span>${esc(f.nome)}</div>
+      <div class="tr"><div class="fl" style="width:${w}%"></div></div>
+      <div class="vl">${main}<small>${sec} ${pf?delta(f.valor,pf.valor):''}</small></div>
+    </div>
+    <div class="detail"><p>${esc(f.descricao||'')} ${pf?`Em ${+ano-1}: ${abrev(pf.valor)}.`:''} Empenhado (comprometido) no ano: ${abrev(f.empenhado)}.</p>
+      <ul>${f.subfuncoes.map(s=>`<li><span><button data-exp="${esc(f.nome)}|${esc(s.nome)}">${esc(s.nome)}</button></span><span>${abrev(s.valor)}</span></li>`).join('')}</ul>
+      <div class="goexp"><button class="moreBtn" data-exp="${esc(f.nome)}">Explorar ${esc(f.nome)} gasto a gasto →</button></div></div>`;
+  }).join('');
+  $('#funcBars').innerHTML=rows;
+  $('#funcBars').querySelectorAll('.bar').forEach(b=>{
+    const t=()=>{b.classList.toggle('open');b.setAttribute('aria-expanded',b.classList.contains('open'));};
+    b.onclick=t; b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();t();}};
+  });
+  bindTips($('#funcBars'));
+  $('#funcBars').querySelectorAll('[data-exp]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();irPara(b.dataset.exp.split('|'));}));
+}
+
+function stacked(el, items, colors, total){
+  el.innerHTML = `<div class="stack">${items.map((x,i)=>`<div style="width:${100*x.valor/total}%;background:${colors[i]}" data-tip="<b>${esc(x.nome)}</b>${fmtBRL(x.valor)} · ${pct(x.pct)}"></div>`).join('')}</div>
+  <div class="legend">${items.map((x,i)=>`<span><i style="background:${colors[i]}"></i>${esc(x.nome)} <b>${pct(x.pct)}</b></span>`).join('')}</div>`;
+  bindTips(el);
+}
+function renderNatureza(){
+  const d=D.despesas[ano];
+  const order=['Pessoal','Custeio','Investimentos','Dívida','Outros'];
+  const items=order.map(n=>d.por_natureza.find(x=>x.nome===n)).filter(Boolean);
+  stacked($('#natureza'),items,['var(--s1)','var(--s2)','var(--s3)','var(--s4)','var(--s5)'],d.totais.pago);
+  const o=d.por_orgao;
+  stacked($('#orgaos'),o,['var(--s1)','var(--s2)','var(--s3)','var(--s4)'],d.totais.pago);
+}
+
+/* line chart: monthly pago by year */
+function renderMensal(){
+  const W=900,H=300,L=64,R=20,T=16,B=36;
+  const series=anos.map(a=>({ano:a,vals:D.despesas[a].por_mes.pago,color:yearColorPref(a)}));
+  const max=nice(Math.max(...series.flatMap(s=>s.vals))*1.05);
+  const x=i=>L+(W-L-R)*i/11, y=v=>T+(H-T-B)*(1-v/max);
+  const ticks=5; let g='';
+  for(let i=0;i<=ticks;i++){const v=max*i/ticks;g+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text class="tick" x="${L-8}" y="${y(v)+4}" text-anchor="end">${abrev(v).replace('R$ ','')}</text>`;}
+  D.meses.forEach((m,i)=>g+=`<text class="tick" x="${x(i)}" y="${H-B+20}" text-anchor="middle">${m}</text>`);
+  let paths='';
+  series.forEach(s=>{
+    const pts=s.vals.map((v,i)=>v>0?[x(i),y(v)]:null);
+    let dpath='';pts.forEach((p,i)=>{if(!p)return;dpath+=(dpath?'L':'M')+p[0]+','+p[1]+' ';});
+    const cur=s.ano===ano;
+    paths+=`<path d="${dpath}" fill="none" stroke="${s.color}" stroke-width="${cur?3:2}" stroke-linejoin="round" stroke-linecap="round" opacity="${cur?1:.75}"/>`;
+    pts.forEach((p,i)=>{ if(!p)return; paths+=`<circle cx="${p[0]}" cy="${p[1]}" r="${cur?5:4}" fill="${s.color}" stroke="var(--surface)" stroke-width="2" data-tip="<b>${D.meses[i]} ${s.ano}</b>${fmtBRL(s.vals[i])} pagos"/>`; });
+  });
+  $('#mensal').innerHTML=`<div class="legend">${series.map(s=>`<span><i style="background:${s.color}"></i>${s.ano} <b>${abrev(D.despesas[s.ano].totais.pago)}</b></span>`).join('')}</div>
+  <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Gastos mensais por ano">${g}${paths}</svg>`;
+  bindTips($('#mensal'));
+}
+
+function linhaAnual(el, getVals, rotulo){
+  const W=900,H=280,L=64,R=20,T=16,B=36;
+  const series=anos.map(a=>({ano:a,vals:getVals(a),color:yearColorPref(a)}));
+  const max=nice(Math.max(...series.flatMap(s=>s.vals))*1.05);
+  const x=i=>L+(W-L-R)*i/11, y=v=>T+(H-T-B)*(1-v/max);
+  let g='';
+  for(let i=0;i<=5;i++){const v=max*i/5;g+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text class="tick" x="${L-8}" y="${y(v)+4}" text-anchor="end">${abrev(v).replace('R$ ','')}</text>`;}
+  D.meses.forEach((m,i)=>g+=`<text class="tick" x="${x(i)}" y="${H-B+20}" text-anchor="middle">${m}</text>`);
+  series.forEach(s=>{
+    const pts=s.vals.map((v,i)=>v>0?[x(i),y(v)]:null); let d='';
+    pts.forEach(p=>{if(!p)return;d+=(d?'L':'M')+p[0]+','+p[1]+' ';});
+    const cur=s.ano===ano;
+    g+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="${cur?3:2}" stroke-linejoin="round" stroke-linecap="round" opacity="${cur?1:.75}"/>`;
+    pts.forEach((p,i)=>{if(!p)return;g+=`<circle cx="${p[0]}" cy="${p[1]}" r="${cur?5:4}" fill="${s.color}" stroke="var(--surface)" stroke-width="2" data-tip="<b>${D.meses[i]} ${s.ano}</b>${fmtBRL(s.vals[i])} ${rotulo}"/>`;});
+  });
+  el.innerHTML=`<div class="legend">${series.map(s=>`<span><i style="background:${s.color}"></i>${s.ano} <b>${abrev(s.vals.reduce((a,b)=>a+b,0))}</b></span>`).join('')}</div><svg viewBox="0 0 ${W} ${H}" role="img">${g}</svg>`;
+  bindTips(el);
+}
+
+function renderFolha(){
+  const d=D.despesas[ano], f=d.folha; const prev=D.despesas[String(+ano-1)]; const pf=prev&&prev.folha;
+  const apos=f.grupos.find(g=>g.nome==='Aposentadorias e pensões')||{valor:0};
+  $('#folhaSub').textContent=`Em ${ano}, ${abrev(f.total)} — ${pct(f.pct_do_gasto)} de tudo o que foi pago — foram para salários, encargos e aposentadorias. É de longe a maior despesa da cidade.`;
+  $('#folhaTiles').innerHTML=`
+    <div class="tile"><div class="lbl">Total com pessoal</div><div class="val">${abrev(f.total)}</div><div class="ctx">${fmtBRL(f.por_habitante)} por morador ${pf?delta(f.total,pf.total):''}</div></div>
+    <div class="tile"><div class="lbl">Servidores ativos</div><div class="val">${abrev(f.ativos)}</div><div class="ctx">salários, adicionais e encargos ${pf?delta(f.ativos,pf.ativos):''}</div></div>
+    <div class="tile"><div class="lbl">Aposentados e pensionistas</div><div class="val">${abrev(apos.valor)}</div><div class="ctx">pagos pela Paulínia Previ</div></div>
+    <div class="tile"><div class="lbl">Salário-base por mês</div><div class="val">${abrev(f.salario_base_mes)}</div><div class="ctx">média mensal só dos vencimentos</div></div>
+    ${f.custo_medio_mensal?`<div class="tile"><div class="lbl">Custo médio por servidor</div><div class="val">${fmtBRL(f.custo_medio_mensal)}</div><div class="ctx">por mês, ${fmtN(f.servidores_total)} servidores</div></div>`:''}`;
+  // composição
+  const max=Math.max(...f.grupos.map(g=>g.valor));
+  $('#folhaComp').innerHTML=f.grupos.slice().sort((a,b)=>b.valor-a.valor).map(g=>{
+    const pg=pf&&pf.grupos.find(x=>x.nome===g.nome);
+    return `<div class="bar leaf wide" data-tip="<b>${esc(g.nome)}</b>${esc(g.descricao)}<br>${fmtBRL(g.valor)} · ${pct(g.pct)} da folha"><div class="nm" title="${esc(g.nome)}">${esc(g.nome)}</div><div class="tr"><div class="fl" style="width:${100*g.valor/max}%"></div></div><div class="vl">${abrev(g.valor)}<small>${pct(g.pct)} ${pg?delta(g.valor,pg.valor):''}</small></div></div>`;
+  }).join('');
+  // por área: 4 segmentos
+  const SEG=[['Salário-base',['Salário-base','Prefeito, vice, secretários e vereadores'],'var(--s1)'],
+             ['Adicionais e temporários',['Contratos temporários','Horas extras','13º salário e férias','Gratificações e adicionais'],'var(--s2)'],
+             ['Encargos',['Encargos (previdência e FGTS)'],'var(--s3)'],
+             ['Aposentadorias, judicial e consórcios',['Aposentadorias e pensões','Decisões judiciais e indenizações','Pessoal de consórcios','Outros'],'var(--s4)']];
+  $('#folhaLeg').innerHTML=SEG.map(s=>`<span><i style="background:${s[2]}"></i>${s[0]}</span>`).join('');
+  const fmax=f.por_funcao[0].total;
+  const icons=Object.fromEntries(d.por_funcao.map(x=>[x.nome,x.icone]));
+  $('#folhaFunc').innerHTML=f.por_funcao.filter(x=>x.total>0).map(x=>{
+    const partes=SEG.map(s=>[s[0],s[1].reduce((a,k)=>a+(x.grupos[k]||0),0),s[2]]).filter(p=>p[1]>0);
+    const tipHtml=`<b>${icons[x.nome]||''} ${esc(x.nome)}</b>`+Object.entries(x.grupos).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`${esc(k)}: ${abrev(v)}`).join('<br>')+(x.custo_medio_mensal?`<br><b>Custo médio: ${fmtBRL(x.custo_medio_mensal)}/mês</b> (${fmtN(x.servidores)} servidores)`:'');
+    return `<div class="hbar" data-tip="${esc(tipHtml)}"><div class="nm">${icons[x.nome]||''} ${esc(x.nome)}</div><div class="seg" style="width:${100*x.total/fmax}%">${partes.map(p=>`<div style="width:${100*p[1]/x.total}%;background:${p[2]}"></div>`).join('')}</div><div class="vl">${abrev(x.total)}<small>${x.custo_medio_mensal?fmtBRL(x.custo_medio_mensal)+'/servidor·mês':pct(100*x.total/f.total)+' da folha'}</small></div></div>`;
+  }).join('');
+  bindTips($('#folhaComp')); bindTips($('#folhaFunc'));
+  linhaAnual($('#folhaMes'),a=>D.despesas[a].folha.por_mes_ativos,'com servidores ativos');
+  $('#folhaNote').textContent = f.servidores_total ? `Custo médio = gasto com servidores ativos ÷ número de servidores ÷ 12. Inclui encargos e adicionais, por isso é maior que o salário.` : `Os dados do TCE não informam quantos servidores existem nem os cargos, então ainda não dá para calcular o custo médio por servidor ou por secretaria. Quando a lista de servidores do portal da prefeitura for incorporada, esses números aparecem aqui automaticamente. Junho e dezembro sobem por causa do 13º salário.`;
+}
+
+function renderReceitas(){
+  const r=D.receitas[ano]; const prev=D.receitas[String(+ano-1)];
+  const icms=r.por_grupo.find(g=>g.nome.startsWith('ICMS'));
+  $('#recSub').textContent=`Em ${ano} entraram ${abrev(r.total)} nos cofres do município.`;
+  $('#recNote').textContent = icms ? `${pct(icms.pct)} de tudo o que a cidade arrecada vem da cota-parte do ICMS repassada pelo Estado, reflexo da refinaria e do polo industrial. Impostos cobrados diretamente dos moradores (IPTU, ITBI, taxas) somam uma parte pequena. Receitas intra-orçamentárias (${abrev(r.intra_orcamentaria_excluida)}) foram excluídas para não contar duas vezes.`:'';
+  const grupos=r.por_grupo.filter(g=>g.valor>0);
+  const max=grupos[0].valor;
+  const top=grupos.slice(0,12); const resto=grupos.slice(12);
+  const outros=resto.length?{nome:'Outras receitas',descricao:resto.map(g=>g.nome).join(', '),valor:resto.reduce((s,g)=>s+g.valor,0),pct:resto.reduce((s,g)=>s+g.pct,0),por_habitante:resto.reduce((s,g)=>s+(g.por_habitante||0),0)}:null;
+  const list=outros?[...top,outros]:top;
+  $('#recBars').innerHTML=list.map(g=>{
+    const pg=g.nome==='Outras receitas'?null:(prev&&prev.por_grupo.find(x=>x.nome===g.nome));
+    return `<div class="bar" data-tip="<b>${esc(g.nome)}</b>${esc(g.descricao)}<br>${fmtBRL(g.valor)} · ${pct(g.pct)} · ${fmtBRL(g.por_habitante||0)}/morador">
+      <div class="nm">${esc(g.nome)}</div>
+      <div class="tr"><div class="fl" style="width:${100*g.valor/max}%;background:var(--s3)"></div></div>
+      <div class="vl">${abrev(g.valor)}<small>${pct(g.pct)} ${pg?delta(g.valor,pg.valor,true):''}</small></div></div>`;
+  }).join('');
+  bindTips($('#recBars'));
+}
+
+function renderBalanco(){
+  const W=900,H=240,L=64,R=20,T=16,B=36;
+  const items=anos.map(a=>({ano:a,rec:D.receitas[a].total,desp:D.despesas[a].totais.pago}));
+  const max=nice(Math.max(...items.flatMap(i=>[i.rec,i.desp]))*1.12);
+  const y=v=>T+(H-T-B)*(1-v/max);
+  const gw=(W-L-R)/items.length, bw=Math.min(56,gw*0.22);
+  let g='';const ticks=4;
+  for(let i=0;i<=ticks;i++){const v=max*i/ticks;g+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text class="tick" x="${L-8}" y="${y(v)+4}" text-anchor="end">${abrev(v).replace('R$ ','')}</text>`;}
+  items.forEach((it,i)=>{
+    const cx=L+gw*i+gw/2;
+    const saldo=it.rec-it.desp;
+    g+=`<rect x="${cx-bw-1}" y="${y(it.rec)}" width="${bw}" height="${H-B-y(it.rec)}" rx="4" fill="var(--s3)" data-tip="<b>Receitas ${it.ano}</b>${fmtBRL(it.rec)}"/>`;
+    g+=`<rect x="${cx+1}" y="${y(it.desp)}" width="${bw}" height="${H-B-y(it.desp)}" rx="4" fill="var(--s1)" data-tip="<b>Despesas pagas ${it.ano}</b>${fmtBRL(it.desp)}"/>`;
+    g+=`<text class="tick" x="${cx}" y="${H-B+20}" text-anchor="middle" font-weight="600" fill="var(--text)">${it.ano}</text>`;
+    g+=`<text x="${cx}" y="${y(Math.max(it.rec,it.desp))-8}" text-anchor="middle" font-size="13" font-weight="600" fill="var(--text)">${saldo>=0?'sobrou':'faltou'} ${abrev(Math.abs(saldo))}</text>`;
+  });
+  g+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}"/>`;
+  $('#balanco').innerHTML=`<div class="legend"><span><i style="background:var(--s3)"></i>Receitas arrecadadas</span><span><i style="background:var(--s1)"></i>Despesas pagas</span></div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Receitas e despesas por ano">${g}</svg>`;
+  bindTips($('#balanco'));
+}
+
+function renderFornecedores(){
+  const d=D.despesas[ano];
+  $('#fornSub').textContent=`${fmtN(d.total_fornecedores)} empresas e entidades receberam pagamentos em ${ano}. Folha de pagamento dos servidores (${abrev(d.totais.folha_pessoal)}) não entra nesta lista.`;
+  const q=($('#busca').value||'').trim().toLowerCase();
+  const digits=q.replace(/\D/g,'');
+  let list;
+  if(q){
+    list=d.fornecedores_todos.filter(f=>f.n.toLowerCase().includes(q)||(digits&&f.i.includes(digits))).slice(0,50).map((f,i)=>({nome:f.n,id:f.i,pago:f.v,area:f.a,empenhos:null}));
+  } else list=d.fornecedores_top.slice(0,25);
+  $('#fornTab tbody').innerHTML=list.map((f,i)=>`<tr><td>${q?'':i+1}</td><td>${esc(f.nome)}<span class="id">${f.id?esc(f.id.length===14?f.id.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,'$1.$2.$3/$4-$5'):'***'+f.id.slice(3,9)+'***'):''}</span></td><td><span class="pill">${esc(f.area)}</span></td><td class="num">${f.empenhos!=null?fmtN(f.empenhos):'–'}</td><td class="num">${fmtBRL(f.pago)}</td></tr>`).join('')||`<tr><td colspan="5">Nenhum fornecedor encontrado.</td></tr>`;
+  $('#fornNote').textContent = q?`Mostrando até 50 resultados para "${q}".`:`Os 25 maiores. Consórcios costumam ser obras e serviços urbanos; empresas de transporte, a frota escolar e coletiva. CPFs aparecem parcialmente ocultos, como no portal do TCE.`;
+}
+$('#busca').addEventListener('input',renderFornecedores);
+
+function renderRodape(){
+  $('#rodape').innerHTML=`Fonte: <a href="${D.fonte_url}" target="_blank" rel="noopener">${esc(D.fonte)}</a>. Dados dos anos ${anos.join(', ')}, processados em ${D.gerado_em}. População: IBGE (Censo 2022 e estimativas). Os dados passam por verificação nas auditorias ordinárias do TCE e podem sofrer ajustes. Este painel é uma iniciativa cidadã, sem vínculo com a Prefeitura de Paulínia.`;
+}
+
+/* ===== Explorador em funil ===== */
+let expPath=[]; let expQuery=''; let expLimit=50;
+const NIVEIS=['Áreas','Serviços','Tipos de gasto','Fornecedores','Pagamentos'];
+function carregarDetalhe(a,cb){
+  if(window.DETALHE&&window.DETALHE[a]) return cb(window.DETALHE[a]);
+  const body=$('#expBody'); body.innerHTML='<p class="empty">Carregando detalhe de '+a+'…</p>';
+  const sc=document.createElement('script'); sc.src='../data/detalhe_'+a+'.js';
+  sc.onload=()=>cb(window.DETALHE&&window.DETALHE[a]);
+  sc.onerror=()=>{body.innerHTML='<p class="empty">Não consegui carregar <code>data/detalhe_'+a+'.js</code>. Abra o painel a partir da pasta do projeto (painel/index.html) para ver o detalhe gasto a gasto.</p>';};
+  document.head.appendChild(sc);
+}
+function irPara(path){ expPath=path.slice(); expQuery=''; $('#buscaExp').value=''; expLimit=50; mostrarTab('detalhe'); renderExplorador(); document.getElementById('explorador').scrollIntoView({behavior:'smooth',block:'start'}); }
+function noDoCaminho(tree,path){
+  let node={t:Object.values(tree).reduce((a,f)=>a+f.t,0),children:tree,kind:0};
+  const keys=['s','e','f'];
+  for(let i=0;i<path.length;i++){
+    const c=node.children; let nxt;
+    if(Array.isArray(c)) nxt=c.find(f=>f.n===path[i]); else nxt=c[path[i]];
+    if(!nxt) return null;
+    node={t:nxt.t,children:i<3?nxt[keys[i]]:null,emp:nxt.e&&Array.isArray(nxt.e)?nxt.e:null,kind:i+1,data:nxt};
+  }
+  return node;
+}
+function fmtCNPJ(id){ if(!id) return ''; return id.length===14?id.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,'$1.$2.$3/$4-$5'):'CPF ***'+id.slice(3,9)+'***'; }
+function renderExplorador(){
+  carregarDetalhe(ano,tree=>{
+    if(!tree) return;
+    const body=$('#expBody');
+    if(expQuery.length>=3){ return renderBuscaGlobal(tree,body); }
+    const node=noDoCaminho(tree,expPath);
+    if(!node){ expPath=[]; return renderExplorador(); }
+    const crumbs=[`<button data-i="-1">${ano}</button>`].concat(expPath.map((p,i)=>`<span class="sep">›</span>`+(i===expPath.length-1?`<b>${esc(p)}</b>`:`<button data-i="${i}">${esc(p)}</button>`))).join('');
+    let html=`<div class="crumbs">${crumbs}</div>`;
+    const lvl=expPath.length;
+    if(lvl<4){
+      const entries=Array.isArray(node.children)?node.children.map(f=>[f.n,f]):Object.entries(node.children);
+      const max=Math.max(...entries.map(([,v])=>v.t));
+      const funcInfo=lvl===0?Object.fromEntries(D.despesas[ano].por_funcao.map(f=>[f.nome,f])):null;
+      html+=`<div class="lvl"><span class="t">${NIVEIS[lvl]}<small>${entries.length} ${lvl===3?'fornecedores':'itens'} · ${abrev(node.t)}</small></span></div>`;
+      const vis=entries.slice(0,expLimit);
+      const GRUPOS={Pessoal:'Salários, encargos e benefícios dos servidores',Custeio:'Contratos, serviços e materiais do dia a dia',Investimentos:'Obras, equipamentos e imóveis',Dívida:'Juros e amortização de dívidas',Outros:''};
+      const ORDEM=['Pessoal','Custeio','Investimentos','Dívida','Outros'];
+      const agrupar=lvl===2;
+      const linha=([k,v])=>{
+        const icon=funcInfo&&funcInfo[k]?`<span>${funcInfo[k].icone}</span>`:'';
+        const extra=lvl===3?`<em>${fmtCNPJ(v.i)} · ${v.q} ${v.q===1?'pagamento':'pagamentos'}</em>`:'';
+        return `<div class="bar${lvl>=2?' wide':''}" role="button" tabindex="0" data-k="${esc(k)}"><div class="nm" title="${esc(k)}">${icon}${esc(k)}${extra}</div><div class="tr"><div class="fl" style="width:${100*v.t/max}%"></div></div><div class="vl">${abrev(v.t)}<small>${pct(100*v.t/node.t)} ${agrupar?'do serviço':'deste nível'}</small></div></div>`;
+      };
+      let lista='';
+      if(agrupar){
+        const porGrupo={}; entries.forEach(e=>{const g=e[1].g||'Outros';(porGrupo[g]=porGrupo[g]||[]).push(e);});
+        ORDEM.filter(g=>porGrupo[g]).forEach(g=>{
+          const tot=porGrupo[g].reduce((a,e)=>a+e[1].t,0);
+          lista+=`<div class="grp"><b>${g}<small>${GRUPOS[g]}</small></b><span><b>${abrev(tot)}</b> · ${pct(100*tot/node.t)} do serviço · ${porGrupo[g].length} ${porGrupo[g].length===1?'item':'itens'}</span></div>`+porGrupo[g].map(linha).join('');
+        });
+      } else lista=vis.map(linha).join('');
+      html+=`<div class="bars">`+lista+`</div>`+(!agrupar&&entries.length>expLimit?`<button class="moreBtn" id="maisEmp">Mostrar mais (${entries.length-expLimit} restantes)</button>`:'');
+      body.innerHTML=html;
+      const mb=$('#maisEmp'); if(mb) mb.onclick=()=>{expLimit+=100;renderExplorador();};
+      body.querySelectorAll('.bar').forEach(b=>{const go=()=>{expPath.push(b.dataset.k);expLimit=50;renderExplorador();};b.onclick=go;b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}};});
+    } else {
+      const f=node.data;
+      html+=`<div class="lvl"><span class="t">${esc(f.n)}<small>${fmtCNPJ(f.i)} · ${f.q} ${f.q===1?'pagamento':'pagamentos'} · ${abrev(f.t)}</small></span></div>`;
+      html+=tabelaEmpenhos(f.e.slice(0,expLimit),false)+(f.e.length>expLimit?`<button class="moreBtn" id="maisEmp">Mostrar mais (${f.e.length-expLimit} restantes)</button>`:'');
+      body.innerHTML=html;
+      const m=$('#maisEmp'); if(m) m.onclick=()=>{expLimit+=100;renderExplorador();};
+    }
+    body.querySelectorAll('.crumbs button').forEach(b=>b.onclick=()=>{expPath=expPath.slice(0,+b.dataset.i+1);expLimit=50;renderExplorador();});
+  });
+}
+function tabelaEmpenhos(rows,comCaminho){
+  return `<div style="overflow-x:auto"><table class="emp"><thead><tr><th>Empenho</th><th>Data</th><th>O que foi pago</th><th>Como foi contratado</th><th class="num">Valor pago</th></tr></thead><tbody>`+
+  rows.map(e=>`<tr><td>${esc(e[0])}</td><td style="white-space:nowrap">${esc(e[1])}</td><td class="hist">${esc(e[3])||'<i>sem descrição</i>'}${comCaminho?`<span class="path">${esc(e.path.join(' › '))}</span>`:''}</td><td>${esc(e[4])||'—'}</td><td class="num">${fmtBRL(e[2])}</td></tr>`).join('')+`</tbody></table></div>`;
+}
+function renderBuscaGlobal(tree,body){
+  const norm=t=>(t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const q=norm(expQuery); const hits=[]; let total=0;
+  for(const [fn,f] of Object.entries(tree)) for(const [sn,s] of Object.entries(f.s)) for(const [en,e] of Object.entries(s.e)) for(const fo of e.f){
+    const ctxHit=norm(fo.n).includes(q)||norm(en).includes(q)||norm(sn).includes(q);
+    for(const emp of fo.e){ if(ctxHit||norm(emp[3]).includes(q)){ const r=emp.slice(); r.path=[fn,sn,en,fo.n]; hits.push(r); total+=emp[2]; } }
+  }
+  hits.sort((a,b)=>b[2]-a[2]);
+  body.innerHTML=`<div class="lvl"><span class="t">Resultados para "${esc(expQuery)}"<small>${hits.length} ${hits.length===1?'pagamento':'pagamentos'} · ${abrev(total)}</small></span></div>`+
+    (hits.length?tabelaEmpenhos(hits.slice(0,expLimit),true)+(hits.length>expLimit?`<button class="moreBtn" id="maisEmp">Mostrar mais (${hits.length-expLimit} restantes)</button>`:''):`<p class="empty">Nada encontrado. Dica: use só o começo da palavra (ex. "asfalt" acha asfalto e asfáltica). A busca olha a descrição do pagamento, o fornecedor, o tipo de gasto e o serviço.</p>`);
+  const m=$('#maisEmp'); if(m) m.onclick=()=>{expLimit+=100;renderExplorador();};
+}
+let buscaTimer; $('#buscaExp').addEventListener('input',()=>{clearTimeout(buscaTimer);buscaTimer=setTimeout(()=>{expQuery=$('#buscaExp').value.trim();expLimit=50;renderExplorador();},250);});
+
+/* ===== abas ===== */
+let tabAtual='geral';
+function mostrarTab(t,scroll){
+  if(!document.querySelector(`.tab[data-tab="${t}"]`)) t='geral';
+  tabAtual=t;
+  document.querySelectorAll('.tab').forEach(el=>el.classList.toggle('on',el.dataset.tab===t));
+  document.querySelectorAll('#topnav button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.tab===t));
+  if(location.hash!=='#'+t) history.replaceState(null,'','#'+t);
+  if(scroll) window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('#topnav button').forEach(b=>b.onclick=()=>mostrarTab(b.dataset.tab,true));
+window.addEventListener('hashchange',()=>mostrarTab(location.hash.slice(1)||'geral'));
+
+let servMode='n';
+function renderServidores(){
+  const d=D.despesas[ano], sv=d.servidores; const sec=document.getElementById('servidores');
+  if(!sv){ sec.style.display='none'; return; } sec.style.display='';
+  const prev=D.despesas[String(+ano-1)]; const ps=prev&&prev.servidores;
+  const mesNome=['','janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'][sv.mes_referencia];
+  $('#servSub').textContent=`Em ${mesNome} de ${ano} a prefeitura tinha ${fmtN(sv.servidores_ativos)} servidores na ativa. Dados da folha publicada pela própria prefeitura, só agregados — nenhum nome aparece aqui.`;
+  $('#servTiles').innerHTML=`
+    <div class="tile"><div class="lbl">Servidores ativos</div><div class="val">${fmtN(sv.servidores_ativos)}</div><div class="ctx">em ${mesNome} ${ps?delta(sv.servidores_ativos,ps.servidores_ativos):''}</div></div>
+    <div class="tile"><div class="lbl">Remuneração típica</div><div class="val">${fmtBRL(sv.mediana_mensal)}</div><div class="ctx">bruto mediano por mês; líquido mediano ${fmtBRL(sv.mediana_liquida)}</div></div>
+    <div class="tile"><div class="lbl">Média bruta</div><div class="val">${fmtBRL(sv.media_mensal)}</div><div class="ctx">líquida ${fmtBRL(sv.media_liquida)}; 10% ganham acima de ${fmtBRL(sv.p90_mensal)} brutos</div></div>
+    <div class="tile"><div class="lbl">Custo médio por servidor</div><div class="val">${fmtBRL(sv.custo_medio_mensal)}</div><div class="ctx">por mês, já com 13º e férias (tudo que recebeu no ano ÷ 12)</div></div>
+    <div class="tile"><div class="lbl">Entradas e saídas</div><div class="val">+${fmtN(sv.admitidos_no_ano)} / −${fmtN(sv.desligados_no_ano)}</div><div class="ctx">admitidos e desligados em ${ano}</div></div>`;
+  const cores={'Efetivos':'var(--s1)','Temporários':'var(--s2)','Comissionados':'var(--s3)','Agentes políticos e conselheiros':'var(--s4)'};
+  const descV={'Efetivos':'Concursados e carreiras (LC 65 e 66/2017, Guarda Civil)','Temporários':'Contratos por tempo determinado (CTD)','Comissionados':'Cargos de confiança: assessores, diretores, chefes de gabinete','Agentes políticos e conselheiros':'Prefeito, vice, secretários e conselheiros tutelares'};
+  $('#servVinc').innerHTML=`<div class="vinc">`+sv.por_vinculo.map(v=>`<div class="card" style="border-left-color:${cores[v.nome]||'var(--s5)'}"><span class="t">${esc(v.nome)}</span><b>${fmtN(v.n)}</b><span>${pct(100*v.n/sv.servidores_ativos)} dos servidores</span><span>média ${fmtBRL(v.media_mensal)}/mês</span><span style="margin-top:4px">${esc(descV[v.nome]||'')}</span></div>`).join('')+`</div>`;
+  // secretarias
+  $('#servSecTabs').innerHTML=[['n','Servidores'],['media','Remuneração média'],['total','Gasto no ano']].map(([k,l])=>`<button aria-pressed="${servMode===k}" data-m="${k}">${l}</button>`).join('');
+  $('#servSecTabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{servMode=b.dataset.m;renderServidores();});
+  const val=x=>servMode==='n'?x.n:servMode==='media'?x.media_mensal:x.total_ano;
+  const lista=sv.por_secretaria.slice().sort((a,b)=>val(b)-val(a)); const mx=Math.max(...lista.map(val));
+  $('#servSec').innerHTML=lista.map(x=>{
+    const main=servMode==='n'?fmtN(x.n)+' serv.':servMode==='media'?fmtBRL(x.media_mensal):abrev(x.total_ano);
+    const sub=servMode==='n'?fmtBRL(x.media_mensal)+'/mês em média':servMode==='media'?fmtN(x.n)+' servidores':fmtN(x.n)+' servidores';
+    return `<div class="bar wide" role="button" tabindex="0" aria-expanded="false" data-tip="<b>${esc(x.nome)}</b>${fmtN(x.n)} servidores · média ${fmtBRL(x.media_mensal)} · mediana ${fmtBRL(x.mediana_mensal)}<br>custo médio ${fmtBRL(x.custo_medio_mensal)}/mês · ${abrev(x.total_ano)} no ano"><div class="nm">${esc(x.nome)}</div><div class="tr"><div class="fl" style="width:${100*val(x)/mx}%"></div></div><div class="vl">${main}<small>${sub}</small></div></div>
+    <div class="detail"><p>Cargos mais comuns (servidores · média bruta mensal; média omitida quando há menos de 3 pessoas):</p><ul>${x.cargos.map(c=>`<li><span>${esc(c.nome)}</span><span>${fmtN(c.n)} · ${c.n>=3?fmtBRL(c.media_mensal):'—'}</span></li>`).join('')}</ul></div>`;
+  }).join('');
+  $('#servSec').querySelectorAll('.bar').forEach(b=>{const t=()=>{b.classList.toggle('open');b.setAttribute('aria-expanded',b.classList.contains('open'));};b.onclick=t;b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();t();}};});
+  bindTips($('#servSec'));
+  renderCargos();
+  $('#top20Tab tbody').innerHTML=(sv.top20||[]).map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.cargo)}</td><td>${esc(x.secretaria)}</td><td><span class="pill">${esc(x.vinculo)}</span></td><td>${x.admissao||'—'}</td><td class="num"><b>${fmtBRL(x.media_mensal)}</b></td><td class="num">${fmtBRL(x.media_liquida)}</td><td class="num">${fmtBRL(x.total_ano)}<span class="d" style="display:block;color:var(--text-3);font-size:12px">${x.meses} meses</span></td></tr>`).join('');
+  // distribuição
+  const W=900,H=240,L=50,R=20,T=24,B=40; const dist=sv.distribuicao; const max=nice(Math.max(...dist.map(x=>x.n))*1.1);
+  const y=v=>T+(H-T-B)*(1-v/max); const gw=(W-L-R)/dist.length, bw=gw*0.6; let g='';
+  for(let i=0;i<=4;i++){const v=max*i/4;g+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text class="tick" x="${L-8}" y="${y(v)+4}" text-anchor="end">${fmtN(v)}</text>`;}
+  dist.forEach((x,i)=>{const cx=L+gw*i+gw/2;g+=`<rect x="${cx-bw/2}" y="${y(x.n)}" width="${bw}" height="${H-B-y(x.n)}" rx="4" fill="var(--s1)" data-tip="<b>${esc(x.faixa)}</b>${fmtN(x.n)} servidores · ${pct(100*x.n/sv.servidores_ativos)}"/><text x="${cx}" y="${y(x.n)-6}" text-anchor="middle" font-size="12" fill="var(--text)">${pct(100*x.n/sv.servidores_ativos)}</text><text class="tick" x="${cx}" y="${H-B+18}" text-anchor="middle">${esc(x.faixa)}</text>`;});
+  g+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}"/>`;
+  $('#servDist').innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Servidores por faixa de remuneração">${g}</svg>`; bindTips($('#servDist'));
+  $('#servNote').innerHTML=`Fonte: ${esc(sv.fonte)}. "Maior salário" é o maior valor bruto individual do cargo no mês, sem identificar a pessoa. A lista das 20 maiores remunerações usa a média das folhas mensais no ano (só quem teve pelo menos 3 meses de folha) e inclui plantões, adicionais e eventuais valores retroativos pagos na folha mensal. <b>Líquido</b> é o que efetivamente foi depositado: bruto menos adiantamento já pago, previdência, imposto de renda e, nos salários mais altos, o corte do teto constitucional (o subsídio do prefeito, cerca de R$ 33 mil) — por isso um bruto de R$ 50 mil pode virar R$ 15 mil líquidos; cargos com menos de 3 servidores não entram na tabela. Remuneração = total de vencimentos brutos da folha mensal de ${mesNome} (antes dos descontos de previdência e IR; inclui gratificações, horas extras e adicionais do mês). <b>Não inclui benefícios pagos fora da folha</b>: o vale-alimentação é pago por cartão (fornecedor Pluxee, cerca de R$ 45 mi/ano no TCE), e auxílio-saúde e auxílio-transporte aparecem no TCE como indenizações (custeio), não como salário. *Custo médio = tudo que o servidor recebeu no ano (folha mensal, 13º, férias; o adiantamento já está dentro da mensal) ÷ 12; não inclui a parte patronal dos encargos; para quem entrou ou saiu durante o ano (caso de muitos temporários) o custo médio fica abaixo da remuneração mensal. Aposentados e pensionistas que ainda constam na folha da prefeitura (${fmtN(sv.aposentados_na_folha)}) ficaram de fora.`;
+}
+let cargoMode='n';
+const CARGO_MODOS=[['n','Mais servidores','os cargos com mais servidores'],['maior','Maiores salários','cargos com maior remuneração média'],['menor','Menores salários','cargos com menor remuneração média']];
+function renderCargos(){
+  const sv=D.despesas[ano].servidores; if(!sv) return;
+  $('#cargoTabs').innerHTML=CARGO_MODOS.map(([k,l])=>`<button aria-pressed="${cargoMode===k}" data-m="${k}">${l}</button>`).join('');
+  $('#cargoTabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{cargoMode=b.dataset.m;renderCargos();});
+  $('#cargoSub').textContent=CARGO_MODOS.find(m=>m[0]===cargoMode)[2];
+  const norm=t=>t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const q=norm(($('#buscaCargo').value||'').trim());
+  let lista=sv.por_cargo.slice();
+  if(cargoMode==='maior') lista.sort((a,b)=>b.media_mensal-a.media_mensal); else if(cargoMode==='menor') lista.sort((a,b)=>a.media_mensal-b.media_mensal);
+  lista=q?lista.filter(c=>norm(c.nome).includes(q)):lista.slice(0,25);
+  $('#cargoTab tbody').innerHTML=lista.map((c,i)=>`<tr><td>${q?'':i+1}</td><td>${esc(c.nome)}</td><td class="num">${fmtN(c.n)}</td><td class="num">${fmtBRL(c.media_mensal)}</td><td class="num">${fmtBRL(c.media_liquida)}</td><td class="num">${fmtBRL(c.maior_mensal)}</td><td class="num">${fmtBRL(c.custo_medio_mensal)}</td></tr>`).join('')||'<tr><td colspan="7">Nenhum cargo encontrado (só cargos com 3 ou mais servidores).</td></tr>';
+}
+$('#buscaCargo').addEventListener('input',renderCargos);
+
+/* ===== explorador de servidores ===== */
+let sPath=[]; let sLimit=50;
+function carregarServidores(a,cb){
+  if(window.SERVIDORES&&window.SERVIDORES[a]) return cb(window.SERVIDORES[a]);
+  const body=$('#servExpBody'); body.innerHTML='<p class="empty">Carregando…</p>';
+  const sc=document.createElement('script'); sc.src='../data/servidores_'+a+'.js';
+  sc.onload=()=>cb(window.SERVIDORES&&window.SERVIDORES[a]);
+  sc.onerror=()=>{body.innerHTML='<p class="empty">Não consegui carregar <code>data/servidores_'+a+'.js</code>. Abra o painel a partir da pasta do projeto.</p>';};
+  document.head.appendChild(sc);
+}
+function renderServExp(){
+  const sec=document.getElementById('servExp'); if(!D.despesas[ano].servidores){sec.style.display='none';return;} sec.style.display='';
+  carregarServidores(ano,data=>{
+    if(!data) return; const body=$('#servExpBody');
+    const NIV=['Secretarias','Vínculos','Cargos','Servidores']; const KEYS=['sec','v','c','s'];
+    let node={children:data.sec,n:0,t:0}; node.n=Object.values(data.sec).reduce((a,x)=>a+x.n,0); node.t=Object.values(data.sec).reduce((a,x)=>a+x.t,0);
+    for(let i=0;i<sPath.length;i++){const nxt=node.children[sPath[i]]; if(!nxt){sPath=[];return renderServExp();} node={...nxt,children:nxt[KEYS[i+1]]};}
+    const lvl=sPath.length;
+    const crumbs=[`<button data-i="-1">${ano}</button>`].concat(sPath.map((p,i)=>`<span class="sep">›</span>`+(i===sPath.length-1?`<b>${esc(p)}</b>`:`<button data-i="${i}">${esc(p)}</button>`))).join('');
+    let html=`<div class="crumbs">${crumbs}</div>`;
+    const mesNome=['','jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'][data.mes_ref];
+    if(lvl<3){
+      const entries=Object.entries(node.children); const max=Math.max(...entries.map(([,v])=>v.n));
+      html+=`<div class="lvl"><span class="t">${NIV[lvl]}<small>${fmtN(node.n)} servidores no ano · ${abrev(node.t)} pagos</small></span></div><div class="bars">`;
+      html+=entries.slice(0,sLimit).map(([k,v])=>`<div class="bar wide" role="button" tabindex="0" data-k="${esc(k)}" data-tip="<b>${esc(k)}</b>${fmtN(v.n)} servidores · média ${fmtBRL(v.m)} em ${mesNome} · ${abrev(v.t)} no ano"><div class="nm">${esc(k)}</div><div class="tr"><div class="fl" style="width:${100*v.n/max}%"></div></div><div class="vl">${fmtN(v.n)} serv.<small>média ${v.n>=3?fmtBRL(v.m):'—'}/mês</small></div></div>`).join('');
+      html+=`</div>`+(entries.length>sLimit?`<button class="moreBtn" id="maisServ">Mostrar mais (${entries.length-sLimit} restantes)</button>`:'');
+      body.innerHTML=html;
+      body.querySelectorAll('.bar').forEach(b=>{const go=()=>{sPath.push(b.dataset.k);sLimit=50;renderServExp();};b.onclick=go;b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}};});
+    } else {
+      const lst=node.s;
+      html+=`<div class="lvl"><span class="t">${esc(sPath[2])}<small>${fmtN(lst.length)} servidores · média ${fmtBRL(node.m)} em ${mesNome} · ${abrev(node.t)} no ano</small></span></div>`;
+      html+=`<div style="overflow-x:auto"><table><thead><tr><th>#</th><th>Admitido em</th><th class="num">Folha de ${mesNome}</th><th class="num">Média bruta</th><th class="num">Média líquida</th><th class="num">13º</th><th class="num">Férias</th><th class="num">Total no ano</th><th class="num">Meses</th><th>Obs.</th></tr></thead><tbody>`+
+        lst.slice(0,sLimit).map((x,i)=>`<tr><td>${i+1}</td><td>${x[0]||'—'}</td><td class="num">${x[1]?fmtBRL(x[1]):'—'}</td><td class="num">${x[7]?fmtBRL(x[7]):'—'}</td><td class="num">${x[8]?fmtBRL(x[8]):'—'}</td><td class="num">${x[3]?fmtBRL(x[3]):'—'}</td><td class="num">${x[4]?fmtBRL(x[4]):'—'}</td><td class="num"><b>${fmtBRL(x[2])}</b></td><td class="num">${x[5]}</td><td>${x[6]?'<span class="pill">saiu em '+ano+'</span>':(x[0]==+ano?'<span class="pill">entrou em '+ano+'</span>':'')}</td></tr>`).join('')+`</tbody></table></div>`+(lst.length>sLimit?`<button class="moreBtn" id="maisServ">Mostrar mais (${lst.length-sLimit} restantes)</button>`:'');
+      body.innerHTML=html;
+    }
+    const mb=$('#maisServ'); if(mb) mb.onclick=()=>{sLimit+=100;renderServExp();};
+    body.querySelectorAll('.crumbs button').forEach(b=>b.onclick=()=>{sPath=sPath.slice(0,+b.dataset.i+1);sLimit=50;renderServExp();});
+    bindTips(body);
+  });
+}
+
+function renderEvolucao(){
+  const items=anos.map(a=>{const f=D.despesas[a].folha;const ap=(f.grupos.find(g=>g.nome==='Aposentadorias e pensões')||{valor:0}).valor;return {ano:a,ativos:f.ativos,apos:ap,total:f.total,gasto:D.despesas[a].totais.pago,rec:D.receitas[a]?D.receitas[a].total:null,pop:D.despesas[a].populacao};});
+  const W=900,H=260,L=64,R=20,T=28,B=36;
+  const max=nice(Math.max(...items.map(i=>i.ativos))*1.15);
+  const y=v=>T+(H-T-B)*(1-v/max);
+  const gw=(W-L-R)/items.length, bw=Math.min(56,gw*0.22);
+  let g='';
+  for(let i=0;i<=4;i++){const v=max*i/4;g+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text class="tick" x="${L-8}" y="${y(v)+4}" text-anchor="end">${abrev(v).replace('R$ ','')}</text>`;}
+  items.forEach((it,i)=>{
+    const cx=L+gw*i+gw/2; const pv=items[i-1];
+    const lab=(v,p)=>p?`${v>p?'+':''}${((v-p)/p*100).toLocaleString('pt-BR',{maximumFractionDigits:1})}%`:'';
+    g+=`<rect x="${cx-bw-1}" y="${y(it.ativos)}" width="${bw}" height="${H-B-y(it.ativos)}" rx="4" fill="var(--s1)" data-tip="<b>Servidores ativos ${it.ano}</b>${fmtBRL(it.ativos)}"/>`;
+    g+=`<rect x="${cx+1}" y="${y(it.apos)}" width="${bw}" height="${H-B-y(it.apos)}" rx="4" fill="var(--s2)" data-tip="<b>Aposentados e pensionistas ${it.ano}</b>${fmtBRL(it.apos)}"/>`;
+    if(pv){g+=`<text x="${cx-bw/2-1}" y="${y(it.ativos)-8}" text-anchor="middle" font-size="12" font-weight="600" fill="var(--text)">${lab(it.ativos,pv.ativos)}</text>`;
+           g+=`<text x="${cx+bw/2+1}" y="${y(it.apos)-8}" text-anchor="middle" font-size="12" font-weight="600" fill="var(--text)">${lab(it.apos,pv.apos)}</text>`;}
+    g+=`<text class="tick" x="${cx}" y="${H-B+20}" text-anchor="middle" font-weight="600" fill="var(--text)">${it.ano}</text>`;
+  });
+  g+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}"/>`;
+  $('#evolChart').innerHTML=`<div class="legend"><span><i style="background:var(--s1)"></i>Servidores ativos</span><span><i style="background:var(--s2)"></i>Aposentados e pensionistas</span></div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Gasto com ativos e aposentados por ano">${g}</svg>`;
+  bindTips($('#evolChart'));
+  const first=items[0];
+  const dl=(v,p,inv)=>p?delta(v,p,inv):'—';
+  $('#evolTab').innerHTML=`<thead><tr><th>Ano</th><th class="num">Servidores ativos</th><th class="num">Aposentados e pensionistas</th><th class="num">Folha total</th><th class="num">Por morador</th><th class="num">% do gasto</th><th class="num">% das receitas</th></tr></thead><tbody>`+
+    items.map((it,i)=>{const pv=items[i-1];return `<tr><td><b>${it.ano}</b></td><td class="num">${abrev(it.ativos)}<span class="d">${pv?dl(it.ativos,pv.ativos):'base'}${i>1?' · desde '+first.ano+' '+dl(it.ativos,first.ativos):''}</span></td><td class="num">${abrev(it.apos)}<span class="d">${pv?dl(it.apos,pv.apos):'base'}${i>1?' · desde '+first.ano+' '+dl(it.apos,first.apos):''}</span></td><td class="num">${abrev(it.total)}<span class="d">${pv?dl(it.total,pv.total):'base'}</span></td><td class="num">${fmtBRL(it.total/it.pop)}</td><td class="num">${pct(100*it.total/it.gasto)}</td><td class="num">${it.rec?pct(100*it.total/it.rec):'—'}</td></tr>`;}).join('')+`</tbody>`;
+}
+
+function renderAll(){ renderYears(); renderHero(); renderFuncoes(); renderNatureza(); renderFolha(); renderServidores(); sPath=[]; sLimit=50; renderServExp(); renderEvolucao(); renderMensal(); renderReceitas(); renderBalanco(); renderFornecedores(); renderRodape(); expPath=[]; expLimit=50; renderExplorador(); }
+renderAll();
+mostrarTab(location.hash.slice(1)||'geral');
+})();
+</script>
+</body>
+</html>
