@@ -10,6 +10,7 @@ import csv
 import gzip
 import json
 import re
+import statistics
 from collections import defaultdict
 from pathlib import Path
 
@@ -474,7 +475,7 @@ def gerar_detalhe(ano):
 # Servidores (portal da prefeitura / SMARAPD) — data/raw/servidores_{ano}.csv.gz
 # ---------------------------------------------------------------------------
 TIPO_FOLHA = {"9": "Folha mensal (bruto, já inclui o adiantamento)", "8": "Adiantamento (incluído na mensal)", "3": "Férias (folha de janeiro)", "5": "Abono de férias (1/3)",
-              "6": "13º salário", "1": "Complementar", "10": "Rescisão", "14": "Complementar", "2": "Outros"}
+              "6": "13º salário", "1": "Rescisão (desligados; pico em julho, fim dos contratos temporários)", "10": "Complementar (diferenças)", "14": "Complementar sem descontos (indenizatória)", "2": "Outros"}
 APOSENTADOS = ("Inativo", "Pensionista")
 
 
@@ -537,31 +538,60 @@ def processar_servidores(ano):
     # Bruto no ano por matrícula. O adiantamento (tipo 8) já está dentro do bruto da folha mensal
     # (tipo 9) e é descontado dela, então NÃO entra na soma — senão conta duas vezes (~12%).
     total_ano = defaultdict(float)
+    mensal_de = defaultdict(float)  # soma das folhas mensais (tipo 9) por matrícula
+    meses_de = defaultdict(set)   # meses com folha mensal por matrícula
     cargo_de = {}
     sec_de = {}
     for r in linhas:
         if r["tipo_folha"] != "8":
             total_ano[r["matricula"]] += r["v"]
+        if r["tipo_folha"] == "9":
+            meses_de[r["matricula"]].add(r["mes"])
+            mensal_de[r["matricula"]] += r["v"]
         cargo_de[r["matricula"]] = r["cargo"]
         sec_de[r["matricula"]] = r["secretaria"]
+    # headcount médio no ano (média dos meses com folha mensal carregada), só ativos
+    ativos_mes = defaultdict(int)
+    for r in linhas:
+        if r["tipo_folha"] == "9" and vinculo(r["cargo"]) != "Aposentados e pensionistas":
+            ativos_mes[r["mes"]] += 1
+    headcount_medio = sum(ativos_mes.values()) / len(ativos_mes)
+    meses_carregados = len(ativos_mes)
+
+    def custo_pessoa(m):
+        """Custo mensal de uma pessoa = média das folhas mensais + (13º, férias, complementares) / 12.
+        Não depende de novembro estar carregado."""
+        k = len(meses_de[m])
+        if not k:
+            return None
+        return mensal_de[m] / k + (total_ano[m] - mensal_de[m]) / 12
     bruto_ano_ativos = sum(v for m, v in total_ano.items() if vinculo(cargo_de[m]) != "Aposentados e pensionistas")
     bruto_ano_apos = sum(v for m, v in total_ano.items() if vinculo(cargo_de[m]) == "Aposentados e pensionistas")
 
     def grupo(chave):
-        g = defaultdict(lambda: {"n": 0, "mensal": 0.0, "liq": 0.0, "anual": 0.0, "valores": []})
-        for m, r in ativos.items():
+        g = defaultdict(lambda: {"n": 0, "mensal": 0.0, "liq": 0.0, "anual": 0.0, "custo": 0.0, "meses": 0, "valores": []})
+        for m, r in ativos.items():          # quem estava na folha do mês de referência
             k = chave(r)
             g[k]["n"] += 1
             g[k]["mensal"] += r["v"]
             g[k]["liq"] += r["l"]
-            g[k]["anual"] += total_ano[m]
             g[k]["valores"].append(r["v"])
+        for m, tot in total_ano.items():     # todos que receberam no ano
+            cp = custo_pessoa(m)
+            if vinculo(cargo_de[m]) == "Aposentados e pensionistas" or cp is None:
+                continue
+            k = chave({"cargo": cargo_de[m], "secretaria": sec_de[m]})
+            g[k]["anual"] += tot
+            g[k]["custo"] += cp
+            g[k]["meses"] += 1
         out = []
         for k, d in g.items():
+            if not d["n"]:
+                continue
             vals = sorted(d["valores"])
             out.append({"nome": k, "n": d["n"], "media_mensal": r2(d["mensal"] / d["n"]), "media_liquida": r2(d["liq"] / d["n"]),
                         "mediana_mensal": r2(vals[len(vals) // 2]), "maior_mensal": r2(vals[-1]), "menor_mensal": r2(vals[0]),
-                        "custo_medio_mensal": r2(d["anual"] / d["n"] / 12), "total_ano": r2(d["anual"])})
+                        "custo_medio_mensal": r2(d["custo"] / d["meses"]) if d["meses"] else 0, "total_ano": r2(d["anual"])})
         return sorted(out, key=lambda x: -x["n"])
 
     por_vinculo = grupo(lambda r: vinculo(r["cargo"]))
@@ -607,7 +637,9 @@ def processar_servidores(ano):
         "mediana_liquida": r2(liqs[n // 2]) if n else 0,
         "media_liquida": r2(sum(liqs) / n) if n else 0,
         "p90_mensal": r2(vals[int(n * 0.9)]) if n else 0,
-        "custo_medio_mensal": r2(bruto_ano_ativos / n / 12) if n else 0,
+        "headcount_medio": r2(headcount_medio),
+        "meses_carregados": meses_carregados,
+        "custo_medio_mensal": r2(statistics.fmean([custo_pessoa(m) for m in total_ano if custo_pessoa(m) is not None and vinculo(cargo_de[m]) != "Aposentados e pensionistas"])),
         "por_vinculo": por_vinculo,
         "por_secretaria": por_secretaria,
         "por_cargo": por_cargo,
@@ -623,7 +655,7 @@ TOP20 = {}
 def gerar_servidores_detalhe(ano):
     """data/servidores_{ano}.js: secretaria -> vínculo -> cargo -> lista de servidores SEM nome
     nem matrícula: [ano de admissão, bruto do mês de referência, total no ano (sem adiantamento),
-    13º, férias, meses com folha mensal, saiu no ano?, média da folha mensal (bruta) nos meses trabalhados, média líquida]."""
+    13º, férias, meses com folha mensal, saiu no ano?, média da folha mensal (bruta) nos meses trabalhados, média líquida, 13º líquido, férias líquidas, líquido total no ano]."""
     caminho = achar(f"servidores_{ano}.csv")
     if not caminho:
         return None
@@ -634,7 +666,7 @@ def gerar_servidores_detalhe(ano):
             v = float(r["vencimentos"] or 0); mes = int(r["mes"] or 0); t = r["tipo_folha"]
             m = por_mat.setdefault(r["matricula"], {"cargo": r["cargo"], "sec": r["secretaria"], "adm": r["data_admissao"][:4],
                                                     "res": r["data_rescisao"], "mensal": {}, "liq": {}, "anual": 0.0, "d13": 0.0,
-                                                    "ferias": 0.0, "meses": set()})
+                                                    "ferias": 0.0, "meses": set(), "l13": 0.0, "lferias": 0.0, "lano": 0.0})
             m["cargo"] = r["cargo"] or m["cargo"]; m["sec"] = r["secretaria"] or m["sec"]
             if r["data_rescisao"]:
                 m["res"] = r["data_rescisao"]
@@ -644,10 +676,12 @@ def gerar_servidores_detalhe(ano):
                 m["liq"][mes] = m["liq"].get(mes, 0) + float(r["liquido"] or 0)
             if t != "8":
                 m["anual"] += v
+            liq = float(r["liquido"] or 0)
+            m["lano"] += liq      # líquido de todos os lançamentos (inclusive adiantamentos) = dinheiro depositado no ano
             if t == "6":          # 13º (dezembro)
-                m["d13"] += v
+                m["d13"] += v; m["l13"] += liq
             if t in ("3", "5"):   # férias: tipo 3 = folha de férias (janeiro, professores) / tipo 5 = abono de férias (junho)
-                m["ferias"] += v
+                m["ferias"] += v; m["lferias"] += liq
     maximo = max(por_mes9.values())
     mes_ref = max(mm for mm, n in por_mes9.items() if n >= 0.9 * maximo)
     arvore = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
@@ -656,7 +690,8 @@ def gerar_servidores_detalhe(ano):
             [int(m["adm"]) if m["adm"].isdigit() else None, r2(m["mensal"].get(mes_ref, 0)), r2(m["anual"]),
              r2(m["d13"]), r2(m["ferias"]), len(m["meses"]), 1 if m["res"].startswith(str(ano)) else 0,
              r2(sum(m["mensal"].values()) / len(m["meses"])) if m["meses"] else 0,
-             r2(sum(m["liq"][k] for k in m["meses"]) / len(m["meses"])) if m["meses"] else 0])
+             r2(sum(m["liq"][k] for k in m["meses"]) / len(m["meses"])) if m["meses"] else 0,
+             r2(m["l13"]), r2(m["lferias"]), r2(m["lano"])])
 
     def no(lista):
         return {"n": len(lista), "t": r2(sum(x[2] for x in lista)),
@@ -719,8 +754,12 @@ def main():
         if sv and d:
             d["servidores"] = sv
             # custo médio na folha do TCE = gasto com ativos (TCE) / servidores ativos (portal)
+            # custo completo por servidor = folha de ATIVOS da Prefeitura no TCE (com encargos patronais,
+            # sem Câmara e Paulínia Previ, que não estão no portal) / servidores ativos do portal / 12
+            pref = next((o for o in d["folha"]["por_orgao"] if o["nome"].startswith("Prefeitura")), None)
+            ativos_pref = sum(v for g, v in pref["grupos"].items() if g not in FOLHA_ATIVOS_EXCLUI) if pref else d["folha"]["ativos"]
             d["folha"]["servidores_total"] = sv["servidores_ativos"]
-            d["folha"]["custo_medio_mensal"] = r2(d["folha"]["ativos"] / sv["servidores_ativos"] / 12)
+            d["folha"]["custo_medio_mensal"] = r2(ativos_pref / sv["headcount_medio"] / 12)
             print(f"      servidores: {sv['servidores_ativos']:,} ativos (ref. mês {sv['mes_referencia']}), "
                   f"média mensal R$ {sv['media_mensal']:,.0f}, custo médio R$ {sv['custo_medio_mensal']:,.0f}")
         sd = gerar_servidores_detalhe(ano)
