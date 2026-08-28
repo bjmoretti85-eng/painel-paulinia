@@ -524,9 +524,14 @@ def processar_servidores(ano):
     mes_ref = max(m for m, n in por_mes9.items() if n >= 0.9 * maximo)
 
     ref = {}  # matricula -> registro da folha mensal do mês de referência (só ativos)
+    adiant = defaultdict(float)
     for r in linhas:
         if r["tipo_folha"] == "9" and r["mes"] == mes_ref:
             ref[r["matricula"]] = r
+        elif r["tipo_folha"] == "8" and r["mes"] == mes_ref:
+            adiant[r["matricula"]] += r["l"]
+    for m, r in ref.items():  # líquido efetivamente recebido no mês = folha mensal + adiantamento
+        r["l"] = r["l"] + adiant.get(m, 0)
     ativos = {m: r for m, r in ref.items() if vinculo(r["cargo"]) != "Aposentados e pensionistas"}
 
     # Bruto no ano por matrícula. O adiantamento (tipo 8) já está dentro do bruto da folha mensal
@@ -635,6 +640,7 @@ def gerar_servidores_detalhe(ano):
                 m["res"] = r["data_rescisao"]
             if t == "9":
                 m["mensal"][mes] = m["mensal"].get(mes, 0) + v; m["meses"].add(mes); por_mes9[mes] += 1
+            if t in ("9", "8"):  # líquido recebido no mês = folha mensal + adiantamento (já descontado da mensal)
                 m["liq"][mes] = m["liq"].get(mes, 0) + float(r["liquido"] or 0)
             if t != "8":
                 m["anual"] += v
@@ -650,7 +656,7 @@ def gerar_servidores_detalhe(ano):
             [int(m["adm"]) if m["adm"].isdigit() else None, r2(m["mensal"].get(mes_ref, 0)), r2(m["anual"]),
              r2(m["d13"]), r2(m["ferias"]), len(m["meses"]), 1 if m["res"].startswith(str(ano)) else 0,
              r2(sum(m["mensal"].values()) / len(m["meses"])) if m["meses"] else 0,
-             r2(sum(m["liq"].values()) / len(m["meses"])) if m["meses"] else 0])
+             r2(sum(m["liq"][k] for k in m["meses"]) / len(m["meses"])) if m["meses"] else 0])
 
     def no(lista):
         return {"n": len(lista), "t": r2(sum(x[2] for x in lista)),
