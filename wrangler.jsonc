@@ -1,0 +1,7 @@
+{
+  // Site estático: sem código de Worker, só serve os arquivos de dist/.
+  // dist/ é gerado por scripts/publicar.py e vai versionado, por isso não há build command.
+  "name": "painel-paulinia",
+  "compatibility_date": "2026-08-28",
+  "assets": { "directory": "./dist" }
+}
