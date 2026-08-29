@@ -187,6 +187,10 @@ details.notas .note{margin-top:2px}
 .cmp .row.c .tr{background:var(--s2)}
 .cmp .row b{font-variant-numeric:tabular-nums;font-size:13px;width:82px;text-align:right;flex:none}
 .cmp .row.c b{color:var(--text-2)}
+.cmp .row i .alerta{display:block;font-size:10px;color:var(--s2);letter-spacing:0;text-transform:none;margin-top:1px}
+.cmp .row u{font-style:normal;text-decoration:none;font-variant-numeric:tabular-nums;font-size:12px;color:var(--text-3);width:132px;text-align:right;flex:none}
+.cmp.dec{grid-template-columns:minmax(190px,1.1fr) 3fr}
+.cmp.dec .row i{width:150px}
 .cmp .dif{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;font-size:15px}
 .cmpleg{display:flex;gap:18px;margin:0 8px 10px;font-size:13px;color:var(--text-2)}
 .cmpleg span{display:inline-flex;align-items:center}
@@ -222,6 +226,14 @@ details.notas .note{margin-top:2px}
   .cmp .row i{width:54px;font-size:10.5px}
   .cmp .row b{width:74px;font-size:12.5px}
   .cmpbase .lin{grid-template-columns:1fr auto;font-size:13px}
+  .cmp.dec{grid-template-columns:1fr}
+  /* rótulo + valor na 1ª linha, barra + horas na 2ª: enfileirados, sobravam 4px para a barra */
+  .cmp.dec .row{display:grid;grid-template-columns:1fr auto;gap:3px 10px;align-items:center}
+  .cmp.dec .row i{grid-column:1;grid-row:1;width:auto}
+  .cmp.dec .row b{grid-column:2;grid-row:1;width:auto}
+  .cmp.dec .row .track{grid-column:1;grid-row:2}
+  .cmp.dec .row u{grid-column:2;grid-row:2;width:auto}
+  .cmp .row u{width:104px;font-size:10.5px}
   /* barra: nome e valor na 1ª linha, a barra inteira na 2ª (antes sobravam 2px para a barra) */
   .bar,.bar.wide,.hbar{grid-template-columns:1fr auto;gap:4px 10px;padding:9px 4px;min-height:0}
   .bar .nm,.bar.wide .nm,.hbar .nm{grid-column:1;grid-row:1;white-space:normal;font-size:14px;line-height:1.3}
@@ -264,7 +276,7 @@ details.notas .note{margin-top:2px}
 <nav class="topnav" id="topnav" aria-label="Seções do painel">
   <button data-tab="geral">Visão geral</button>
   <button data-tab="pessoal">Pessoal</button>
-  <button data-tab="comparar">Comparação</button>
+  <button data-tab="salarios">Salários</button>
   <button data-tab="detalhe">Gasto a gasto</button>
   <button data-tab="entenda">Entenda</button>
 </nav>
@@ -340,10 +352,6 @@ details.notas .note{margin-top:2px}
   <h3>Por secretaria<small>número de servidores e remuneração média bruta mensal</small></h3>
   <div class="tabs" id="servSecTabs"></div>
   <div class="bars" id="servSec"></div>
-  <h3>Por cargo<small id="cargoSub">os cargos com mais servidores</small></h3>
-  <div class="tabs" id="cargoTabs"></div>
-  <input type="search" id="buscaCargo" placeholder="Buscar cargo: professor, médico, guarda, motorista…" aria-label="Buscar cargo">
-  <div class="tw"><table id="cargoTab"><thead><tr><th>#</th><th>Cargo</th><th class="num">Servidores</th><th class="num">Média bruta</th><th class="num">Média líquida</th><th class="num">Maior salário</th><th class="num">Custo médio*</th></tr></thead><tbody></tbody></table></div>
   <h3>Quanto ganham<small>servidores ativos por faixa de remuneração bruta mensal</small></h3>
   <div class="chart-wrap" id="servDist"></div>
   <p class="note" id="servNote"></p>
@@ -357,9 +365,9 @@ details.notas .note{margin-top:2px}
 </section>
 
 <section id="pontecomp">
-  <h2>E como isso se compara?</h2>
-  <p class="sub">Um salário só faz sentido ao lado de outro. Na aba <b>Comparação</b>, os mesmos cargos aparecem lado a lado com os de Campinas.</p>
-  <button class="moreBtn" id="irComparar">Ver a comparação com Campinas</button>
+  <h2>E quanto cada um ganha?</h2>
+  <p class="sub">Esta aba mostra quantos servidores a cidade tem e quanto a folha custa. Quanto ganha cada cargo, como isso se compara com Campinas e por que dois colegas do mesmo cargo recebem diferente está na aba <b>Salários</b>.</p>
+  <button class="moreBtn" id="irComparar">Ver os salários por cargo</button>
 </section>
 
 <section id="evolucao">
@@ -371,7 +379,17 @@ details.notas .note{margin-top:2px}
 </section>
 </div>
 
-<div class="tab" data-tab="comparar">
+<div class="tab" data-tab="salarios">
+<section id="porcargo">
+  <h2>Quanto ganha cada cargo</h2>
+  <p class="sub" id="cargoTopo"></p>
+  <p class="sub" id="cargoSub" style="margin:2px 0 10px">os cargos com mais servidores</p>
+  <div class="tabs" id="cargoTabs"></div>
+  <input type="search" id="buscaCargo" placeholder="Buscar cargo: professor, médico, guarda, motorista…" aria-label="Buscar cargo">
+  <div class="tw"><table id="cargoTab"><thead><tr><th>#</th><th>Cargo</th><th class="num">Servidores</th><th class="num">Média bruta</th><th class="num">Média líquida</th><th class="num">Maior salário</th><th class="num">Custo médio*</th></tr></thead><tbody></tbody></table></div>
+  <p class="note" id="cargoNote"></p>
+</section>
+
 <section id="comparativo">
   <h2>Paulínia paga mais que Campinas?</h2>
   <p class="sub" id="compSub"></p>
@@ -385,6 +403,13 @@ details.notas .note{margin-top:2px}
   <p class="sub" id="tabSub"></p>
   <div id="tabBars"></div>
   <p class="note" id="tabNote"></p>
+</section>
+
+<section id="porquesobe">
+  <h2>Por que dois colegas ganham diferente</h2>
+  <p class="sub" id="decSub"></p>
+  <div id="decBars"></div>
+  <p class="note" id="decNote"></p>
 </section>
 </div>
 
@@ -645,6 +670,198 @@ const COMPARATIVO = {
    "topo_de_carreira": false
   }
  ],
+ "decomposicao": {
+  "quadro": "QUADRO DE PESSOAL REF. SETEMBRO 2025.pdf",
+  "cargos": [
+   {
+    "cargo": "Agente de Apoio Operacional",
+    "n_folha": 826,
+    "n_casado": 825,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "base": {
+      "n": 625,
+      "mediana": 9341.18,
+      "horas": 200,
+      "por_hora": 46.71
+     },
+     "funcao": {
+      "n": 75,
+      "mediana": 14163.78,
+      "horas": 200,
+      "por_hora": 71.69
+     },
+     "designada_menor": {
+      "n": 125,
+      "mediana": 14173.45,
+      "horas": 180,
+      "por_hora": 78.74
+     }
+    }
+   },
+   {
+    "cargo": "Medico Plantonista",
+    "n_folha": 287,
+    "n_casado": 281,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "base": {
+      "n": 70,
+      "mediana": 20990.54,
+      "horas": 120,
+      "por_hora": 174.92
+     },
+     "ampliada": {
+      "n": 206,
+      "mediana": 30273.97,
+      "horas": 160,
+      "por_hora": 189.21
+     }
+    }
+   },
+   {
+    "cargo": "Guarda Civil Municipal",
+    "n_folha": 208,
+    "n_casado": 207,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "designada_menor": {
+      "n": 150,
+      "mediana": 20764.6,
+      "horas": 180,
+      "por_hora": 115.36
+     },
+     "funcao": {
+      "n": 36,
+      "mediana": 21693.1,
+      "horas": 180,
+      "por_hora": 114.9
+     },
+     "base": {
+      "n": 21,
+      "mediana": 17865.58,
+      "horas": 200,
+      "por_hora": 89.33
+     }
+    }
+   },
+   {
+    "cargo": "Monitor",
+    "n_folha": 165,
+    "n_casado": 163,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "base": {
+      "n": 138,
+      "mediana": 9986.69,
+      "horas": 200,
+      "por_hora": 49.93
+     },
+     "funcao": {
+      "n": 23,
+      "mediana": 15146.55,
+      "horas": 200,
+      "por_hora": 75.73
+     }
+    }
+   },
+   {
+    "cargo": "Motorista",
+    "n_folha": 71,
+    "n_casado": 71,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "base": {
+      "n": 38,
+      "mediana": 11601.3,
+      "horas": 200,
+      "por_hora": 58.01
+     },
+     "designada_menor": {
+      "n": 31,
+      "mediana": 14904.2,
+      "horas": 180,
+      "por_hora": 82.8
+     }
+    }
+   },
+   {
+    "cargo": "Auxiliar de Apoio Administrativo",
+    "n_folha": 66,
+    "n_casado": 66,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "base": {
+      "n": 38,
+      "mediana": 11892.92,
+      "horas": 200,
+      "por_hora": 59.46
+     },
+     "funcao": {
+      "n": 25,
+      "mediana": 18059.6,
+      "horas": 200,
+      "por_hora": 90.3
+     }
+    }
+   },
+   {
+    "cargo": "Farmaceutico",
+    "n_folha": 40,
+    "n_casado": 40,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "base": {
+      "n": 22,
+      "mediana": 14869.58,
+      "horas": 200,
+      "por_hora": 74.35
+     },
+     "designada_menor": {
+      "n": 13,
+      "mediana": 13608.25,
+      "horas": 180,
+      "por_hora": 75.6
+     }
+    }
+   }
+  ]
+ },
  "pares": [
   {
    "nome": "Professor dos anos iniciais e da educação infantil",
@@ -656,7 +873,8 @@ const COMPARATIVO = {
    },
    "cargos": {
     "paulinia": [
-     "PROFESSOR DE EDUCACAO BASICA I - PEBI - LC 65/2017"
+     "PROFESSOR DE EDUCACAO BASICA I - PEBI - LC 65/2017",
+     "EDUCADORA INFANTIL - LC 66/2017"
     ],
     "campinas": [
      "PROFESSOR PEB I",
@@ -666,11 +884,11 @@ const COMPARATIVO = {
    "dados": {
     "2023": {
      "paulinia": {
-      "n": 829,
-      "mediana": 13579.93,
-      "media": 13753.89,
-      "p25": 11687.72,
-      "p75": 15735.21
+      "n": 883,
+      "mediana": 13166.6,
+      "media": 13504.28,
+      "p25": 11440.83,
+      "p75": 15710.25
      },
      "campinas": {
       "n": 1461,
@@ -679,15 +897,15 @@ const COMPARATIVO = {
       "p25": 6918.26,
       "p75": 9683.14
      },
-     "dif_pct": 69.5
+     "dif_pct": 64.4
     },
     "2024": {
      "paulinia": {
-      "n": 834,
-      "mediana": 14098.59,
-      "media": 14368.9,
-      "p25": 12267.53,
-      "p75": 16351.14
+      "n": 885,
+      "mediana": 13901.31,
+      "media": 14173.27,
+      "p25": 11979.85,
+      "p75": 16178.85
      },
      "campinas": {
       "n": 1500,
@@ -696,15 +914,15 @@ const COMPARATIVO = {
       "p25": 7230.82,
       "p75": 10040.43
      },
-     "dif_pct": 67.9
+     "dif_pct": 65.5
     },
     "2025": {
      "paulinia": {
-      "n": 492,
-      "mediana": 15257.61,
-      "media": 15547.47,
-      "p25": 12855.22,
-      "p75": 17834.08
+      "n": 864,
+      "mediana": 14002.9,
+      "media": 14765.51,
+      "p25": 12710.3,
+      "p75": 16571.21
      },
      "campinas": {
       "n": 1453,
@@ -713,7 +931,7 @@ const COMPARATIVO = {
       "p25": 7792.84,
       "p75": 10865.19
      },
-     "dif_pct": 67.6
+     "dif_pct": 53.8
     }
    }
   },
@@ -725,6 +943,7 @@ const COMPARATIVO = {
     "paulinia": "36h (30h com alunos + 6h de preparação)",
     "campinas": "32h ou 40h"
    },
+   "desde": 2025,
    "cargos": {
     "paulinia": [
      "EDUCADORA INFANTIL - LC 66/2017"
@@ -734,40 +953,6 @@ const COMPARATIVO = {
     ]
    },
    "dados": {
-    "2023": {
-     "paulinia": {
-      "n": 54,
-      "mediana": 9508.82,
-      "media": 9672.23,
-      "p25": 8996.38,
-      "p75": 10816.45
-     },
-     "campinas": {
-      "n": 1027,
-      "mediana": 7986.01,
-      "media": 8458.73,
-      "p25": 6897.3,
-      "p75": 9626.04
-     },
-     "dif_pct": 19.1
-    },
-    "2024": {
-     "paulinia": {
-      "n": 51,
-      "mediana": 10780.56,
-      "media": 10974.05,
-      "p25": 9662.54,
-      "p75": 12610.34
-     },
-     "campinas": {
-      "n": 1069,
-      "mediana": 8265.39,
-      "media": 8783.33,
-      "p25": 7130.79,
-      "p75": 9970.59
-     },
-     "dif_pct": 30.4
-    },
     "2025": {
      "paulinia": {
       "n": 372,
@@ -1532,6 +1717,7 @@ addEventListener('resize', ()=>{
 /* ===== abas ===== */
 let tabAtual='geral';
 function mostrarTab(t,scroll){
+  if(t==='comparar') t='salarios';          // link antigo continua funcionando
   if(!document.querySelector(`.tab[data-tab="${t}"]`)) t='geral';
   tabAtual=t;
   document.querySelectorAll('.tab').forEach(el=>el.classList.toggle('on',el.dataset.tab===t));
@@ -1541,7 +1727,7 @@ function mostrarTab(t,scroll){
   ajustarLayout();  // só dá para medir a rolagem das tabelas da aba visível
 }
 document.querySelectorAll('#topnav button').forEach(b=>b.onclick=()=>mostrarTab(b.dataset.tab,true));
-const btnCmp=$('#irComparar'); if(btnCmp) btnCmp.onclick=()=>mostrarTab('comparar',true);
+const btnCmp=$('#irComparar'); if(btnCmp) btnCmp.onclick=()=>mostrarTab('salarios',true);
 window.addEventListener('hashchange',()=>mostrarTab(location.hash.slice(1)||'geral'));
 
 let servMode='n';
@@ -1582,7 +1768,9 @@ function renderServidores(){
   g+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}"/>`;
   if(fone()) g+=`<text class="tick" x="${W-R}" y="${H-4}" text-anchor="end">faixas em R$ mil</text>`;
   $('#servDist').innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Servidores por faixa de remuneração">${g}</svg>`; bindTips($('#servDist'));
-  $('#servNote').innerHTML=`Fonte: ${esc(sv.fonte)}. "Maior salário" é o maior valor bruto individual do cargo no mês, sem identificar a pessoa. <b>Líquido</b> é o que efetivamente entrou na conta no mês (adiantamento do dia 20 + folha do fim do mês): bruto menos previdência, imposto de renda, consignados e, nos salários mais altos, o corte do teto constitucional (o subsídio do prefeito, cerca de R$ 33 mil). Para a maioria dos servidores fica em torno de dois terços do bruto; cargos com menos de 3 servidores não entram na tabela. Remuneração = total de vencimentos brutos da folha mensal de ${mesNome} (antes dos descontos de previdência e IR; inclui gratificações, horas extras e adicionais do mês). <b>Não inclui benefícios pagos fora da folha</b>: o vale-alimentação é pago por cartão (fornecedor Pluxee, cerca de R$ 45 mi/ano no TCE), e auxílio-saúde e auxílio-transporte aparecem no TCE como indenizações (custeio), não como salário. *Custo médio por servidor = média das folhas mensais da pessoa + (13º, férias e complementares do ano ÷ 12), calculado para todos que passaram pelo grupo no ano; o adiantamento já está dentro da mensal; não inclui a parte patronal dos encargos. Aposentados e pensionistas que ainda constam na folha da prefeitura (${fmtN(sv.aposentados_na_folha)}) ficaram de fora. A contagem é por matrícula: cerca de 40 pessoas acumulam dois vínculos legais (médicos plantonistas, professores, técnicos de enfermagem) e aparecem duas vezes, cada uma com o salário de um dos vínculos.`;
+  $('#cargoTopo').textContent=`Cada cargo da Prefeitura, com quantos servidores tem e quanto recebe. Valores da folha de ${mesNome}.`;
+  $('#cargoNote').innerHTML=`Fonte: ${esc(sv.fonte)}. "Maior salário" é o maior valor bruto individual do cargo no mês, sem identificar a pessoa. <b>Líquido</b> é o que efetivamente entrou na conta no mês (adiantamento do dia 20 + folha do fim do mês): bruto menos previdência, imposto de renda, consignados e, nos salários mais altos, o corte do teto constitucional (o subsídio do prefeito, cerca de R$ 33 mil). Para a maioria dos servidores fica em torno de dois terços do bruto; cargos com menos de 3 servidores não entram na tabela. *Custo médio por servidor = média das folhas mensais da pessoa + (13º, férias e complementares do ano ÷ 12), calculado para todos que passaram pelo grupo no ano; o adiantamento já está dentro da mensal; não inclui a parte patronal dos encargos.`;
+  $('#servNote').innerHTML=`Fonte: ${esc(sv.fonte)}. Remuneração = total de vencimentos brutos da folha mensal de ${mesNome} (antes dos descontos de previdência e IR; inclui gratificações, horas extras e adicionais do mês). <b>Não inclui benefícios pagos fora da folha</b>: o vale-alimentação é pago por cartão (fornecedor Pluxee, cerca de R$ 45 mi/ano no TCE), e auxílio-saúde e auxílio-transporte aparecem no TCE como indenizações (custeio), não como salário. Aposentados e pensionistas que ainda constam na folha da prefeitura (${fmtN(sv.aposentados_na_folha)}) ficaram de fora. A contagem é por matrícula: cerca de 40 pessoas acumulam dois vínculos legais (médicos plantonistas, professores, técnicos de enfermagem) e aparecem duas vezes, cada uma com o salário de um dos vínculos.`;
 }
 let cargoMode='n';
 const CARGO_MODOS=[['n','Mais servidores','os cargos com mais servidores'],['maior','Maiores salários','cargos com maior remuneração média'],['menor','Menores salários','cargos com menor remuneração média']];
@@ -1644,11 +1832,12 @@ function renderServExp(){
 function renderComparativo(){
   const sec=$('#comparativo');
   const C=(typeof COMPARATIVO!=='undefined')&&COMPARATIVO;
-  const A='2025';   // só 2025 por enquanto: a série de anos anteriores ainda está sendo conferida
+  const ANOS=(C&&C.anos||[]).map(String);
+  const A=ANOS.includes(String(ano))?String(ano):(ANOS[ANOS.length-1]||'2025');   // segue o seletor de ano
   const pares=(C&&C.pares||[]).filter(p=>p.dados&&p.dados[A]);
   if(!pares.length){ if(sec) sec.style.display='none'; return; }
   sec.style.display='';
-  $('#compSub').innerHTML='Salário bruto <b>mediano</b> de dezembro de 2025, cargo a cargo. Campinas tem dez vezes mais gente que Paulínia, mas contrata as mesmas profissões — e é com ela que Paulínia disputa professor, enfermeiro e guarda.';
+  $('#compSub').innerHTML='Salário bruto <b>mediano</b> de dezembro de '+A+', cargo a cargo. Campinas tem dez vezes mais gente que Paulínia, mas contrata as mesmas profissões — e é com ela que Paulínia disputa professor, enfermeiro e guarda.';
   pares.sort((a,b)=>b.dados[A].dif_pct-a.dados[A].dif_pct);
   const max=Math.max(...pares.map(p=>Math.max(p.dados[A].paulinia.mediana,p.dados[A].campinas.mediana)));
   $('#compBars').innerHTML=pares.map(p=>{
@@ -1665,6 +1854,9 @@ function renderComparativo(){
 }
 function renderTabela(){
   const sec=$('#acimadatabela');
+  const REF=((typeof COMPARATIVO!=='undefined'&&COMPARATIVO&&COMPARATIVO.anos)||[2025]).slice(-1)[0];
+  if(String(ano)!==String(REF)){ if(sec) sec.style.display='none'; return; }   // esta seção só existe para o ano de referência
+
   const L=(typeof COMPARATIVO!=='undefined'&&COMPARATIVO&&COMPARATIVO.tabela_vs_folha)||[];
   if(!L.length){ if(sec) sec.style.display='none'; return; }
   sec.style.display='';
@@ -1690,6 +1882,43 @@ function renderTabela(){
     'a comparação é contra o <b>topo</b> da carreira, não contra o início. Paulínia tem duas leis de quadro geral em '+
     'vigor ao mesmo tempo (LC 66/2017 e LC 133/2025) e cada cargo é comparado com a tabela da lei que consta na folha. '+
     'Cargos em comissão e funções de confiança ficaram de fora.';
+}
+function renderDecomposicao(){
+  const sec=$('#porquesobe');
+  const REF=((typeof COMPARATIVO!=='undefined'&&COMPARATIVO&&COMPARATIVO.anos)||[2025]).slice(-1)[0];
+  if(String(ano)!==String(REF)){ if(sec) sec.style.display='none'; return; }   // esta seção só existe para o ano de referência
+
+  const D=(typeof COMPARATIVO!=='undefined'&&COMPARATIVO&&COMPARATIVO.decomposicao)||{};
+  const lista=(D.cargos||[]).filter(c=>c.grupos&&c.grupos.base);
+  if(!lista.length){ if(sec) sec.style.display='none'; return; }
+  sec.style.display='';
+  $('#decSub').innerHTML='Duas pessoas no mesmo cargo podem receber valores bem diferentes. Aqui está o motivo — '+
+    'e, ao lado, <b>quanto vale a hora</b> de cada grupo. Se a hora vale o mesmo, a diferença é quantidade de trabalho.';
+  const R=(lista[0].rotulos)||{};
+  const ORDEM=['base','ampliada','designada_menor','funcao'];
+  const hora=v=>'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+  $('#decBars').innerHTML=lista.map(c=>{
+    const base=c.grupos.base;
+    const max=Math.max(...ORDEM.filter(k=>c.grupos[k]).map(k=>c.grupos[k].mediana));
+    const linhas=ORDEM.filter(k=>c.grupos[k]).map(k=>{
+      const g=c.grupos[k];
+      const rel=g.por_hora&&base.por_hora?g.por_hora/base.por_hora:null;
+      const marca=(k==='base')?'':(rel&&rel>1.25?' <span class="alerta">hora vale mais</span>':'');
+      return `<div class="row ${k==='base'?'p':'c'}"><i>${esc(R[k]||k)}${marca}</i>`+
+        `<span class="track"><span class="tr" style="width:${100*g.mediana/max}%"></span></span>`+
+        `<b>${fmtBRL(g.mediana)}</b>`+
+        `<u>${g.horas?fmtN(g.horas)+'h · ':''}${g.por_hora?hora(g.por_hora)+'/h':''}</u></div>`;
+    }).join('');
+    return `<div class="cmp dec"><div class="nm">${esc(c.cargo)}<em>${fmtN(c.n_casado)} servidores</em></div>`+
+      `<div class="duo">${linhas}</div></div>`;
+  }).join('');
+  $('#decNote').innerHTML='<b>Trabalhar mais horas não é hora extra.</b> Quem "foi contratado para mais horas" tem '+
+    'uma jornada maior fixada em contrato e recebe por ela todo mês, com a hora valendo praticamente o mesmo: o médico '+
+    'de 160 horas ganha R$ 189/hora contra R$ 175/hora do de 120 horas. Hora extra é ocasional e paga com adicional — '+
+    'e a Prefeitura não publica quanto dela existe, então este painel não sabe dizer. Onde a <b>hora vale bem mais</b>, '+
+    'a diferença não é quantidade de trabalho: é adicional de turno, noturno, insalubridade ou hora extra, tudo junto '+
+    'num valor que o portal não separa — é aí que cabe perguntar. Fonte: Quadro de Pessoal de setembro de 2025 cruzado '+
+    'com a folha de dezembro de 2025 pela matrícula (99% dos servidores). "Horas" é a jornada mensal designada.';
 }
 function renderEvolucao(){
   const items=anos.map(a=>{const f=D.despesas[a].folha;const ap=(f.grupos.find(g=>g.nome==='Aposentadorias e pensões')||{valor:0}).valor;return {ano:a,ativos:f.ativos,apos:ap,total:f.total,gasto:D.despesas[a].totais.pago,rec:D.receitas[a]?D.receitas[a].total:null,pop:D.despesas[a].populacao};});
@@ -1717,7 +1946,7 @@ function renderEvolucao(){
     items.map((it,i)=>{const pv=items[i-1];return `<tr><td><b>${it.ano}</b></td><td class="num">${abrev(it.ativos)}<span class="d">${pv?dl(it.ativos,pv.ativos):'base'}${i>1?' · desde '+first.ano+' '+dl(it.ativos,first.ativos):''}</span></td><td class="num">${abrev(it.apos)}<span class="d">${pv?dl(it.apos,pv.apos):'base'}${i>1?' · desde '+first.ano+' '+dl(it.apos,first.apos):''}</span></td><td class="num">${abrev(it.total)}<span class="d">${pv?dl(it.total,pv.total):'base'}</span></td><td class="num">${fmtBRL(it.total/it.pop)}</td><td class="num">${pct(100*it.total/it.gasto)}</td><td class="num">${it.rec?pct(100*it.total/it.rec):'—'}</td></tr>`;}).join('')+`</tbody>`;
 }
 
-function renderAll(){ renderYears(); renderHero(); renderFuncoes(); renderNatureza(); renderFolha(); renderServidores(); renderComparativo(); renderTabela(); sPath=[]; sLimit=50; renderServExp(); renderEvolucao(); renderMensal(); renderReceitas(); renderBalanco(); renderFornecedores(); renderRodape(); expPath=[]; expLimit=50; renderExplorador(); ajustarLayout(); }
+function renderAll(){ renderYears(); renderHero(); renderFuncoes(); renderNatureza(); renderFolha(); renderServidores(); renderComparativo(); renderTabela(); renderDecomposicao(); sPath=[]; sLimit=50; renderServExp(); renderEvolucao(); renderMensal(); renderReceitas(); renderBalanco(); renderFornecedores(); renderRodape(); expPath=[]; expLimit=50; renderExplorador(); ajustarLayout(); }
 renderAll();
 mostrarTab(location.hash.slice(1)||'geral');
 })();

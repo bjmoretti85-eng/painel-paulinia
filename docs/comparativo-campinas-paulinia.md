@@ -1,7 +1,7 @@
 # Comparar salário por cargo: Paulínia × Campinas
 
 Este documento reúne o que já estava espalhado pelos scripts (`comparar_cargos.py`,
-`importar_servidores.py`) e pelo `CLAUDE.md`, para que a aba **Comparação** do painel possa ser
+`importar_servidores.py`) e pelo `CLAUDE.md`, para que a aba **Salários** do painel possa ser
 defendida número a número.
 
 > **Atenção:** os textos legais citados aqui (leis complementares, editais) **não estão no
@@ -64,8 +64,8 @@ altera, não no painel. Cada par declara a confiança:
 
 | Par | Paulínia | Campinas | Confiança | Ressalva |
 |---|---|---|---|---|
-| Professor dos anos iniciais e da educação infantil | PEB I (LC 65/2017) | PEB I + PEB II | media | os nomes significam coisas diferentes nas duas cidades — ver abaixo |
-| Professor de creche e pré-escola | Educadora Infantil (LC 66/2017) | PEB I | media | a Educadora Infantil faz regência em creche, mas está no quadro geral, não no magistério. **Não** comparar com o Agente de Educação Infantil de Campinas, que é cargo de apoio, de ensino médio |
+| Professor dos anos iniciais e da educação infantil | PEB I (LC 65/2017) **+ Educadora Infantil (LC 66/2017)** | PEB I + PEB II | media | os nomes significam coisas diferentes nas duas cidades — ver abaixo. Os dois cargos de Paulínia são somados por causa da reclassificação de ago/2025 |
+| Professor de creche e pré-escola | Educadora Infantil (LC 66/2017) | PEB I | media | **só de 2025 em diante** (campo `desde`): antes o cargo tinha ~50 pessoas, porque quem fazia creche estava no PEB I. **Não** comparar com o Agente de Educação Infantil de Campinas, que é cargo de apoio, de ensino médio |
 | Guarda municipal | Guarda Civil Municipal | todos os cargos "GM …" | media | Campinas divide por classe e até por sexo ("GM 1 Classe Masculino/Feminino"); somamos todos. Paulínia tem cargo único, o que mistura níveis de carreira dos dois lados |
 | Enfermeiro | LC 66/2017 | Enfermeiro | alta | em Campinas inclui a Rede Mário Gatti (hospital municipal) |
 | Técnico de enfermagem | LC 66/2017 | Técnico Enfermagem | alta | idem, inclui a Rede Mário Gatti |
@@ -81,6 +81,26 @@ altera, não no painel. Cada par declara a confiança:
 Por isso o par soma PEB I + PEB II de Campinas. Os professores temporários (CTD) de Paulínia
 ficam de fora. As duas carreiras da educação infantil estão em mudança por causa da Lei federal
 15.326/2026.
+
+### A reclassificação de agosto de 2025
+
+Entre julho e agosto de 2025, cerca de 350 servidores saíram do PEB I para Educadora Infantil —
+**ajuste de lei, as mesmas pessoas**. O efetivo do PEB I caiu de 845 para 496 e o da Educadora
+Infantil subiu de 43 para 390.
+
+Isso quebrou a comparação de 2025 enquanto o par usava só o PEB I: o lado de Paulínia ficou só com
+os anos iniciais (mais bem pagos) enquanto o lado de Campinas continuava incluindo a educação
+infantil. A diferença saía **+68%** quando o certo era **+54%**. Somando os dois cargos de Paulínia,
+a população fica estável nos três anos (883, 885, 864) e equivalente ao escopo de Campinas:
+
+| Ano | Paulínia (PEB I + Educadora) | Campinas (PEB I + PEB II) | Diferença |
+|---|---|---|---|
+| 2023 | R$ 13.167 (883) | R$ 8.010 | +64% |
+| 2024 | R$ 13.901 (885) | R$ 8.399 | +66% |
+| 2025 | R$ 14.003 (864) | R$ 9.103 | +54% |
+
+A queda de 2025 é real e do lado de Campinas: a mediana de lá subiu 14% em um ano (R$ 8.399 →
+R$ 9.103) enquanto a de Paulínia subiu 6%.
 
 ## 4. Hora-aula não é hora-relógio
 
@@ -105,7 +125,9 @@ verbas que cada carreira acumula por cima do vencimento.
 
 No lugar dessa tabela, a aba passou a trazer a seção **"De onde vem o salário"** — a comparação
 deixou de ser entre concursos e passou a ser entre a folha e a tabela de vencimentos da própria
-Paulínia.
+Paulínia. Depois dela vem **"Por que dois colegas ganham diferente"**, que separa cada cargo por
+jornada e função designada (`scripts/quadro_pessoal.py` → `data/decomposicao_folha.json`) e mostra
+o R$/hora de cada grupo — é o que impede ler jornada maior como hora extra.
 
 ## 5. De onde vem o salário: folha × tabela de vencimentos
 
@@ -148,8 +170,12 @@ de usar esse número numa discussão pública.
 - **Um mês só**: dezembro. Se uma das cidades pagar algo atípico em dezembro que não caia nas
   cinco parcelas descontadas, o número daquele ano fica torto — foi exatamente o que aconteceu
   com o "Eventual" de 2023.
-- **A aba mostra só 2025.** A série 2023–2025 existe no JSON e, depois da correção do "Eventual",
-  está coerente entre os anos; ligar o seletor de ano é decisão de revisão, não de código.
+- **A comparação segue o seletor de ano** (2023–2025). As seções "De onde vem o salário" e "Por que
+  dois colegas ganham diferente" não têm série: são de dezembro de 2025 e ficam ocultas nos outros
+  anos, para não misturar épocas.
+- **Dezembro é atípico na educação**: os professores temporários (CTD) somem da folha em alguns
+  dezembros (198 em nov/2024, 4 em dez/2024), quando encerra o ano letivo. Não entra na conta,
+  porque o CTD é excluído dos pares, mas explica saltos de efetivo.
 
 ## 7. Como refazer
 

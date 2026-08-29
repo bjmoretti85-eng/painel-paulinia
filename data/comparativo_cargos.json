@@ -214,6 +214,198 @@
    "topo_de_carreira": false
   }
  ],
+ "decomposicao": {
+  "quadro": "QUADRO DE PESSOAL REF. SETEMBRO 2025.pdf",
+  "cargos": [
+   {
+    "cargo": "Agente de Apoio Operacional",
+    "n_folha": 826,
+    "n_casado": 825,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "base": {
+      "n": 625,
+      "mediana": 9341.18,
+      "horas": 200,
+      "por_hora": 46.71
+     },
+     "funcao": {
+      "n": 75,
+      "mediana": 14163.78,
+      "horas": 200,
+      "por_hora": 71.69
+     },
+     "designada_menor": {
+      "n": 125,
+      "mediana": 14173.45,
+      "horas": 180,
+      "por_hora": 78.74
+     }
+    }
+   },
+   {
+    "cargo": "Medico Plantonista",
+    "n_folha": 287,
+    "n_casado": 281,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "base": {
+      "n": 70,
+      "mediana": 20990.54,
+      "horas": 120,
+      "por_hora": 174.92
+     },
+     "ampliada": {
+      "n": 206,
+      "mediana": 30273.97,
+      "horas": 160,
+      "por_hora": 189.21
+     }
+    }
+   },
+   {
+    "cargo": "Guarda Civil Municipal",
+    "n_folha": 208,
+    "n_casado": 207,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "designada_menor": {
+      "n": 150,
+      "mediana": 20764.6,
+      "horas": 180,
+      "por_hora": 115.36
+     },
+     "funcao": {
+      "n": 36,
+      "mediana": 21693.1,
+      "horas": 180,
+      "por_hora": 114.9
+     },
+     "base": {
+      "n": 21,
+      "mediana": 17865.58,
+      "horas": 200,
+      "por_hora": 89.33
+     }
+    }
+   },
+   {
+    "cargo": "Monitor",
+    "n_folha": 165,
+    "n_casado": 163,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "base": {
+      "n": 138,
+      "mediana": 9986.69,
+      "horas": 200,
+      "por_hora": 49.93
+     },
+     "funcao": {
+      "n": 23,
+      "mediana": 15146.55,
+      "horas": 200,
+      "por_hora": 75.73
+     }
+    }
+   },
+   {
+    "cargo": "Motorista",
+    "n_folha": 71,
+    "n_casado": 71,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "base": {
+      "n": 38,
+      "mediana": 11601.3,
+      "horas": 200,
+      "por_hora": 58.01
+     },
+     "designada_menor": {
+      "n": 31,
+      "mediana": 14904.2,
+      "horas": 180,
+      "por_hora": 82.8
+     }
+    }
+   },
+   {
+    "cargo": "Auxiliar de Apoio Administrativo",
+    "n_folha": 66,
+    "n_casado": 66,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "base": {
+      "n": 38,
+      "mediana": 11892.92,
+      "horas": 200,
+      "por_hora": 59.46
+     },
+     "funcao": {
+      "n": 25,
+      "mediana": 18059.6,
+      "horas": 200,
+      "por_hora": 90.3
+     }
+    }
+   },
+   {
+    "cargo": "Farmaceutico",
+    "n_folha": 40,
+    "n_casado": 40,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "base": {
+      "n": 22,
+      "mediana": 14869.58,
+      "horas": 200,
+      "por_hora": 74.35
+     },
+     "designada_menor": {
+      "n": 13,
+      "mediana": 13608.25,
+      "horas": 180,
+      "por_hora": 75.6
+     }
+    }
+   }
+  ]
+ },
  "pares": [
   {
    "nome": "Professor dos anos iniciais e da educação infantil",
@@ -225,7 +417,8 @@
    },
    "cargos": {
     "paulinia": [
-     "PROFESSOR DE EDUCACAO BASICA I - PEBI - LC 65/2017"
+     "PROFESSOR DE EDUCACAO BASICA I - PEBI - LC 65/2017",
+     "EDUCADORA INFANTIL - LC 66/2017"
     ],
     "campinas": [
      "PROFESSOR PEB I",
@@ -235,11 +428,11 @@
    "dados": {
     "2023": {
      "paulinia": {
-      "n": 829,
-      "mediana": 13579.93,
-      "media": 13753.89,
-      "p25": 11687.72,
-      "p75": 15735.21
+      "n": 883,
+      "mediana": 13166.6,
+      "media": 13504.28,
+      "p25": 11440.83,
+      "p75": 15710.25
      },
      "campinas": {
       "n": 1461,
@@ -248,15 +441,15 @@
       "p25": 6918.26,
       "p75": 9683.14
      },
-     "dif_pct": 69.5
+     "dif_pct": 64.4
     },
     "2024": {
      "paulinia": {
-      "n": 834,
-      "mediana": 14098.59,
-      "media": 14368.9,
-      "p25": 12267.53,
-      "p75": 16351.14
+      "n": 885,
+      "mediana": 13901.31,
+      "media": 14173.27,
+      "p25": 11979.85,
+      "p75": 16178.85
      },
      "campinas": {
       "n": 1500,
@@ -265,15 +458,15 @@
       "p25": 7230.82,
       "p75": 10040.43
      },
-     "dif_pct": 67.9
+     "dif_pct": 65.5
     },
     "2025": {
      "paulinia": {
-      "n": 492,
-      "mediana": 15257.61,
-      "media": 15547.47,
-      "p25": 12855.22,
-      "p75": 17834.08
+      "n": 864,
+      "mediana": 14002.9,
+      "media": 14765.51,
+      "p25": 12710.3,
+      "p75": 16571.21
      },
      "campinas": {
       "n": 1453,
@@ -282,7 +475,7 @@
       "p25": 7792.84,
       "p75": 10865.19
      },
-     "dif_pct": 67.6
+     "dif_pct": 53.8
     }
    }
   },
@@ -294,6 +487,7 @@
     "paulinia": "36h (30h com alunos + 6h de preparação)",
     "campinas": "32h ou 40h"
    },
+   "desde": 2025,
    "cargos": {
     "paulinia": [
      "EDUCADORA INFANTIL - LC 66/2017"
@@ -303,40 +497,6 @@
     ]
    },
    "dados": {
-    "2023": {
-     "paulinia": {
-      "n": 54,
-      "mediana": 9508.82,
-      "media": 9672.23,
-      "p25": 8996.38,
-      "p75": 10816.45
-     },
-     "campinas": {
-      "n": 1027,
-      "mediana": 7986.01,
-      "media": 8458.73,
-      "p25": 6897.3,
-      "p75": 9626.04
-     },
-     "dif_pct": 19.1
-    },
-    "2024": {
-     "paulinia": {
-      "n": 51,
-      "mediana": 10780.56,
-      "media": 10974.05,
-      "p25": 9662.54,
-      "p75": 12610.34
-     },
-     "campinas": {
-      "n": 1069,
-      "mediana": 8265.39,
-      "media": 8783.33,
-      "p25": 7130.79,
-      "p75": 9970.59
-     },
-     "dif_pct": 30.4
-    },
     "2025": {
      "paulinia": {
       "n": 372,

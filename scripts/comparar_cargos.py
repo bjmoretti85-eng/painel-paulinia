@@ -38,7 +38,12 @@ ANOS = [2023, 2024, 2025]
 PARES = [
     {
         "nome": "Professor dos anos iniciais e da educação infantil",
-        "paulinia": ["PROFESSOR DE EDUCACAO BASICA I - PEBI - LC 65/2017"],
+        # Entre julho e agosto de 2025 cerca de 350 servidores saíram do PEB I para Educadora
+        # Infantil: ajuste de lei, as mesmas pessoas. Somar os dois mantém a população igual nos
+        # três anos (883, 885, 864) e igual ao escopo do lado de Campinas (PEB I + PEB II, que
+        # também cobre creche e anos iniciais). Só o PEB I de 2025 inflaria a diferença em 14 pontos.
+        "paulinia": ["PROFESSOR DE EDUCACAO BASICA I - PEBI - LC 65/2017",
+                     "EDUCADORA INFANTIL - LC 66/2017"],
         "campinas": ["PROFESSOR PEB I", "PROFESSOR PEB II"],
         "confianca": "media",
         "jornada": {"paulinia": "30, 38 ou 45 horas-aula de 50 min (≈25h, 31,7h ou 37,5h)",
@@ -53,6 +58,9 @@ PARES = [
         "paulinia": ["EDUCADORA INFANTIL - LC 66/2017"],
         "campinas": ["PROFESSOR PEB I"],
         "confianca": "media",
+        # Antes de agosto/2025 este cargo tinha só ~50 pessoas: quem fazia creche e pré-escola
+        # estava no PEB I. Comparar 2023/2024 aqui seria descrever outro grupo.
+        "desde": 2025,
         "jornada": {"paulinia": "36h (30h com alunos + 6h de preparação)",
                     "campinas": "32h ou 40h"},
         "obs": ("A Educadora Infantil de Paulínia exerce regência em creche, mas está no quadro "
@@ -202,6 +210,15 @@ def tabela_vs_folha(minimo=25):
     return linhas
 
 
+def decomposicao():
+    """Vem de scripts/quadro_pessoal.py: mediana por grupo (jornada padrão, ampliada,
+    em escala, com função de chefia) dentro de cada cargo."""
+    arq = RAIZ / "data/decomposicao_folha.json"
+    if not arq.exists():
+        return {}
+    return json.loads(arq.read_text(encoding="utf-8"))
+
+
 def brl(v):
     return ("R$ " + f"{v:,.0f}").replace(",", ".")
 
@@ -248,7 +265,8 @@ def main():
         return
 
     saida = {"gerado_em": date.today().isoformat(), "anos": ANOS,
-             "tabela_vs_folha": tabela_vs_folha(), "pares": []}
+             "tabela_vs_folha": tabela_vs_folha(),
+             "decomposicao": decomposicao(), "pares": []}
 
     print(f"Paulínia × Campinas — dezembro/{args.ano}, mediana do bruto mensal")
     print("(Paulínia: folha mensal, ativos. Campinas: bruto sem verbas de uma vez só.)\n")
@@ -257,9 +275,13 @@ def main():
 
     for par in PARES:
         item = {k: par[k] for k in ("nome", "confianca", "obs", "jornada")}
+        if par.get("desde"):
+            item["desde"] = par["desde"]
         item["cargos"] = {"paulinia": par["paulinia"], "campinas": par["campinas"]}
         item["dados"] = {}
         for ano in ANOS:
+            if ano < par.get("desde", 0):
+                continue
             dp, dc = dados["paulinia"].get(ano), dados["campinas"].get(ano)
             if not dp or not dc:
                 continue

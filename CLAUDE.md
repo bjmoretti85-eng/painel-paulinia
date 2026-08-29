@@ -22,6 +22,13 @@ scripts/tabelas_salariais.py  lê as tabelas de vencimento oficiais (PDFs do mó
                           ATENÇÃO: LC 66/2017 e LC 133/2025 coexistem com valores diferentes para o mesmo
                           cargo; o casamento respeita a lei que aparece no nome do cargo na folha.
                           -> data/tabelas_salariais.json
+scripts/quadro_pessoal.py  lê o Quadro de Pessoal (PDF do mesmo módulo) e separa os servidores por
+                          jornada e função designada, para explicar o que puxa o salário acima da tabela.
+                          Casa com a folha pela MATRÍCULA (99%). Use o Quadro de SETEMBRO/2025: o de
+                          abril/2026 não tem matrícula e traz a admissão como número de série.
+                          CUIDADO: jornada designada MENOR que a do cargo (200->180) NÃO significa ganhar
+                          menos - esse grupo ganha mais (escala de turno com adicionais).
+                          -> data/decomposicao_folha.json
 scripts/comparar_cargos.py  compara salário por cargo entre Paulínia e as cidades importadas.
                           A tabela PARES no topo do arquivo é o julgamento (quais cargos equivalem a quais,
                           com nível de confiança e ressalva); pares de confiança 'baixa' ficam FORA do JSON
@@ -92,14 +99,24 @@ dist/                     o que vai para o ar (gerado por publicar.py, versionad
 
 ## Estrutura do painel (abas)
 
-O painel tem 5 abas (navegação por hash: #geral, #pessoal, #comparar, #detalhe, #entenda), cada uma é um `<div class="tab" data-tab="...">`:
+O painel tem 5 abas (navegação por hash: #geral, #pessoal, #salarios, #detalhe, #entenda), cada uma é um `<div class="tab" data-tab="...">`.
+O hash antigo #comparar continua funcionando: mostrarTab() redireciona para #salarios.
 - geral: números-chave, por área, natureza/órgãos, mês a mês, receitas, receitas x despesas
 - pessoal: folha (composição, por área, mês a mês) · quem são os servidores (agregados) · servidor a servidor (funil
-  secretaria › vínculo › cargo › indivíduos anônimos, carregado de data/servidores_{ano}.js) · evolução ativos x aposentados
-- comparar: Paulínia x outras cidades. Hoje: salário mediano por cargo contra Campinas (dez/2025) +
-  "De onde vem o salário" (quanto cada cargo recebe acima da tabela de vencimentos de Paulínia).
-  A tabela de vencimento-base dos concursos foi removida do painel a pedido do Bruno. Dados de data/comparativo_cargos.json, embutido pelo montar_painel.py
-  (opcional: sem o arquivo a aba fica vazia e nada quebra). A aba pessoal tem um botão-ponte (#irComparar).
+  secretaria › vínculo › cargo › indivíduos anônimos, carregado de data/servidores_{ano}.js) · evolução ativos x aposentados.
+  Termina com a ponte "E quanto cada um ganha?" (#irComparar) para a aba salarios.
+- salarios: tudo sobre quanto se ganha. "Quanto ganha cada cargo" (tabela por cargo, veio da aba pessoal) +
+  salário mediano por cargo contra Campinas (segue o seletor de ano; dezembro de cada ano) +
+  "De onde vem o salário" (quanto cada cargo recebe acima da tabela de vencimentos de Paulínia)
+  e "Por que dois colegas ganham diferente" (mediana e R$/hora por grupo: horas normais,
+  contratado para mais horas, turno/escala, chefia). O R$/hora é o que impede a leitura errada:
+  jornada maior NÃO é hora extra (a hora vale quase o mesmo); hora valendo muito mais = adicionais.
+  A tabela de vencimento-base dos concursos foi removida do painel a pedido do Bruno. Dados de
+  data/comparativo_cargos.json, embutido pelo montar_painel.py (opcional: sem o arquivo as seções somem
+  e nada quebra). As duas últimas seções são de dez/2025 e se escondem quando outro ano é escolhido.
+  ATENÇÃO ao par de professores: a reclassificação de ago/2025 (PEB I -> Educadora Infantil, mesma
+  gente) obriga a somar os dois cargos de Paulínia, senão 2025 sai com +68% em vez de +54%. O campo
+  'desde' em PARES limita um par aos anos em que ele faz sentido.
 - detalhe: explorador em funil + ranking/busca de fornecedores
 - entenda: glossário
 `mostrarTab(nome)` troca de aba; `irPara(caminho)` abre o explorador na aba detalhe.
