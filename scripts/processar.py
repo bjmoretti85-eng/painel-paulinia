@@ -658,9 +658,6 @@ def processar_servidores(ano):
     }
 
 
-TOP20 = {}
-
-
 def gerar_servidores_detalhe(ano):
     """data/servidores_{ano}.js: secretaria -> vínculo -> cargo -> lista de servidores SEM nome
     nem matrícula: [ano de admissão, bruto do mês de referência, total no ano (sem adiantamento),
@@ -721,20 +718,6 @@ def gerar_servidores_detalhe(ano):
         todos = [x for c in vincs.values() for l in c.values() for x in l]
         saida[sec] = {**no(todos), "v": dict(sorted(vs.items(), key=lambda kv: -kv[1]["n"]))}
     saida = dict(sorted(saida.items(), key=lambda kv: -kv[1]["n"]))
-    # 20 maiores remunerações médias mensais (só quem teve folha mensal em pelo menos 3 meses)
-    todos = []
-    for sec, vincs in arvore.items():
-        for vinc, cargos in vincs.items():
-            for cargo, lst in cargos.items():
-                if vinc == "Aposentados e pensionistas":
-                    continue
-                for x in lst:
-                    if x[5] >= 3 and x[7] > 0:
-                        todos.append({"cargo": cargo, "secretaria": sec, "vinculo": vinc, "admissao": x[0],
-                                      "media_mensal": x[7], "media_liquida": x[8], "mes_ref": x[1], "total_ano": x[2], "meses": x[5]})
-    todos.sort(key=lambda x: -x["media_mensal"])
-    global TOP20
-    TOP20[ano] = todos[:20]
     destino = BASE / "data" / f"servidores_{ano}.js"
     js = json.dumps({"mes_ref": mes_ref, "sec": saida}, ensure_ascii=False, separators=(",", ":")).replace("</script", "<\\/script")
     destino.write_text(f"window.SERVIDORES=window.SERVIDORES||{{}};window.SERVIDORES[{ano}]={js};", encoding="utf-8")
@@ -775,8 +758,6 @@ def main():
                   f"média mensal R$ {sv['media_mensal']:,.0f}, custo médio R$ {sv['custo_medio_mensal']:,.0f}")
         sd = gerar_servidores_detalhe(ano)
         if sd:
-            if d and d.get("servidores"):
-                d["servidores"]["top20"] = TOP20.get(ano, [])
             print(f"      servidores detalhe -> {sd.name} ({sd.stat().st_size/1024:.0f} KB)")
         det = gerar_detalhe(ano)
         if det:
