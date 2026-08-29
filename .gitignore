@@ -8,3 +8,7 @@ data/raw/servidores_*/
 # CSV bruto da folha: tem nome, matrícula e salário individual.
 # O painel publica só agregados anônimos; refaça com scripts/baixar_servidores.py.
 data/raw/servidores_*.csv.gz
+
+# Entrada bruta de outras cidades (tem nome e salário individual)
+data/raw/entrada/
+data/raw/*.csv

@@ -16,5 +16,14 @@ SAIDA = BASE / "painel" / "index.html"
 html = TEMPLATE.read_text(encoding="utf-8")
 dados = DADOS.read_text(encoding="utf-8").replace("</script", "<\\/script")
 assert "/*__DADOS__*/null" in html, "placeholder não encontrado no template"
-SAIDA.write_text(html.replace("/*__DADOS__*/null", dados), encoding="utf-8")
+html = html.replace("/*__DADOS__*/null", dados)
+
+# comparativo com outras cidades (opcional: se o arquivo não existir, a seção some)
+COMP = BASE / "data" / "comparativo_cargos.json"
+comp = COMP.read_text(encoding="utf-8").replace("</script", "<\\/script") if COMP.exists() else "null"
+assert "/*__COMPARATIVO__*/null" in html, "placeholder do comparativo não encontrado"
+html = html.replace("/*__COMPARATIVO__*/null", comp)
+print("comparativo:", "embutido" if COMP.exists() else "ausente (seção oculta)")
+
+SAIDA.write_text(html, encoding="utf-8")
 print(f"-> {SAIDA} ({SAIDA.stat().st_size/1024:.0f} KB)")

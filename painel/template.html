@@ -174,6 +174,29 @@ thead th{position:sticky;top:0;z-index:2;background:var(--surface);box-shadow:in
 details.notas{border-top:0;padding:0;margin:12px 0 0}
 details.notas summary{font-size:13px;font-weight:600;color:var(--text-2);padding:4px 0}
 details.notas .note{margin-top:2px}
+/* comparativo com outra cidade */
+.cmp{display:grid;grid-template-columns:minmax(190px,1.3fr) 3fr 76px;align-items:center;gap:6px 14px;padding:10px 8px;border-radius:8px}
+.cmp:hover{background:var(--surface-2)}
+.cmp .nm{font-weight:600;font-size:15px;line-height:1.25}
+.cmp .nm em{display:block;font-style:normal;color:var(--text-3);font-weight:400;font-size:12px;margin-top:3px;line-height:1.35}
+.cmp .duo{display:flex;flex-direction:column;gap:5px}
+.cmp .row{display:flex;align-items:center;gap:9px}
+.cmp .row i{font-style:normal;color:var(--text-3);font-size:11px;width:62px;flex:none;letter-spacing:.02em;text-transform:uppercase}
+.cmp .track{flex:1;display:block}
+.cmp .tr{display:block;height:13px;border-radius:0 4px 4px 0;min-width:2px;background:var(--s1)}
+.cmp .row.c .tr{background:var(--s2)}
+.cmp .row b{font-variant-numeric:tabular-nums;font-size:13px;width:82px;text-align:right;flex:none}
+.cmp .row.c b{color:var(--text-2)}
+.cmp .dif{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;font-size:15px}
+.cmpleg{display:flex;gap:18px;margin:0 8px 10px;font-size:13px;color:var(--text-2)}
+.cmpleg span{display:inline-flex;align-items:center}
+.cmpleg span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px;background:var(--s1)}
+.cmpleg .c::before{background:var(--s2)}
+.cmpbase{display:flex;flex-direction:column;gap:2px}
+.cmpbase .lin{display:grid;grid-template-columns:1fr auto 1fr auto;gap:8px 14px;align-items:baseline;padding:8px;border-radius:8px;font-size:14px}
+.cmpbase .lin:nth-child(odd){background:var(--surface-2)}
+.cmpbase .lin b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.cmpbase .lin span{color:var(--text-2)}
 /* celular: o painel é pensado para 1080px; aqui tudo encolhe e as barras passam a ocupar a linha inteira */
 @media (max-width:560px){
   .wrap{padding:16px 12px 56px}
@@ -192,6 +215,13 @@ details.notas .note{margin-top:2px}
   .mini{grid-template-columns:1fr 1fr;gap:10px}
   .mini .tile{padding:11px 12px}.mini .tile .val{font-size:19px}
   .vinc{grid-template-columns:1fr;gap:8px}.vinc .card b{font-size:19px}
+  .cmp{grid-template-columns:1fr auto;gap:6px 10px;padding:12px 4px}
+  .cmp .nm{grid-column:1;grid-row:1}
+  .cmp .dif{grid-column:2;grid-row:1;align-self:start}
+  .cmp .duo{grid-column:1/-1;grid-row:2}
+  .cmp .row i{width:54px;font-size:10.5px}
+  .cmp .row b{width:74px;font-size:12.5px}
+  .cmpbase .lin{grid-template-columns:1fr auto;font-size:13px}
   /* barra: nome e valor na 1ª linha, a barra inteira na 2ª (antes sobravam 2px para a barra) */
   .bar,.bar.wide,.hbar{grid-template-columns:1fr auto;gap:4px 10px;padding:9px 4px;min-height:0}
   .bar .nm,.bar.wide .nm,.hbar .nm{grid-column:1;grid-row:1;white-space:normal;font-size:14px;line-height:1.3}
@@ -234,6 +264,7 @@ details.notas .note{margin-top:2px}
 <nav class="topnav" id="topnav" aria-label="Seções do painel">
   <button data-tab="geral">Visão geral</button>
   <button data-tab="pessoal">Pessoal</button>
+  <button data-tab="comparar">Comparação</button>
   <button data-tab="detalhe">Gasto a gasto</button>
   <button data-tab="entenda">Entenda</button>
 </nav>
@@ -325,12 +356,31 @@ details.notas .note{margin-top:2px}
   <p class="note">Inclui todos que receberam algum pagamento no ano (quem entrou ou saiu no meio do ano aparece com menos meses); cada pessoa fica na última secretaria em que constou. Em março de 2025 a Secretaria de Esportes, Cultura, Turismo e Eventos foi dividida em duas e a de Governo mudou de nome; quem saiu antes disso aparece na secretaria "extinta". Total no ano = folhas mensais + 13º + férias + folhas complementares (retroativos, acertos) + verbas de rescisão, sem os adiantamentos (salarial e do 13º, que já estão dentro da mensal e do 13º); por isso pode ser maior que média mensal × meses + 13º + férias. "Férias" é a folha de férias (para professores, concentrada em janeiro, por isso a folha mensal de janeiro é menor). O 13º bruto é o valor integral lançado em dezembro; o líquido soma a 1ª parcela, adiantada sem descontos em junho (em 2023, em setembro), com o acerto de dezembro, que desconta essa parcela, previdência e IR. O "líquido no ano" é a soma de tudo o que foi efetivamente depositado, incluindo adiantamentos, e é o número mais fiel ao que a pessoa recebeu. Média bruta e líquida = médias das folhas mensais nos meses em que a pessoa recebeu (sem 13º e férias); o líquido é o que entrou na conta no mês (adiantamento + folha final), já descontados previdência, IR, consignados e o corte do teto. O portal não carregou a folha mensal de novembro, por isso o máximo é 11 meses. Não inclui vale-alimentação e outros benefícios pagos fora da folha.</p>
 </section>
 
+<section id="pontecomp">
+  <h2>E como isso se compara?</h2>
+  <p class="sub">Um salário só faz sentido ao lado de outro. Na aba <b>Comparação</b>, os mesmos cargos aparecem lado a lado com os de Campinas.</p>
+  <button class="moreBtn" id="irComparar">Ver a comparação com Campinas</button>
+</section>
+
 <section id="evolucao">
   <h2>Ativos e aposentados, ano a ano</h2>
   <p class="sub">Quanto cresceu o gasto com servidores na ativa e com aposentadorias e pensões</p>
   <div class="chart-wrap" id="evolChart"></div>
   <div class="tw"><table id="evolTab"></table></div>
   <p class="note">Valores nominais (sem descontar a inflação). Aposentadorias incluem pensões e o 13º dos inativos, pagos pela Paulínia Previ. "% das receitas" compara a folha com tudo o que a cidade arrecadou no ano.</p>
+</section>
+</div>
+
+<div class="tab" data-tab="comparar">
+<section id="comparativo">
+  <h2>Paulínia paga mais que Campinas?</h2>
+  <p class="sub" id="compSub"></p>
+  <div class="cmpleg"><span class="p">Paulínia</span><span class="c">Campinas</span></div>
+  <div id="compBars"></div>
+  <h3>E por hora de trabalho?<small id="compBaseSub"></small></h3>
+  <div class="cmpbase" id="compBase"></div>
+  <p class="sub" id="compBaseNote" style="margin-top:12px"></p>
+  <p class="note" id="compNote"></p>
 </section>
 </div>
 
@@ -375,6 +425,7 @@ details.notas .note{margin-top:2px}
 
 <script>
 const DADOS = /*__DADOS__*/null;
+const COMPARATIVO = /*__COMPARATIVO__*/null;
 </script>
 <script>
 (function(){
@@ -777,6 +828,7 @@ function mostrarTab(t,scroll){
   ajustarLayout();  // só dá para medir a rolagem das tabelas da aba visível
 }
 document.querySelectorAll('#topnav button').forEach(b=>b.onclick=()=>mostrarTab(b.dataset.tab,true));
+const btnCmp=$('#irComparar'); if(btnCmp) btnCmp.onclick=()=>mostrarTab('comparar',true);
 window.addEventListener('hashchange',()=>mostrarTab(location.hash.slice(1)||'geral'));
 
 let servMode='n';
@@ -876,6 +928,36 @@ function renderServExp(){
   });
 }
 
+function renderComparativo(){
+  const sec=$('#comparativo');
+  const C=(typeof COMPARATIVO!=='undefined')&&COMPARATIVO;
+  const A='2025';   // só 2025 por enquanto: a série de anos anteriores ainda está sendo conferida
+  const pares=(C&&C.pares||[]).filter(p=>p.dados&&p.dados[A]);
+  if(!pares.length){ if(sec) sec.style.display='none'; return; }
+  sec.style.display='';
+  $('#compSub').innerHTML='Salário bruto <b>mediano</b> de dezembro de 2025, cargo a cargo. Campinas tem dez vezes mais gente que Paulínia, mas contrata as mesmas profissões — e é com ela que Paulínia disputa professor, enfermeiro e guarda.';
+  pares.sort((a,b)=>b.dados[A].dif_pct-a.dados[A].dif_pct);
+  const max=Math.max(...pares.map(p=>Math.max(p.dados[A].paulinia.mediana,p.dados[A].campinas.mediana)));
+  $('#compBars').innerHTML=pares.map(p=>{
+    const d=p.dados[A], jp=p.jornada&&p.jornada.paulinia, jc=p.jornada&&p.jornada.campinas;
+    const jor=(jp&&jc&&jp.indexOf('não informada')<0)?`Jornada: Paulínia ${esc(jp)} · Campinas ${esc(jc)}`:'';
+    const linha=(cls,rot,r)=>`<div class="row ${cls}"><i>${rot}</i><span class="track"><span class="tr" style="width:${100*r.mediana/max}%"></span></span><b>${fmtBRL(r.mediana)}</b></div>`;
+    return `<div class="cmp" title="${esc(p.obs||'')}">`+
+      `<div class="nm">${esc(p.nome)}<em>${fmtN(d.paulinia.n)} em Paulínia · ${fmtN(d.campinas.n)} em Campinas${jor?'<br>'+jor:''}</em></div>`+
+      `<div class="duo">${linha('p','Paulínia',d.paulinia)}${linha('c','Campinas',d.campinas)}</div>`+
+      `<div class="dif" style="color:${d.dif_pct>=0?'var(--s1)':'var(--s2)'}">${d.dif_pct>=0?'+':''}${Math.round(d.dif_pct)}%</div>`+
+    `</div>`;
+  }).join('');
+  const R=C.referencia_vencimento_base;
+  if(R){
+    $('#compBaseSub').textContent='salário inicial de professor nos concursos, em jornadas equivalentes';
+    $('#compBase').innerHTML=R.linhas.map(l=>
+      `<div class="lin"><span>Paulínia · ${esc(l.paulinia)}</span><b>${fmtBRL(l.valor_paulinia)}</b>`+
+      `<span>Campinas · ${esc(l.campinas)}</span><b>${fmtBRL(l.valor_campinas)}</b></div>`).join('');
+    $('#compBaseNote').innerHTML='Paulínia paga por <b>hora-aula de 50 minutos</b>; Campinas, por hora de relógio — por isso 45 horas-aula equivalem a cerca de 37,5 horas. Lado a lado, o salário inicial das duas cidades é praticamente o mesmo: a diferença que aparece acima vem sobretudo da <b>jornada contratada</b> e das verbas de cada carreira, não do preço da hora. Fontes: '+esc(R.fonte.paulinia)+' e '+esc(R.fonte.campinas)+'.';
+  }
+  $('#compNote').innerHTML='Usamos a mediana (o servidor do meio), e não a média, para que poucos salários muito altos não distorçam. Os valores não incluem 13º, férias nem outras verbas que não se repetem todo mês. Cargos com o mesmo nome nem sempre são a mesma coisa nas duas cidades: em Paulínia o "PEB I" cobre da creche ao 5º ano, em Campinas só a educação infantil — por isso somamos PEB I e PEB II de Campinas. As educadoras infantis de Paulínia foram comparadas com os professores de educação infantil de Campinas, e não com os agentes, que são cargo de apoio. As carreiras da educação infantil estão mudando nos dois municípios por causa da Lei federal 15.326/2026. Fonte: folha de dezembro de 2025 publicada por cada prefeitura.';
+}
 function renderEvolucao(){
   const items=anos.map(a=>{const f=D.despesas[a].folha;const ap=(f.grupos.find(g=>g.nome==='Aposentadorias e pensões')||{valor:0}).valor;return {ano:a,ativos:f.ativos,apos:ap,total:f.total,gasto:D.despesas[a].totais.pago,rec:D.receitas[a]?D.receitas[a].total:null,pop:D.despesas[a].populacao};});
   const {W,H,L,R,T,B}=geo({W:900,H:260,L:64,R:20,T:28,B:36},{W:360,H:230,L:48,R:8,B:32});
@@ -902,7 +984,7 @@ function renderEvolucao(){
     items.map((it,i)=>{const pv=items[i-1];return `<tr><td><b>${it.ano}</b></td><td class="num">${abrev(it.ativos)}<span class="d">${pv?dl(it.ativos,pv.ativos):'base'}${i>1?' · desde '+first.ano+' '+dl(it.ativos,first.ativos):''}</span></td><td class="num">${abrev(it.apos)}<span class="d">${pv?dl(it.apos,pv.apos):'base'}${i>1?' · desde '+first.ano+' '+dl(it.apos,first.apos):''}</span></td><td class="num">${abrev(it.total)}<span class="d">${pv?dl(it.total,pv.total):'base'}</span></td><td class="num">${fmtBRL(it.total/it.pop)}</td><td class="num">${pct(100*it.total/it.gasto)}</td><td class="num">${it.rec?pct(100*it.total/it.rec):'—'}</td></tr>`;}).join('')+`</tbody>`;
 }
 
-function renderAll(){ renderYears(); renderHero(); renderFuncoes(); renderNatureza(); renderFolha(); renderServidores(); sPath=[]; sLimit=50; renderServExp(); renderEvolucao(); renderMensal(); renderReceitas(); renderBalanco(); renderFornecedores(); renderRodape(); expPath=[]; expLimit=50; renderExplorador(); ajustarLayout(); }
+function renderAll(){ renderYears(); renderHero(); renderFuncoes(); renderNatureza(); renderFolha(); renderServidores(); renderComparativo(); sPath=[]; sLimit=50; renderServExp(); renderEvolucao(); renderMensal(); renderReceitas(); renderBalanco(); renderFornecedores(); renderRodape(); expPath=[]; expLimit=50; renderExplorador(); ajustarLayout(); }
 renderAll();
 mostrarTab(location.hash.slice(1)||'geral');
 })();

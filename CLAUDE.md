@@ -13,6 +13,14 @@ docs/como-obter-lista-de-servidores.md  passo a passo para exportar a lista de s
 scripts/baixar_dados.py   baixa dados do TCE-SP e filtra Paulínia -> data/raw/
 scripts/baixar_servidores.py  baixa a folha por servidor do portal SMARAPD (POST paiportalserver/modulovisao/filter,
                           visão servidor/pagamentoaservidores, 5000 registros/página, retomável) -> data/raw/servidores_{ano}.csv.gz
+scripts/comparar_cargos.py  compara salário por cargo entre Paulínia e as cidades importadas.
+                          A tabela PARES no topo do arquivo é o julgamento (quais cargos equivalem a quais,
+                          com nível de confiança e ressalva); pares de confiança 'baixa' ficam FORA do JSON
+                          por padrão. --listar mostra cargos grandes ainda sem par -> data/comparativo_cargos.json
+scripts/importar_servidores.py  importa a folha de OUTRAS cidades a partir do CSV que a prefeitura
+                          fornece (download manual: Campinas exige captcha). Mapeia as colunas do portal
+                          para o formato de Paulínia -> data/raw/servidores_{cidade}_{ano}_{mes}.csv.gz
+                          Use --inspecionar antes, para ver as colunas do arquivo novo.
 scripts/processar.py      agrega e gera data/painel.json e data/detalhe_{ano}.js (funil até o empenho)
 scripts/montar_painel.py  embute painel.json no template -> painel/index.html
 scripts/publicar.py       monta dist/ para o Cloudflare ('../data/' -> 'data/', index na raiz)
@@ -75,13 +83,29 @@ dist/                     o que vai para o ar (gerado por publicar.py, versionad
 
 ## Estrutura do painel (abas)
 
-O painel tem 4 abas (navegação por hash: #geral, #pessoal, #detalhe, #entenda), cada uma é um `<div class="tab" data-tab="...">`:
+O painel tem 5 abas (navegação por hash: #geral, #pessoal, #comparar, #detalhe, #entenda), cada uma é um `<div class="tab" data-tab="...">`:
 - geral: números-chave, por área, natureza/órgãos, mês a mês, receitas, receitas x despesas
 - pessoal: folha (composição, por área, mês a mês) · quem são os servidores (agregados) · servidor a servidor (funil
   secretaria › vínculo › cargo › indivíduos anônimos, carregado de data/servidores_{ano}.js) · evolução ativos x aposentados
+- comparar: Paulínia x outras cidades. Hoje: salário mediano por cargo contra Campinas (dez/2025) +
+  vencimento-base por jornada equivalente. Dados de data/comparativo_cargos.json, embutido pelo montar_painel.py
+  (opcional: sem o arquivo a aba fica vazia e nada quebra). A aba pessoal tem um botão-ponte (#irComparar).
 - detalhe: explorador em funil + ranking/busca de fornecedores
 - entenda: glossário
 `mostrarTab(nome)` troca de aba; `irPara(caminho)` abre o explorador na aba detalhe.
+
+## Comparação com outras cidades
+
+- O TCE **não** publica dados de pessoal (conferido: os 10 conjuntos são despesas, receitas, RCL, dívida ativa,
+  licitações, pareceres, planejamento e afins). Folha por servidor só vem do portal de cada prefeitura.
+- **Campinas**: exportação CSV em remuneracoes.campinas.sp.gov.br, com **reCAPTCHA** — download manual, o Bruno
+  faz. Filtros: Secretarias/Lotações/Cargos em "Todos", Ano, Mês (usar **dezembro**, igual a Paulínia).
+  Com tudo marcado o servidor às vezes devolve 503; nesse caso exportar por secretaria. O captcha é de uso único.
+  O arquivo não traz nome, admissão nem jornada; traz o bruto quebrado em 11 parcelas.
+- Ao comparar, cuidado: **PEB I e PEB II significam coisas diferentes nas duas cidades** (em Paulínia PEB I vai da
+  creche ao 5º ano; em Campinas PEB I é só educação infantil e PEB II são os anos iniciais). E **Paulínia paga por
+  hora-aula de 50 minutos**, Campinas por hora-relógio. Detalhes e fontes legais no doc do projeto
+  `claude/comparativo-campinas-paulinia.md`.
 
 ## Convenções
 

@@ -1,0 +1,528 @@
+{
+ "gerado_em": "2026-08-29",
+ "anos": [
+  2023,
+  2024,
+  2025
+ ],
+ "referencia_vencimento_base": {
+  "fonte": {
+   "paulinia": "Processo Seletivo 001/2026 da Prefeitura de Paulínia",
+   "campinas": "Edital 01/2025 da Prefeitura de Campinas (PEB II)"
+  },
+  "aviso": "Paulínia paga por hora-aula de 50 minutos (LC 65/2017, art. 16); Campinas usa hora-relógio. As linhas abaixo já estão em jornadas equivalentes.",
+  "linhas": [
+   {
+    "paulinia": "45 horas-aula (≈37,5h)",
+    "valor_paulinia": 7350.75,
+    "campinas": "40 horas",
+    "valor_campinas": 7397.41
+   },
+   {
+    "paulinia": "38 horas-aula (≈31,7h)",
+    "valor_paulinia": 6207.3,
+    "campinas": "32 horas",
+    "valor_campinas": 5917.92
+   },
+   {
+    "paulinia": "30 horas-aula (≈25h)",
+    "valor_paulinia": 4900.5,
+    "campinas": "27 horas",
+    "valor_campinas": 4993.26
+   }
+  ]
+ },
+ "pares": [
+  {
+   "nome": "Professor dos anos iniciais e da educação infantil",
+   "confianca": "media",
+   "obs": "PEB I e PEB II querem dizer coisas diferentes nas duas cidades: em Paulínia o PEB I cobre creche, pré-escola e o 1º ao 5º ano; em Campinas o PEB I é só educação infantil e o PEB II são os anos iniciais. Por isso somamos os dois de Campinas. Não inclui os professores temporários (CTD) de Paulínia.",
+   "jornada": {
+    "paulinia": "30, 38 ou 45 horas-aula de 50 min (≈25h, 31,7h ou 37,5h)",
+    "campinas": "32h ou 40h de relógio, definidas pela Prefeitura"
+   },
+   "cargos": {
+    "paulinia": [
+     "PROFESSOR DE EDUCACAO BASICA I - PEBI - LC 65/2017"
+    ],
+    "campinas": [
+     "PROFESSOR PEB I",
+     "PROFESSOR PEB II"
+    ]
+   },
+   "dados": {
+    "2023": {
+     "paulinia": {
+      "n": 829,
+      "mediana": 13579.93,
+      "media": 13753.89,
+      "p25": 11687.72,
+      "p75": 15735.21
+     },
+     "campinas": {
+      "n": 1461,
+      "mediana": 13884.43,
+      "media": 13890.5,
+      "p25": 12038.86,
+      "p75": 16134.72
+     },
+     "dif_pct": -2.2
+    },
+    "2024": {
+     "paulinia": {
+      "n": 834,
+      "mediana": 14098.59,
+      "media": 14368.9,
+      "p25": 12267.53,
+      "p75": 16351.14
+     },
+     "campinas": {
+      "n": 1500,
+      "mediana": 8445.61,
+      "media": 8912.01,
+      "p25": 7263.32,
+      "p75": 10068.03
+     },
+     "dif_pct": 66.9
+    },
+    "2025": {
+     "paulinia": {
+      "n": 492,
+      "mediana": 15257.61,
+      "media": 15547.47,
+      "p25": 12855.22,
+      "p75": 17834.08
+     },
+     "campinas": {
+      "n": 1453,
+      "mediana": 9124.09,
+      "media": 9642.39,
+      "p25": 7798.29,
+      "p75": 10896.38
+     },
+     "dif_pct": 67.2
+    }
+   }
+  },
+  {
+   "nome": "Professor de creche e pré-escola",
+   "confianca": "media",
+   "obs": "A Educadora Infantil de Paulínia exerce regência em creche, mas está no quadro geral, não no magistério. O equivalente pela função em Campinas é o PEB I de educação infantil. NÃO comparar com o Agente de Educação Infantil de Campinas, que é cargo de cuidado e apoio, de ensino médio. As duas carreiras estão em mudança por causa da Lei federal 15.326/2026.",
+   "jornada": {
+    "paulinia": "36h (30h com alunos + 6h de preparação)",
+    "campinas": "32h ou 40h"
+   },
+   "cargos": {
+    "paulinia": [
+     "EDUCADORA INFANTIL - LC 66/2017"
+    ],
+    "campinas": [
+     "PROFESSOR PEB I"
+    ]
+   },
+   "dados": {
+    "2023": {
+     "paulinia": {
+      "n": 54,
+      "mediana": 9508.82,
+      "media": 9672.23,
+      "p25": 8996.38,
+      "p75": 10816.45
+     },
+     "campinas": {
+      "n": 1027,
+      "mediana": 13938.19,
+      "media": 13906.93,
+      "p25": 12098.31,
+      "p75": 15933.38
+     },
+     "dif_pct": -31.8
+    },
+    "2024": {
+     "paulinia": {
+      "n": 51,
+      "mediana": 10780.56,
+      "media": 10974.05,
+      "p25": 9662.54,
+      "p75": 12610.34
+     },
+     "campinas": {
+      "n": 1069,
+      "mediana": 8332.87,
+      "media": 8834.39,
+      "p25": 7155.64,
+      "p75": 10026.77
+     },
+     "dif_pct": 29.4
+    },
+    "2025": {
+     "paulinia": {
+      "n": 372,
+      "mediana": 13433.11,
+      "media": 13731.29,
+      "p25": 12676.96,
+      "p75": 14652.85
+     },
+     "campinas": {
+      "n": 1045,
+      "mediana": 9082.07,
+      "media": 9586.37,
+      "p25": 7769.39,
+      "p75": 10841.77
+     },
+     "dif_pct": 47.9
+    }
+   }
+  },
+  {
+   "nome": "Guarda municipal",
+   "confianca": "media",
+   "obs": "Em Campinas o cargo é dividido por classe e até por sexo ('GM 1 Classe Masculino/Feminino'); somamos todos. Paulínia tem um cargo único, o que mistura níveis de carreira diferentes dos dois lados.",
+   "jornada": {
+    "paulinia": "não informada na folha",
+    "campinas": "não informada na folha"
+   },
+   "cargos": {
+    "paulinia": [
+     "GUARDA CIVIL MUNICIPAL"
+    ],
+    "campinas": [
+     "__PREFIXO__GM "
+    ]
+   },
+   "dados": {
+    "2023": {
+     "paulinia": {
+      "n": 215,
+      "mediana": 17966.09,
+      "media": 17636.07,
+      "p25": 14965.23,
+      "p75": 20656.51
+     },
+     "campinas": {
+      "n": 668,
+      "mediana": 8572.36,
+      "media": 9172.97,
+      "p25": 6967.99,
+      "p75": 10456.97
+     },
+     "dif_pct": 109.6
+    },
+    "2024": {
+     "paulinia": {
+      "n": 211,
+      "mediana": 19110.53,
+      "media": 18394.07,
+      "p25": 15620.14,
+      "p75": 21693.1
+     },
+     "campinas": {
+      "n": 738,
+      "mediana": 9042.48,
+      "media": 9377.04,
+      "p25": 6698.2,
+      "p75": 10714.12
+     },
+     "dif_pct": 111.3
+    },
+    "2025": {
+     "paulinia": {
+      "n": 208,
+      "mediana": 20764.6,
+      "media": 20286.96,
+      "p25": 17444.84,
+      "p75": 23729.16
+     },
+     "campinas": {
+      "n": 719,
+      "mediana": 9955.87,
+      "media": 10372.28,
+      "p25": 7181.3,
+      "p75": 11899.87
+     },
+     "dif_pct": 108.6
+    }
+   }
+  },
+  {
+   "nome": "Enfermeiro",
+   "confianca": "alta",
+   "obs": "Em Campinas inclui a Rede Mário Gatti, que é o hospital municipal.",
+   "jornada": {
+    "paulinia": "não informada na folha",
+    "campinas": "não informada na folha"
+   },
+   "cargos": {
+    "paulinia": [
+     "ENFERMEIRO - LC 66/2017"
+    ],
+    "campinas": [
+     "ENFERMEIRO"
+    ]
+   },
+   "dados": {
+    "2023": {
+     "paulinia": {
+      "n": 163,
+      "mediana": 12488.81,
+      "media": 13548.96,
+      "p25": 10678.91,
+      "p75": 16111.24
+     },
+     "campinas": {
+      "n": 641,
+      "mediana": 10226.31,
+      "media": 11248.77,
+      "p25": 8899.56,
+      "p75": 12244.76
+     },
+     "dif_pct": 22.1
+    },
+    "2024": {
+     "paulinia": {
+      "n": 157,
+      "mediana": 13530.19,
+      "media": 15135.73,
+      "p25": 11507.11,
+      "p75": 17461.91
+     },
+     "campinas": {
+      "n": 711,
+      "mediana": 10077.72,
+      "media": 11445.66,
+      "p25": 8953.64,
+      "p75": 12741.87
+     },
+     "dif_pct": 34.3
+    },
+    "2025": {
+     "paulinia": {
+      "n": 151,
+      "mediana": 14411.14,
+      "media": 15207.5,
+      "p25": 12310.22,
+      "p75": 18632.02
+     },
+     "campinas": {
+      "n": 728,
+      "mediana": 11145.15,
+      "media": 12415.54,
+      "p25": 9649.26,
+      "p75": 13927.09
+     },
+     "dif_pct": 29.3
+    }
+   }
+  },
+  {
+   "nome": "Técnico de enfermagem",
+   "confianca": "alta",
+   "obs": "Em Campinas inclui a Rede Mário Gatti.",
+   "jornada": {
+    "paulinia": "não informada na folha",
+    "campinas": "não informada na folha"
+   },
+   "cargos": {
+    "paulinia": [
+     "TECNICO DE ENFERMAGEM - LC 66/2017"
+    ],
+    "campinas": [
+     "TECNICO ENFERMAGEM"
+    ]
+   },
+   "dados": {
+    "2023": {
+     "paulinia": {
+      "n": 310,
+      "mediana": 9696.01,
+      "media": 10552.15,
+      "p25": 8463.22,
+      "p75": 12122.99
+     },
+     "campinas": {
+      "n": 950,
+      "mediana": 5540.46,
+      "media": 5807.51,
+      "p25": 5116.78,
+      "p75": 6062.93
+     },
+     "dif_pct": 75.0
+    },
+    "2024": {
+     "paulinia": {
+      "n": 303,
+      "mediana": 10168.38,
+      "media": 11516.82,
+      "p25": 8791.42,
+      "p75": 13414.37
+     },
+     "campinas": {
+      "n": 983,
+      "mediana": 5794.9,
+      "media": 6041.77,
+      "p25": 5305.61,
+      "p75": 6296.97
+     },
+     "dif_pct": 75.5
+    },
+    "2025": {
+     "paulinia": {
+      "n": 299,
+      "mediana": 10888.46,
+      "media": 11933.44,
+      "p25": 9171.73,
+      "p75": 14518.93
+     },
+     "campinas": {
+      "n": 1034,
+      "mediana": 6238.68,
+      "media": 6548.07,
+      "p25": 5636.27,
+      "p75": 6966.61
+     },
+     "dif_pct": 74.5
+    }
+   }
+  },
+  {
+   "nome": "Auxiliar de enfermagem",
+   "confianca": "alta",
+   "obs": "Cargo em extinção nas duas redes; o efetivo tende a cair.",
+   "jornada": {
+    "paulinia": "não informada na folha",
+    "campinas": "não informada na folha"
+   },
+   "cargos": {
+    "paulinia": [
+     "AUXILIAR DE ENFERMAGEM - LC 66/2017"
+    ],
+    "campinas": [
+     "AUX.ENFERMAGEM"
+    ]
+   },
+   "dados": {
+    "2023": {
+     "paulinia": {
+      "n": 156,
+      "mediana": 10396.03,
+      "media": 11116.97,
+      "p25": 8650.4,
+      "p75": 12638.57
+     },
+     "campinas": {
+      "n": 662,
+      "mediana": 5568.06,
+      "media": 5627.26,
+      "p25": 4679.61,
+      "p75": 6300.71
+     },
+     "dif_pct": 86.7
+    },
+    "2024": {
+     "paulinia": {
+      "n": 147,
+      "mediana": 10938.25,
+      "media": 11852.81,
+      "p25": 8995.4,
+      "p75": 14309.22
+     },
+     "campinas": {
+      "n": 601,
+      "mediana": 5846.14,
+      "media": 5904.42,
+      "p25": 4942.85,
+      "p75": 6626.62
+     },
+     "dif_pct": 87.1
+    },
+    "2025": {
+     "paulinia": {
+      "n": 137,
+      "mediana": 11615.65,
+      "media": 12810.38,
+      "p25": 9790.92,
+      "p75": 15656.26
+     },
+     "campinas": {
+      "n": 553,
+      "mediana": 6347.57,
+      "media": 6412.12,
+      "p25": 5567.36,
+      "p75": 7257.1
+     },
+     "dif_pct": 83.0
+    }
+   }
+  },
+  {
+   "nome": "Agente de apoio operacional",
+   "confianca": "media",
+   "obs": "É o cargo mais numeroso de Paulínia (826) e junta funções variadas de apoio. A comparação de atribuição é frouxa.",
+   "jornada": {
+    "paulinia": "não informada na folha",
+    "campinas": "não informada na folha"
+   },
+   "cargos": {
+    "paulinia": [
+     "AGENTE DE APOIO OPERACIONAL - LC 66/2017"
+    ],
+    "campinas": [
+     "AG. APOIO OPERACIONAL"
+    ]
+   },
+   "dados": {
+    "2023": {
+     "paulinia": {
+      "n": 903,
+      "mediana": 8424.52,
+      "media": 9370.66,
+      "p25": 7915.88,
+      "p75": 10562.23
+     },
+     "campinas": {
+      "n": 624,
+      "mediana": 4853.73,
+      "media": 5219.08,
+      "p25": 3836.18,
+      "p75": 5988.72
+     },
+     "dif_pct": 73.6
+    },
+    "2024": {
+     "paulinia": {
+      "n": 879,
+      "mediana": 8847.35,
+      "media": 9899.08,
+      "p25": 8218.88,
+      "p75": 11456.32
+     },
+     "campinas": {
+      "n": 573,
+      "mediana": 4212.6,
+      "media": 5045.87,
+      "p25": 3429.44,
+      "p75": 5930.31
+     },
+     "dif_pct": 110.0
+    },
+    "2025": {
+     "paulinia": {
+      "n": 826,
+      "mediana": 9839.51,
+      "media": 11180.08,
+      "p25": 8886.46,
+      "p75": 12948.25
+     },
+     "campinas": {
+      "n": 530,
+      "mediana": 4556.68,
+      "media": 5550.07,
+      "p25": 3815.55,
+      "p75": 6664.96
+     },
+     "dif_pct": 115.9
+    }
+   }
+  }
+ ]
+}
