@@ -212,6 +212,13 @@ details.notas .note{margin-top:2px}
   .moreBtn{width:100%}
   .note{font-size:12.5px}
   .tip{max-width:min(280px,calc(100vw - 24px))}
+  /* a tabela que rola de lado vira uma janela com altura limitada: assim o cabeçalho gruda no
+     topo dela e as primeiras colunas grudam na esquerda, mantendo a referência nos dois eixos */
+  .tw.rola{max-height:72vh}
+  .tw.rola th.fix,.tw.rola td.fix{position:sticky;background:var(--surface)}
+  .tw.rola td.fix{z-index:1}
+  .tw.rola thead th.fix{z-index:3}
+  .tw.rola .fix2{box-shadow:1px 0 0 var(--line)}
   input[type=search]{font-size:16px;padding:9px 12px}  /* 16px evita o zoom automático ao tocar no campo */
   footer{font-size:12px}
 }
@@ -398,6 +405,15 @@ function delta(cur,prev,inv){
 const yearColor = {}; anos.forEach((a,i)=>yearColor[a]=['var(--s3)','var(--s2)','var(--s1)','var(--s4)','var(--s5)'][i]||'var(--s1)');
 const yearColorPref=(a)=>yearColor[a];
 
+/* Geometria dos gráficos. No celular o desenho de 900px encolhe ~2,6x e um texto de 12px
+   apareceria com 4,6px. Aumentar a fonte faria os rótulos se sobreporem, então o celular
+   desenha num papel menor, onde 12px são 12px de verdade. */
+const fone = () => matchMedia('(max-width:560px)').matches;
+const geo = (mesa, cel) => fone() ? {...mesa, ...cel} : mesa;
+
+/* "até R$ 3 mil" -> "≤3"; "R$ 8–12 mil" -> "8–12"; "acima de R$ 30 mil" -> ">30" (a legenda diz que é em R$ mil) */
+const faixaCurta = f => f.replace('até R$ ','≤').replace('acima de R$ ','>').replace('R$ ','').replace(' mil','');
+
 /* tooltip */
 function showTip(html,e){ tip.innerHTML=html; tip.style.display='block'; moveTip(e); }
 function moveTip(e){ const x=e.clientX,y=e.clientY; const w=tip.offsetWidth,h=tip.offsetHeight; tip.style.left=Math.min(x+14,innerWidth-w-8)+'px'; tip.style.top=(y-h-14<8? y+16 : y-h-14)+'px'; }
@@ -480,13 +496,13 @@ function renderNatureza(){
 
 /* line chart: monthly pago by year */
 function renderMensal(){
-  const W=900,H=300,L=64,R=20,T=16,B=36;
+  const {W,H,L,R,T,B}=geo({W:900,H:300,L:64,R:20,T:16,B:36},{W:360,H:240,L:48,R:8,B:32});
   const series=anos.map(a=>({ano:a,vals:D.despesas[a].por_mes.pago,color:yearColorPref(a)}));
   const max=nice(Math.max(...series.flatMap(s=>s.vals))*1.05);
   const x=i=>L+(W-L-R)*i/11, y=v=>T+(H-T-B)*(1-v/max);
   const ticks=5; let g='';
   for(let i=0;i<=ticks;i++){const v=max*i/ticks;g+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text class="tick" x="${L-8}" y="${y(v)+4}" text-anchor="end">${abrev(v).replace('R$ ','')}</text>`;}
-  D.meses.forEach((m,i)=>g+=`<text class="tick" x="${x(i)}" y="${H-B+20}" text-anchor="middle">${m}</text>`);
+  D.meses.forEach((m,i)=>g+=`<text class="tick" x="${x(i)}" y="${H-B+(fone()?26:20)}" text-anchor="middle">${m}</text>`);
   let paths='';
   series.forEach(s=>{
     const pts=s.vals.map((v,i)=>v>0?[x(i),y(v)]:null);
@@ -501,13 +517,13 @@ function renderMensal(){
 }
 
 function linhaAnual(el, getVals, rotulo){
-  const W=900,H=280,L=64,R=20,T=16,B=36;
+  const {W,H,L,R,T,B}=geo({W:900,H:280,L:64,R:20,T:16,B:36},{W:360,H:230,L:48,R:8,B:32});
   const series=anos.map(a=>({ano:a,vals:getVals(a),color:yearColorPref(a)}));
   const max=nice(Math.max(...series.flatMap(s=>s.vals))*1.05);
   const x=i=>L+(W-L-R)*i/11, y=v=>T+(H-T-B)*(1-v/max);
   let g='';
   for(let i=0;i<=5;i++){const v=max*i/5;g+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text class="tick" x="${L-8}" y="${y(v)+4}" text-anchor="end">${abrev(v).replace('R$ ','')}</text>`;}
-  D.meses.forEach((m,i)=>g+=`<text class="tick" x="${x(i)}" y="${H-B+20}" text-anchor="middle">${m}</text>`);
+  D.meses.forEach((m,i)=>g+=`<text class="tick" x="${x(i)}" y="${H-B+(fone()?26:20)}" text-anchor="middle">${m}</text>`);
   series.forEach(s=>{
     const pts=s.vals.map((v,i)=>v>0?[x(i),y(v)]:null); let d='';
     pts.forEach(p=>{if(!p)return;d+=(d?'L':'M')+p[0]+','+p[1]+' ';});
@@ -574,7 +590,7 @@ function renderReceitas(){
 }
 
 function renderBalanco(){
-  const W=900,H=240,L=64,R=20,T=16,B=36;
+  const {W,H,L,R,T,B}=geo({W:900,H:240,L:64,R:20,T:16,B:36},{W:360,H:210,L:48,R:8,B:32});
   const items=anos.map(a=>({ano:a,rec:D.receitas[a].total,desp:D.despesas[a].totais.pago}));
   const max=nice(Math.max(...items.flatMap(i=>[i.rec,i.desp]))*1.12);
   const y=v=>T+(H-T-B)*(1-v/max);
@@ -587,7 +603,7 @@ function renderBalanco(){
     g+=`<rect x="${cx-bw-1}" y="${y(it.rec)}" width="${bw}" height="${H-B-y(it.rec)}" rx="4" fill="var(--s3)" data-tip="<b>Receitas ${it.ano}</b>${fmtBRL(it.rec)}"/>`;
     g+=`<rect x="${cx+1}" y="${y(it.desp)}" width="${bw}" height="${H-B-y(it.desp)}" rx="4" fill="var(--s1)" data-tip="<b>Despesas pagas ${it.ano}</b>${fmtBRL(it.desp)}"/>`;
     g+=`<text class="tick" x="${cx}" y="${H-B+20}" text-anchor="middle" font-weight="600" fill="var(--text)">${it.ano}</text>`;
-    g+=`<text x="${cx}" y="${y(Math.max(it.rec,it.desp))-8}" text-anchor="middle" font-size="13" font-weight="600" fill="var(--text)">${saldo>=0?'sobrou':'faltou'} ${abrev(Math.abs(saldo))}</text>`;
+    g+=`<text x="${cx}" y="${y(Math.max(it.rec,it.desp))-8}" text-anchor="middle" font-size="13" font-weight="600" fill="var(--text)">${fone()?(saldo>=0?'+':'−')+abrev(Math.abs(saldo)):(saldo>=0?'sobrou':'faltou')+' '+abrev(Math.abs(saldo))}</text>`;
   });
   g+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}"/>`;
   $('#balanco').innerHTML=`<div class="legend"><span><i style="background:var(--s3)"></i>Receitas arrecadadas</span><span><i style="background:var(--s1)"></i>Despesas pagas</span></div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Receitas e despesas por ano">${g}</svg>`;
@@ -702,6 +718,21 @@ function renderBuscaGlobal(tree,body){
 }
 let buscaTimer; $('#buscaExp').addEventListener('input',()=>{clearTimeout(buscaTimer);buscaTimer=setTimeout(()=>{expQuery=$('#buscaExp').value.trim();expLimit=50;renderExplorador();},250);});
 
+/* Congela a 1ª coluna da tabela que rola de lado (e a 2ª, quando a 1ª é só o número da posição:
+   aí o que importa é o nome ao lado). Sem isso, arrastando para o lado some a referência da linha. */
+function congelarColunas(w){
+  const linhas = w.querySelectorAll('tr'); if(!linhas.length) return;
+  const c0 = linhas[0].children[0], c1 = linhas[0].children[1];
+  if(!c0) return;
+  const larg0 = c0.getBoundingClientRect().width;
+  const dois = !!c1 && larg0 < 60 && !c1.classList.contains('num') && !c1.classList.contains('hist');
+  linhas.forEach(tr=>{
+    const c = tr.children;
+    if(c[0]){ c[0].classList.add('fix'); c[0].style.left = '0px'; }
+    if(dois && c[1]){ c[1].classList.add('fix','fix2'); c[1].style.left = larg0 + 'px'; }
+  });
+}
+
 /* notas longas recolhidas, aviso quando a tabela rola de lado e cabeçalho fixo quando ela cabe */
 function ajustarLayout(){
   document.querySelectorAll('p.note').forEach(p=>{
@@ -720,10 +751,19 @@ function ajustarLayout(){
     w.classList.add('rola');                 // mede com a rolagem ligada...
     const larg = w.clientWidth, precisa = larg > 0 && w.scrollWidth > larg + 4;
     w.classList.toggle('rola', precisa);     // ...e desliga se a tabela couber, para o cabeçalho poder grudar
+    if(precisa) congelarColunas(w);
     // largura 0 = aba escondida: não dá para medir agora; mostrarTab() mede de novo ao abrir
   });
 }
-addEventListener('resize', ajustarLayout);
+let eraFone = fone();
+addEventListener('resize', ()=>{
+  ajustarLayout();
+  if(fone() !== eraFone){   // girou o aparelho ou mudou a janela: os gráficos são desenhados noutra escala
+    eraFone = fone();
+    renderMensal(); renderFolha(); renderBalanco(); renderServidores(); renderEvolucao();
+    ajustarLayout();
+  }
+});
 
 /* ===== abas ===== */
 let tabAtual='geral';
@@ -770,11 +810,12 @@ function renderServidores(){
   bindTips($('#servSec'));
   renderCargos();
   // distribuição
-  const W=900,H=240,L=50,R=20,T=24,B=40; const dist=sv.distribuicao; const max=nice(Math.max(...dist.map(x=>x.n))*1.1);
+  const {W,H,L,R,T,B}=geo({W:900,H:240,L:50,R:20,T:24,B:40},{W:360,H:215,L:40,R:6,B:42}); const dist=sv.distribuicao; const max=nice(Math.max(...dist.map(x=>x.n))*1.1);
   const y=v=>T+(H-T-B)*(1-v/max); const gw=(W-L-R)/dist.length, bw=gw*0.6; let g='';
   for(let i=0;i<=4;i++){const v=max*i/4;g+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text class="tick" x="${L-8}" y="${y(v)+4}" text-anchor="end">${fmtN(v)}</text>`;}
-  dist.forEach((x,i)=>{const cx=L+gw*i+gw/2;g+=`<rect x="${cx-bw/2}" y="${y(x.n)}" width="${bw}" height="${H-B-y(x.n)}" rx="4" fill="var(--s1)" data-tip="<b>${esc(x.faixa)}</b>${fmtN(x.n)} servidores · ${pct(100*x.n/sv.servidores_ativos)}"/><text x="${cx}" y="${y(x.n)-6}" text-anchor="middle" font-size="12" fill="var(--text)">${pct(100*x.n/sv.servidores_ativos)}</text><text class="tick" x="${cx}" y="${H-B+18}" text-anchor="middle">${esc(x.faixa)}</text>`;});
+  dist.forEach((x,i)=>{const cx=L+gw*i+gw/2;g+=`<rect x="${cx-bw/2}" y="${y(x.n)}" width="${bw}" height="${H-B-y(x.n)}" rx="4" fill="var(--s1)" data-tip="<b>${esc(x.faixa)}</b>${fmtN(x.n)} servidores · ${pct(100*x.n/sv.servidores_ativos)}"/><text x="${cx}" y="${y(x.n)-6}" text-anchor="middle" font-size="12" fill="var(--text)">${pct(100*x.n/sv.servidores_ativos)}</text><text class="tick" x="${cx}" y="${H-B+18}" text-anchor="middle">${esc(fone()?faixaCurta(x.faixa):x.faixa)}</text>`;});
   g+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}"/>`;
+  if(fone()) g+=`<text class="tick" x="${W-R}" y="${H-4}" text-anchor="end">faixas em R$ mil</text>`;
   $('#servDist').innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Servidores por faixa de remuneração">${g}</svg>`; bindTips($('#servDist'));
   $('#servNote').innerHTML=`Fonte: ${esc(sv.fonte)}. "Maior salário" é o maior valor bruto individual do cargo no mês, sem identificar a pessoa. <b>Líquido</b> é o que efetivamente entrou na conta no mês (adiantamento do dia 20 + folha do fim do mês): bruto menos previdência, imposto de renda, consignados e, nos salários mais altos, o corte do teto constitucional (o subsídio do prefeito, cerca de R$ 33 mil). Para a maioria dos servidores fica em torno de dois terços do bruto; cargos com menos de 3 servidores não entram na tabela. Remuneração = total de vencimentos brutos da folha mensal de ${mesNome} (antes dos descontos de previdência e IR; inclui gratificações, horas extras e adicionais do mês). <b>Não inclui benefícios pagos fora da folha</b>: o vale-alimentação é pago por cartão (fornecedor Pluxee, cerca de R$ 45 mi/ano no TCE), e auxílio-saúde e auxílio-transporte aparecem no TCE como indenizações (custeio), não como salário. *Custo médio por servidor = média das folhas mensais da pessoa + (13º, férias e complementares do ano ÷ 12), calculado para todos que passaram pelo grupo no ano; o adiantamento já está dentro da mensal; não inclui a parte patronal dos encargos. Aposentados e pensionistas que ainda constam na folha da prefeitura (${fmtN(sv.aposentados_na_folha)}) ficaram de fora. A contagem é por matrícula: cerca de 40 pessoas acumulam dois vínculos legais (médicos plantonistas, professores, técnicos de enfermagem) e aparecem duas vezes, cada uma com o salário de um dos vínculos.`;
 }
@@ -837,7 +878,7 @@ function renderServExp(){
 
 function renderEvolucao(){
   const items=anos.map(a=>{const f=D.despesas[a].folha;const ap=(f.grupos.find(g=>g.nome==='Aposentadorias e pensões')||{valor:0}).valor;return {ano:a,ativos:f.ativos,apos:ap,total:f.total,gasto:D.despesas[a].totais.pago,rec:D.receitas[a]?D.receitas[a].total:null,pop:D.despesas[a].populacao};});
-  const W=900,H=260,L=64,R=20,T=28,B=36;
+  const {W,H,L,R,T,B}=geo({W:900,H:260,L:64,R:20,T:28,B:36},{W:360,H:230,L:48,R:8,B:32});
   const max=nice(Math.max(...items.map(i=>i.ativos))*1.15);
   const y=v=>T+(H-T-B)*(1-v/max);
   const gw=(W-L-R)/items.length, bw=Math.min(56,gw*0.22);
@@ -848,7 +889,7 @@ function renderEvolucao(){
     const lab=(v,p)=>p?`${v>p?'+':''}${((v-p)/p*100).toLocaleString('pt-BR',{maximumFractionDigits:1})}%`:'';
     g+=`<rect x="${cx-bw-1}" y="${y(it.ativos)}" width="${bw}" height="${H-B-y(it.ativos)}" rx="4" fill="var(--s1)" data-tip="<b>Servidores ativos ${it.ano}</b>${fmtBRL(it.ativos)}"/>`;
     g+=`<rect x="${cx+1}" y="${y(it.apos)}" width="${bw}" height="${H-B-y(it.apos)}" rx="4" fill="var(--s2)" data-tip="<b>Aposentados e pensionistas ${it.ano}</b>${fmtBRL(it.apos)}"/>`;
-    if(pv){g+=`<text x="${cx-bw/2-1}" y="${y(it.ativos)-8}" text-anchor="middle" font-size="12" font-weight="600" fill="var(--text)">${lab(it.ativos,pv.ativos)}</text>`;
+    if(pv && !fone()){g+=`<text x="${cx-bw/2-1}" y="${y(it.ativos)-8}" text-anchor="middle" font-size="12" font-weight="600" fill="var(--text)">${lab(it.ativos,pv.ativos)}</text>`;
            g+=`<text x="${cx+bw/2+1}" y="${y(it.apos)-8}" text-anchor="middle" font-size="12" font-weight="600" fill="var(--text)">${lab(it.apos,pv.apos)}</text>`;}
     g+=`<text class="tick" x="${cx}" y="${H-B+20}" text-anchor="middle" font-weight="600" fill="var(--text)">${it.ano}</text>`;
   });
