@@ -5,33 +5,215 @@
   2024,
   2025
  ],
- "referencia_vencimento_base": {
-  "fonte": {
-   "paulinia": "Processo Seletivo 001/2026 da Prefeitura de Paulínia",
-   "campinas": "Edital 01/2025 da Prefeitura de Campinas (PEB II)"
+ "tabela_vs_folha": [
+  {
+   "cargo": "Guarda Patrimonial",
+   "n": 43,
+   "mediana": 21174.16,
+   "vencimento": 8657.44,
+   "acima": 2.446,
+   "referencia": "REM22",
+   "topo_de_carreira": false
   },
-  "aviso": "Paulínia paga por hora-aula de 50 minutos (LC 65/2017, art. 16); Campinas usa hora-relógio. As linhas abaixo já estão em jornadas equivalentes.",
-  "linhas": [
-   {
-    "paulinia": "45 horas-aula (≈37,5h)",
-    "valor_paulinia": 7350.75,
-    "campinas": "40 horas",
-    "valor_campinas": 7397.41
-   },
-   {
-    "paulinia": "38 horas-aula (≈31,7h)",
-    "valor_paulinia": 6207.3,
-    "campinas": "32 horas",
-    "valor_campinas": 5917.92
-   },
-   {
-    "paulinia": "30 horas-aula (≈25h)",
-    "valor_paulinia": 4900.5,
-    "campinas": "27 horas",
-    "valor_campinas": 4993.26
-   }
-  ]
- },
+  {
+   "cargo": "Tecnico de Radiologia",
+   "n": 28,
+   "mediana": 14709.12,
+   "vencimento": 6608.87,
+   "acima": 2.226,
+   "referencia": "REM14",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Motorista",
+   "n": 71,
+   "mediana": 13686.7,
+   "vencimento": 6506.32,
+   "acima": 2.104,
+   "referencia": "REM10",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Auxiliar de Apoio Administrativo",
+   "n": 66,
+   "mediana": 13614.9,
+   "vencimento": 6827.49,
+   "acima": 1.994,
+   "referencia": "REM17",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Auxiliar de Enfermagem",
+   "n": 137,
+   "mediana": 11615.65,
+   "vencimento": 6709.73,
+   "acima": 1.731,
+   "referencia": "REM16",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Auxiliar Odontologico",
+   "n": 30,
+   "mediana": 10959.05,
+   "vencimento": 6709.73,
+   "acima": 1.633,
+   "referencia": "REM16",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Educadora Infantil",
+   "n": 372,
+   "mediana": 13433.11,
+   "vencimento": 8522.26,
+   "acima": 1.576,
+   "referencia": "REM21",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Monitor",
+   "n": 165,
+   "mediana": 10265.4,
+   "vencimento": 6570.51,
+   "acima": 1.562,
+   "referencia": "REM12",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Enfermeiro",
+   "n": 151,
+   "mediana": 14411.14,
+   "vencimento": 9405.85,
+   "acima": 1.532,
+   "referencia": "REM24",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Tecnico de Enfermagem",
+   "n": 299,
+   "mediana": 10888.46,
+   "vencimento": 7152.95,
+   "acima": 1.522,
+   "referencia": "REM18",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Agente de Apoio Educacional",
+   "n": 183,
+   "mediana": 3863.34,
+   "vencimento": 2558.33,
+   "acima": 1.51,
+   "referencia": "REM01",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Agente de Apoio Operacional",
+   "n": 826,
+   "mediana": 9839.51,
+   "vencimento": 6570.51,
+   "acima": 1.498,
+   "referencia": "REM12",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Assistente Social",
+   "n": 35,
+   "mediana": 13970.25,
+   "vencimento": 9355.63,
+   "acima": 1.493,
+   "referencia": "REM23",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Guarda Civil Municipal",
+   "n": 208,
+   "mediana": 20764.6,
+   "vencimento": 14146.73,
+   "acima": 1.468,
+   "referencia": "LC 139/2026 (carreira)",
+   "topo_de_carreira": true
+  },
+  {
+   "cargo": "Agente Comunitario de Saude",
+   "n": 30,
+   "mediana": 4943.2,
+   "vencimento": 3369.41,
+   "acima": 1.467,
+   "referencia": "REM02",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Auxiliar de Educacao Infantil",
+   "n": 71,
+   "mediana": 8765.67,
+   "vencimento": 6412.45,
+   "acima": 1.367,
+   "referencia": "REM08",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Farmaceutico",
+   "n": 40,
+   "mediana": 14936.47,
+   "vencimento": 11287.03,
+   "acima": 1.323,
+   "referencia": "REM27",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Tecnico de Enfermagem (CTD)",
+   "n": 160,
+   "mediana": 9402.73,
+   "vencimento": 7152.95,
+   "acima": 1.315,
+   "referencia": "REM18",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Psicologo",
+   "n": 35,
+   "mediana": 12250.72,
+   "vencimento": 9405.85,
+   "acima": 1.302,
+   "referencia": "REM24",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Fisioterapeuta",
+   "n": 25,
+   "mediana": 11775.79,
+   "vencimento": 9355.63,
+   "acima": 1.259,
+   "referencia": "REM23",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Enfermeiro (CTD)",
+   "n": 45,
+   "mediana": 11704.66,
+   "vencimento": 9405.85,
+   "acima": 1.244,
+   "referencia": "REM24",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Diretor de Unidade Escolar",
+   "n": 57,
+   "mediana": 20712.32,
+   "vencimento": 16958.95,
+   "acima": 1.221,
+   "referencia": "RMM02",
+   "topo_de_carreira": false
+  },
+  {
+   "cargo": "Coordenador Pedagogico",
+   "n": 29,
+   "mediana": 16748.45,
+   "vencimento": 15545.8,
+   "acima": 1.077,
+   "referencia": "RMM01",
+   "topo_de_carreira": false
+  }
+ ],
  "pares": [
   {
    "nome": "Professor dos anos iniciais e da educação infantil",
@@ -61,12 +243,12 @@
      },
      "campinas": {
       "n": 1461,
-      "mediana": 13884.43,
-      "media": 13890.5,
-      "p25": 12038.86,
-      "p75": 16134.72
+      "mediana": 8009.86,
+      "media": 8497.34,
+      "p25": 6918.26,
+      "p75": 9683.14
      },
-     "dif_pct": -2.2
+     "dif_pct": 69.5
     },
     "2024": {
      "paulinia": {
@@ -78,12 +260,12 @@
      },
      "campinas": {
       "n": 1500,
-      "mediana": 8445.61,
-      "media": 8912.01,
-      "p25": 7263.32,
-      "p75": 10068.03
+      "mediana": 8399.31,
+      "media": 8868.68,
+      "p25": 7230.82,
+      "p75": 10040.43
      },
-     "dif_pct": 66.9
+     "dif_pct": 67.9
     },
     "2025": {
      "paulinia": {
@@ -95,12 +277,12 @@
      },
      "campinas": {
       "n": 1453,
-      "mediana": 9124.09,
-      "media": 9642.39,
-      "p25": 7798.29,
-      "p75": 10896.38
+      "mediana": 9102.99,
+      "media": 9577.84,
+      "p25": 7792.84,
+      "p75": 10865.19
      },
-     "dif_pct": 67.2
+     "dif_pct": 67.6
     }
    }
   },
@@ -131,12 +313,12 @@
      },
      "campinas": {
       "n": 1027,
-      "mediana": 13938.19,
-      "media": 13906.93,
-      "p25": 12098.31,
-      "p75": 15933.38
+      "mediana": 7986.01,
+      "media": 8458.73,
+      "p25": 6897.3,
+      "p75": 9626.04
      },
-     "dif_pct": -31.8
+     "dif_pct": 19.1
     },
     "2024": {
      "paulinia": {
@@ -148,12 +330,12 @@
      },
      "campinas": {
       "n": 1069,
-      "mediana": 8332.87,
-      "media": 8834.39,
-      "p25": 7155.64,
-      "p75": 10026.77
+      "mediana": 8265.39,
+      "media": 8783.33,
+      "p25": 7130.79,
+      "p75": 9970.59
      },
-     "dif_pct": 29.4
+     "dif_pct": 30.4
     },
     "2025": {
      "paulinia": {
@@ -165,12 +347,12 @@
      },
      "campinas": {
       "n": 1045,
-      "mediana": 9082.07,
-      "media": 9586.37,
-      "p25": 7769.39,
-      "p75": 10841.77
+      "mediana": 9055.99,
+      "media": 9509.64,
+      "p25": 7755.01,
+      "p75": 10817.72
      },
-     "dif_pct": 47.9
+     "dif_pct": 48.3
     }
    }
   },
@@ -202,7 +384,7 @@
      "campinas": {
       "n": 668,
       "mediana": 8572.36,
-      "media": 9172.97,
+      "media": 9146.77,
       "p25": 6967.99,
       "p75": 10456.97
      },
@@ -236,7 +418,7 @@
      "campinas": {
       "n": 719,
       "mediana": 9955.87,
-      "media": 10372.28,
+      "media": 10370.03,
       "p25": 7181.3,
       "p75": 11899.87
      },
@@ -271,12 +453,12 @@
      },
      "campinas": {
       "n": 641,
-      "mediana": 10226.31,
-      "media": 11248.77,
-      "p25": 8899.56,
-      "p75": 12244.76
+      "mediana": 10200.51,
+      "media": 11172.31,
+      "p25": 8883.75,
+      "p75": 12180.28
      },
-     "dif_pct": 22.1
+     "dif_pct": 22.4
     },
     "2024": {
      "paulinia": {
@@ -288,12 +470,12 @@
      },
      "campinas": {
       "n": 711,
-      "mediana": 10077.72,
-      "media": 11445.66,
-      "p25": 8953.64,
-      "p75": 12741.87
+      "mediana": 10010.52,
+      "media": 11375.6,
+      "p25": 8945.18,
+      "p75": 12733.09
      },
-     "dif_pct": 34.3
+     "dif_pct": 35.2
     },
     "2025": {
      "paulinia": {
@@ -305,12 +487,12 @@
      },
      "campinas": {
       "n": 728,
-      "mediana": 11145.15,
-      "media": 12415.54,
-      "p25": 9649.26,
-      "p75": 13927.09
+      "mediana": 11090.51,
+      "media": 12350.12,
+      "p25": 9606.09,
+      "p75": 13744.3
      },
-     "dif_pct": 29.3
+     "dif_pct": 29.9
     }
    }
   },
@@ -341,12 +523,12 @@
      },
      "campinas": {
       "n": 950,
-      "mediana": 5540.46,
-      "media": 5807.51,
+      "mediana": 5463.19,
+      "media": 5727.52,
       "p25": 5116.78,
-      "p75": 6062.93
+      "p75": 5920.57
      },
-     "dif_pct": 75.0
+     "dif_pct": 77.5
     },
     "2024": {
      "paulinia": {
@@ -358,12 +540,12 @@
      },
      "campinas": {
       "n": 983,
-      "mediana": 5794.9,
-      "media": 6041.77,
+      "mediana": 5791.35,
+      "media": 6012.04,
       "p25": 5305.61,
-      "p75": 6296.97
+      "p75": 6255.42
      },
-     "dif_pct": 75.5
+     "dif_pct": 75.6
     },
     "2025": {
      "paulinia": {
@@ -375,12 +557,12 @@
      },
      "campinas": {
       "n": 1034,
-      "mediana": 6238.68,
-      "media": 6548.07,
-      "p25": 5636.27,
-      "p75": 6966.61
+      "mediana": 6157.03,
+      "media": 6473.18,
+      "p25": 5623.96,
+      "p75": 6785.17
      },
-     "dif_pct": 74.5
+     "dif_pct": 76.8
     }
    }
   },
@@ -411,12 +593,12 @@
      },
      "campinas": {
       "n": 662,
-      "mediana": 5568.06,
-      "media": 5627.26,
-      "p25": 4679.61,
-      "p75": 6300.71
+      "mediana": 5551.01,
+      "media": 5583.47,
+      "p25": 4640.15,
+      "p75": 6249.83
      },
-     "dif_pct": 86.7
+     "dif_pct": 87.3
     },
     "2024": {
      "paulinia": {
@@ -428,12 +610,12 @@
      },
      "campinas": {
       "n": 601,
-      "mediana": 5846.14,
-      "media": 5904.42,
+      "mediana": 5840.74,
+      "media": 5888.58,
       "p25": 4942.85,
-      "p75": 6626.62
+      "p75": 6582.76
      },
-     "dif_pct": 87.1
+     "dif_pct": 87.3
     },
     "2025": {
      "paulinia": {
@@ -445,12 +627,12 @@
      },
      "campinas": {
       "n": 553,
-      "mediana": 6347.57,
-      "media": 6412.12,
-      "p25": 5567.36,
-      "p75": 7257.1
+      "mediana": 6281.21,
+      "media": 6366.64,
+      "p25": 5546.07,
+      "p75": 7172.22
      },
-     "dif_pct": 83.0
+     "dif_pct": 84.9
     }
    }
   },
@@ -481,12 +663,12 @@
      },
      "campinas": {
       "n": 624,
-      "mediana": 4853.73,
-      "media": 5219.08,
-      "p25": 3836.18,
-      "p75": 5988.72
+      "mediana": 4028.09,
+      "media": 4695.44,
+      "p25": 3130.48,
+      "p75": 5317.72
      },
-     "dif_pct": 73.6
+     "dif_pct": 109.1
     },
     "2024": {
      "paulinia": {
@@ -498,12 +680,12 @@
      },
      "campinas": {
       "n": 573,
-      "mediana": 4212.6,
-      "media": 5045.87,
+      "mediana": 4205.19,
+      "media": 5033.91,
       "p25": 3429.44,
       "p75": 5930.31
      },
-     "dif_pct": 110.0
+     "dif_pct": 110.4
     },
     "2025": {
      "paulinia": {
@@ -515,12 +697,12 @@
      },
      "campinas": {
       "n": 530,
-      "mediana": 4556.68,
-      "media": 5550.07,
-      "p25": 3815.55,
-      "p75": 6664.96
+      "mediana": 4528.9,
+      "media": 5527.39,
+      "p25": 3807.3,
+      "p75": 6614.02
      },
-     "dif_pct": 115.9
+     "dif_pct": 117.3
     }
    }
   }

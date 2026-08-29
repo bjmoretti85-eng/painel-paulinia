@@ -9,7 +9,7 @@ Fora dessa tabela, o resto é aritmética.
     python scripts/comparar_cargos.py              # relatório + data/comparativo_cargos.json
     python scripts/comparar_cargos.py --listar     # cargos grandes que ainda não foram pareados
 
-Fontes das jornadas e das ressalvas: ver claude/comparativo-campinas-paulinia.md
+Fontes das jornadas e das ressalvas: ver docs/comparativo-campinas-paulinia.md
 (LC 65/2017 e LC 66/2017 de Paulínia, PS 001/2026 de Paulínia, editais
 01/2025 e 01/2022 de Campinas).
 """
@@ -114,26 +114,6 @@ PARES = [
     },
 ]
 
-# Vencimento-base por jornada, direto dos editais. É a comparação hora a hora,
-# que a folha sozinha não permite fazer.
-REFERENCIA_BASE = {
-    "fonte": {
-        "paulinia": "Processo Seletivo 001/2026 da Prefeitura de Paulínia",
-        "campinas": "Edital 01/2025 da Prefeitura de Campinas (PEB II)",
-    },
-    "aviso": ("Paulínia paga por hora-aula de 50 minutos (LC 65/2017, art. 16); Campinas usa "
-              "hora-relógio. As linhas abaixo já estão em jornadas equivalentes."),
-    "linhas": [
-        {"paulinia": "45 horas-aula (≈37,5h)", "valor_paulinia": 7350.75,
-         "campinas": "40 horas", "valor_campinas": 7397.41},
-        {"paulinia": "38 horas-aula (≈31,7h)", "valor_paulinia": 6207.30,
-         "campinas": "32 horas", "valor_campinas": 5917.92},
-        {"paulinia": "30 horas-aula (≈25h)", "valor_paulinia": 4900.50,
-         "campinas": "27 horas", "valor_campinas": 4993.26},
-    ],
-}
-
-
 def norm(s):
     s = unicodedata.normalize("NFD", s or "").encode("ascii", "ignore").decode().upper()
     return re.sub(r"\s+", " ", s).strip()
@@ -193,6 +173,35 @@ def resumo(valores):
             "p25": round(q[0], 2), "p75": round(q[2], 2)}
 
 
+def tabela_vs_folha(minimo=25):
+    """Quanto cada cargo recebe acima do vencimento da tabela oficial da própria Paulínia.
+
+    Vem de scripts/tabelas_salariais.py. Só entram cargos pagos por mês: quem é pago por
+    hora-aula (professores, médicos plantonistas) precisaria da jornada de cada pessoa,
+    que a folha não informa.
+    """
+    arq = RAIZ / "data/tabelas_salariais.json"
+    if not arq.exists():
+        return []
+    cruz = json.loads(arq.read_text(encoding="utf-8")).get("cruzamento", {})
+    linhas = []
+    for cargo, c in cruz.items():
+        if c.get("unidade") != "mes" or c["n"] < minimo:
+            continue
+        base = c.get("vencimento_topo") or c["vencimento"]
+        if not base:
+            continue
+        linhas.append({
+            "cargo": re.sub(r"\s*-\s*LC\s*[\d/]+", "", cargo).strip(),
+            "n": c["n"], "mediana": c["mediana"], "vencimento": base,
+            "acima": round(c["mediana"] / base, 3),
+            "referencia": c["referencia"],
+            "topo_de_carreira": bool(c.get("vencimento_topo")),
+        })
+    linhas.sort(key=lambda x: -x["acima"])
+    return linhas
+
+
 def brl(v):
     return ("R$ " + f"{v:,.0f}").replace(",", ".")
 
@@ -239,7 +248,7 @@ def main():
         return
 
     saida = {"gerado_em": date.today().isoformat(), "anos": ANOS,
-             "referencia_vencimento_base": REFERENCIA_BASE, "pares": []}
+             "tabela_vs_folha": tabela_vs_folha(), "pares": []}
 
     print(f"Paulínia × Campinas — dezembro/{args.ano}, mediana do bruto mensal")
     print("(Paulínia: folha mensal, ativos. Campinas: bruto sem verbas de uma vez só.)\n")
@@ -276,10 +285,6 @@ def main():
     destino = RAIZ / "data/comparativo_cargos.json"
     destino.write_text(json.dumps(saida, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"\n-> {destino.relative_to(RAIZ)}")
-    print("\nVencimento-base por jornada equivalente (dos editais, não da folha):")
-    for l in REFERENCIA_BASE["linhas"]:
-        print(f"   Paulínia {l['paulinia']:24s} {brl(l['valor_paulinia']):>10s}   "
-              f"Campinas {l['campinas']:10s} {brl(l['valor_campinas']):>10s}")
     baixa = [p["nome"] for p in PARES if p["confianca"] == "baixa"]
     if baixa:
         estado = "incluídos" if args.incluir_baixa else "FORA do JSON"

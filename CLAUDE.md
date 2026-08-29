@@ -10,9 +10,18 @@ simples (sem jargão orçamentário sem explicação).
 CLAUDE.md                 este arquivo (contexto do projeto)
 docs/planejamento.md      planejamento detalhado, perguntas do painel, decisões
 docs/como-obter-lista-de-servidores.md  passo a passo para exportar a lista de servidores do portal da prefeitura
+docs/comparativo-campinas-paulinia.md  como a comparação com Campinas é feita: fontes, o que entra no bruto
+                          recorrente, a tabela de equivalências entre cargos e os limites da comparação
 scripts/baixar_dados.py   baixa dados do TCE-SP e filtra Paulínia -> data/raw/
 scripts/baixar_servidores.py  baixa a folha por servidor do portal SMARAPD (POST paiportalserver/modulovisao/filter,
                           visão servidor/pagamentoaservidores, 5000 registros/página, retomável) -> data/raw/servidores_{ano}.csv.gz
+scripts/tabelas_salariais.py  lê as tabelas de vencimento oficiais (PDFs do módulo escondido
+                          "Folha de Pagamento" do portal) e cruza com a folha: quanto cada cargo recebe acima
+                          do vencimento da lei. --baixar pega os PDFs, --conferir mostra a cobertura.
+                          Usa pdftotext -bbox-layout (coordenadas): parsear o texto alinhado dá errado.
+                          ATENÇÃO: LC 66/2017 e LC 133/2025 coexistem com valores diferentes para o mesmo
+                          cargo; o casamento respeita a lei que aparece no nome do cargo na folha.
+                          -> data/tabelas_salariais.json
 scripts/comparar_cargos.py  compara salário por cargo entre Paulínia e as cidades importadas.
                           A tabela PARES no topo do arquivo é o julgamento (quais cargos equivalem a quais,
                           com nível de confiança e ressalva); pares de confiança 'baixa' ficam FORA do JSON
@@ -88,7 +97,8 @@ O painel tem 5 abas (navegação por hash: #geral, #pessoal, #comparar, #detalhe
 - pessoal: folha (composição, por área, mês a mês) · quem são os servidores (agregados) · servidor a servidor (funil
   secretaria › vínculo › cargo › indivíduos anônimos, carregado de data/servidores_{ano}.js) · evolução ativos x aposentados
 - comparar: Paulínia x outras cidades. Hoje: salário mediano por cargo contra Campinas (dez/2025) +
-  vencimento-base por jornada equivalente. Dados de data/comparativo_cargos.json, embutido pelo montar_painel.py
+  "De onde vem o salário" (quanto cada cargo recebe acima da tabela de vencimentos de Paulínia).
+  A tabela de vencimento-base dos concursos foi removida do painel a pedido do Bruno. Dados de data/comparativo_cargos.json, embutido pelo montar_painel.py
   (opcional: sem o arquivo a aba fica vazia e nada quebra). A aba pessoal tem um botão-ponte (#irComparar).
 - detalhe: explorador em funil + ranking/busca de fornecedores
 - entenda: glossário
@@ -104,8 +114,8 @@ O painel tem 5 abas (navegação por hash: #geral, #pessoal, #comparar, #detalhe
   O arquivo não traz nome, admissão nem jornada; traz o bruto quebrado em 11 parcelas.
 - Ao comparar, cuidado: **PEB I e PEB II significam coisas diferentes nas duas cidades** (em Paulínia PEB I vai da
   creche ao 5º ano; em Campinas PEB I é só educação infantil e PEB II são os anos iniciais). E **Paulínia paga por
-  hora-aula de 50 minutos**, Campinas por hora-relógio. Detalhes e fontes legais no doc do projeto
-  `claude/comparativo-campinas-paulinia.md`.
+  hora-aula de 50 minutos**, Campinas por hora-relógio. Detalhes e fontes legais em
+  `docs/comparativo-campinas-paulinia.md`.
 
 ## Convenções
 

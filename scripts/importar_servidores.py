@@ -37,7 +37,7 @@ SCHEMA = ["matricula", "nome", "cargo", "secretaria", "data_admissao",
 
 # vencimentos       = tudo que a cidade chama de bruto no mês
 # bruto_recorrente  = o bruto sem verbas de uma vez só (13º, prêmio férias,
-#                     licença-prêmio, salário atrasado). É o número honesto
+#                     licença-prêmio, salário atrasado, eventual). É o número honesto
 #                     para comparar cargos entre cidades. Vazio = use vencimentos.
 
 # Nomes de coluna que cada campo pode ter nos portais. Comparação sem acento,
@@ -108,8 +108,11 @@ def adaptar_campinas(reg):
         codigo, cargo = codigo.strip(), cargo.strip()
 
     bruto = v("Total Bruto")
+    # "Eventual" também é verba de uma vez só: em dez/2023 ela pagou o rateio do Fundeb
+    # a 86% dos professores (mediana R$ 6.328) e inflou a mediana da Educação em ~65%.
+    # Em dez/2024 e dez/2025 só 2% recebem, e valores pequenos (mediana ~R$ 250).
     uma_vez = (v("13º Salário") + v("Prêmio Férias") + v("Licença Prêmio")
-               + v("Salário Atraso"))
+               + v("Salário Atraso") + v("Eventual"))
     liquido = v("Bruto c/ Deduções")
     return {
         "matricula": (reg.get("Matricula") or "").strip(),

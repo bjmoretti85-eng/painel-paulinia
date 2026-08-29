@@ -377,10 +377,14 @@ details.notas .note{margin-top:2px}
   <p class="sub" id="compSub"></p>
   <div class="cmpleg"><span class="p">Paulínia</span><span class="c">Campinas</span></div>
   <div id="compBars"></div>
-  <h3>E por hora de trabalho?<small id="compBaseSub"></small></h3>
-  <div class="cmpbase" id="compBase"></div>
-  <p class="sub" id="compBaseNote" style="margin-top:12px"></p>
   <p class="note" id="compNote"></p>
+</section>
+
+<section id="acimadatabela">
+  <h2>De onde vem o salário</h2>
+  <p class="sub" id="tabSub"></p>
+  <div id="tabBars"></div>
+  <p class="note" id="tabNote"></p>
 </section>
 </div>
 
@@ -948,15 +952,35 @@ function renderComparativo(){
       `<div class="dif" style="color:${d.dif_pct>=0?'var(--s1)':'var(--s2)'}">${d.dif_pct>=0?'+':''}${Math.round(d.dif_pct)}%</div>`+
     `</div>`;
   }).join('');
-  const R=C.referencia_vencimento_base;
-  if(R){
-    $('#compBaseSub').textContent='salário inicial de professor nos concursos, em jornadas equivalentes';
-    $('#compBase').innerHTML=R.linhas.map(l=>
-      `<div class="lin"><span>Paulínia · ${esc(l.paulinia)}</span><b>${fmtBRL(l.valor_paulinia)}</b>`+
-      `<span>Campinas · ${esc(l.campinas)}</span><b>${fmtBRL(l.valor_campinas)}</b></div>`).join('');
-    $('#compBaseNote').innerHTML='Paulínia paga por <b>hora-aula de 50 minutos</b>; Campinas, por hora de relógio — por isso 45 horas-aula equivalem a cerca de 37,5 horas. Lado a lado, o salário inicial das duas cidades é praticamente o mesmo: a diferença que aparece acima vem sobretudo da <b>jornada contratada</b> e das verbas de cada carreira, não do preço da hora. Fontes: '+esc(R.fonte.paulinia)+' e '+esc(R.fonte.campinas)+'.';
-  }
-  $('#compNote').innerHTML='Usamos a mediana (o servidor do meio), e não a média, para que poucos salários muito altos não distorçam. Os valores não incluem 13º, férias nem outras verbas que não se repetem todo mês. Cargos com o mesmo nome nem sempre são a mesma coisa nas duas cidades: em Paulínia o "PEB I" cobre da creche ao 5º ano, em Campinas só a educação infantil — por isso somamos PEB I e PEB II de Campinas. As educadoras infantis de Paulínia foram comparadas com os professores de educação infantil de Campinas, e não com os agentes, que são cargo de apoio. As carreiras da educação infantil estão mudando nos dois municípios por causa da Lei federal 15.326/2026. Fonte: folha de dezembro de 2025 publicada por cada prefeitura.';
+  $('#compNote').innerHTML='Usamos a mediana (o servidor do meio), e não a média, para que poucos salários muito altos não distorçam. Os valores não incluem 13º, férias nem outras verbas que não se repetem todo mês. Cargos com o mesmo nome nem sempre são a mesma coisa nas duas cidades: em Paulínia o "PEB I" cobre da creche ao 5º ano, em Campinas só a educação infantil — por isso somamos PEB I e PEB II de Campinas. As educadoras infantis de Paulínia foram comparadas com os professores de educação infantil de Campinas, e não com os agentes, que são cargo de apoio. Paulínia paga o professor por hora-aula de 50 minutos e Campinas por hora de relógio, e a jornada contratada difere: parte da diferença é jornada, não preço da hora. As carreiras da educação infantil estão mudando nos dois municípios por causa da Lei federal 15.326/2026. Fonte: folha de dezembro de 2025 publicada por cada prefeitura.';
+}
+function renderTabela(){
+  const sec=$('#acimadatabela');
+  const L=(typeof COMPARATIVO!=='undefined'&&COMPARATIVO&&COMPARATIVO.tabela_vs_folha)||[];
+  if(!L.length){ if(sec) sec.style.display='none'; return; }
+  sec.style.display='';
+  $('#tabSub').innerHTML='A lei fixa um vencimento para cada cargo. O que cai na conta costuma ser bem mais: '+
+    'adicionais, gratificações, horas extras e jornada ampliada entram por cima. Abaixo, quantas vezes o salário '+
+    'mediano de dezembro de 2025 supera o vencimento da tabela oficial da própria Prefeitura.';
+  const max=Math.max(...L.map(x=>x.acima));
+  $('#tabBars').innerHTML=L.map(x=>{
+    const extra=x.mediana-x.vencimento;
+    return `<div class="cmp">`+
+      `<div class="nm">${esc(x.cargo)}<em>${fmtN(x.n)} servidores · tabela ${fmtBRL(x.vencimento)}`+
+        `${x.topo_de_carreira?' (topo da carreira)':''} · mediana ${fmtBRL(x.mediana)}</em></div>`+
+      `<div class="duo"><div class="row p"><span class="track">`+
+        `<span class="tr" style="width:${100*x.acima/max}%"></span></span>`+
+        `<b>+${fmtBRL(extra)}</b></div></div>`+
+      `<div class="dif">${x.acima.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}x</div>`+
+    `</div>`;
+  }).join('');
+  $('#tabNote').innerHTML='As tabelas de vencimento saem do próprio portal da Prefeitura (módulo "Folha de Pagamento"), '+
+    'referência 05/2026; a folha é de dezembro de 2025, então houve reajuste entre uma coisa e outra e estes números '+
+    'são conservadores. Só entram cargos pagos por mês e com pelo menos 25 servidores: quem é pago por hora-aula '+
+    '(professores, médicos plantonistas) precisaria da jornada de cada pessoa, que a folha não informa. Na Guarda Civil '+
+    'a comparação é contra o <b>topo</b> da carreira, não contra o início. Paulínia tem duas leis de quadro geral em '+
+    'vigor ao mesmo tempo (LC 66/2017 e LC 133/2025) e cada cargo é comparado com a tabela da lei que consta na folha. '+
+    'Cargos em comissão e funções de confiança ficaram de fora.';
 }
 function renderEvolucao(){
   const items=anos.map(a=>{const f=D.despesas[a].folha;const ap=(f.grupos.find(g=>g.nome==='Aposentadorias e pensões')||{valor:0}).valor;return {ano:a,ativos:f.ativos,apos:ap,total:f.total,gasto:D.despesas[a].totais.pago,rec:D.receitas[a]?D.receitas[a].total:null,pop:D.despesas[a].populacao};});
@@ -984,7 +1008,7 @@ function renderEvolucao(){
     items.map((it,i)=>{const pv=items[i-1];return `<tr><td><b>${it.ano}</b></td><td class="num">${abrev(it.ativos)}<span class="d">${pv?dl(it.ativos,pv.ativos):'base'}${i>1?' · desde '+first.ano+' '+dl(it.ativos,first.ativos):''}</span></td><td class="num">${abrev(it.apos)}<span class="d">${pv?dl(it.apos,pv.apos):'base'}${i>1?' · desde '+first.ano+' '+dl(it.apos,first.apos):''}</span></td><td class="num">${abrev(it.total)}<span class="d">${pv?dl(it.total,pv.total):'base'}</span></td><td class="num">${fmtBRL(it.total/it.pop)}</td><td class="num">${pct(100*it.total/it.gasto)}</td><td class="num">${it.rec?pct(100*it.total/it.rec):'—'}</td></tr>`;}).join('')+`</tbody>`;
 }
 
-function renderAll(){ renderYears(); renderHero(); renderFuncoes(); renderNatureza(); renderFolha(); renderServidores(); renderComparativo(); sPath=[]; sLimit=50; renderServExp(); renderEvolucao(); renderMensal(); renderReceitas(); renderBalanco(); renderFornecedores(); renderRodape(); expPath=[]; expLimit=50; renderExplorador(); ajustarLayout(); }
+function renderAll(){ renderYears(); renderHero(); renderFuncoes(); renderNatureza(); renderFolha(); renderServidores(); renderComparativo(); renderTabela(); sPath=[]; sLimit=50; renderServExp(); renderEvolucao(); renderMensal(); renderReceitas(); renderBalanco(); renderFornecedores(); renderRodape(); expPath=[]; expLimit=50; renderExplorador(); ajustarLayout(); }
 renderAll();
 mostrarTab(location.hash.slice(1)||'geral');
 })();

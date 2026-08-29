@@ -1,0 +1,2037 @@
+{
+ "tabelas": [
+  {
+   "cargo": "Comandante da Guarda Civil Municipal de Paulínia",
+   "referencia": "LC 139/2026",
+   "vencimento": 18695.08,
+   "unidade": "mes",
+   "tabela": "GUARDA CIVIL MUNICIPAL REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Subcomandante da Guarda Civil Municipal de Paulínia",
+   "referencia": "LC 139/2026",
+   "vencimento": 17440.56,
+   "unidade": "mes",
+   "tabela": "GUARDA CIVIL MUNICIPAL REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Corregedor da Guarda Civil Municipal de Paulínia",
+   "referencia": "LC 139/2026",
+   "vencimento": 18695.08,
+   "unidade": "mes",
+   "tabela": "GUARDA CIVIL MUNICIPAL REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Corregedor Adjunto da Guarda Civil Municipal de Paulínia",
+   "referencia": "LC 139/2026",
+   "vencimento": 17440.56,
+   "unidade": "mes",
+   "tabela": "GUARDA CIVIL MUNICIPAL REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Ouvidor da Guarda Civil Municipal de Paulínia",
+   "referencia": "LC 139/2026",
+   "vencimento": 16912.5,
+   "unidade": "mes",
+   "tabela": "GUARDA CIVIL MUNICIPAL REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Subinspetor",
+   "referencia": "LC 139/2026",
+   "vencimento": 2622.15,
+   "unidade": "mes",
+   "tabela": "GUARDA CIVIL MUNICIPAL REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Inspetor",
+   "referencia": "LC 139/2026",
+   "vencimento": 3496.2,
+   "unidade": "mes",
+   "tabela": "GUARDA CIVIL MUNICIPAL REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Superintendente",
+   "referencia": "LC 139/2026",
+   "vencimento": 4588.76,
+   "unidade": "mes",
+   "tabela": "GUARDA CIVIL MUNICIPAL REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Guarda Civil Municipal",
+   "referencia": "LC 139/2026 (carreira)",
+   "vencimento": 4676.85,
+   "vencimento_topo": 14146.73,
+   "unidade": "mes",
+   "tabela": "GUARDA CIVIL MUNICIPAL REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "– Professor de Educação Básica I (PEB-I)",
+   "referencia": "RMH01",
+   "vencimento": 58.52,
+   "unidade": "hora-aula",
+   "tabela": "MAGISTÉRIO LC 65-2017 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Sem Curso Superior - Magistério",
+   "referencia": "RMH01",
+   "vencimento": 58.52,
+   "unidade": "hora-aula",
+   "tabela": "MAGISTÉRIO LC 65-2017 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Professor de Educação Básica I (PEB-I) Licenciatura Superior",
+   "referencia": "RMH02",
+   "vencimento": 63.82,
+   "unidade": "hora-aula",
+   "tabela": "MAGISTÉRIO LC 65-2017 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Professor de Educação Básica II (PEB-II)",
+   "referencia": "RMH03",
+   "vencimento": 71.59,
+   "unidade": "hora-aula",
+   "tabela": "MAGISTÉRIO LC 65-2017 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Coordenador Pedagógico",
+   "referencia": "RMM01",
+   "vencimento": 15545.8,
+   "unidade": "mes",
+   "tabela": "MAGISTÉRIO LC 65-2017 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Diretor de Unidade Escolar",
+   "referencia": "RMM02",
+   "vencimento": 16958.95,
+   "unidade": "mes",
+   "tabela": "MAGISTÉRIO LC 65-2017 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Supervisor Educacional",
+   "referencia": "RMM03",
+   "vencimento": 18513.47,
+   "unidade": "mes",
+   "tabela": "MAGISTÉRIO LC 65-2017 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "– RMH do Magistério Horista;",
+   "referencia": "RMM03",
+   "vencimento": 18513.47,
+   "unidade": "mes",
+   "tabela": "MAGISTÉRIO LC 65-2017 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Agente de Apoio Educacional",
+   "referencia": "REM1",
+   "vencimento": 2558.33,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Fotógrafo",
+   "referencia": "REM1",
+   "vencimento": 2558.33,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Motorista",
+   "referencia": "REM2",
+   "vencimento": 3074.19,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "SalvaVidas",
+   "referencia": "REM2",
+   "vencimento": 3074.19,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Agente Comunitário de Saúde",
+   "referencia": "REM3",
+   "vencimento": 3369.41,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Agente de Combate às Endemias",
+   "referencia": "REM3",
+   "vencimento": 3369.41,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Intérprete de Libras",
+   "referencia": "REM3",
+   "vencimento": 3369.41,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Agente Administrativo",
+   "referencia": "REM4",
+   "vencimento": 3375.18,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Agente de Cerimonial",
+   "referencia": "REM4",
+   "vencimento": 3375.18,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Agente de Defesa Civil",
+   "referencia": "REM4",
+   "vencimento": 3375.18,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Agente de Fiscalização",
+   "referencia": "REM4",
+   "vencimento": 3375.18,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Agente De Tributação",
+   "referencia": "REM4",
+   "vencimento": 3375.18,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Radiologia",
+   "referencia": "REM4",
+   "vencimento": 3375.18,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Contabilidade",
+   "referencia": "REM4",
+   "vencimento": 3375.18,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Design Gráfico",
+   "referencia": "REM4",
+   "vencimento": 3375.18,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Edificações",
+   "referencia": "REM5",
+   "vencimento": 4975.67,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Eletrotécnica",
+   "referencia": "REM5",
+   "vencimento": 4975.67,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Farmácia",
+   "referencia": "REM5",
+   "vencimento": 4975.67,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Informática",
+   "referencia": "REM5",
+   "vencimento": 4975.67,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Mobilidade Urbana",
+   "referencia": "REM5",
+   "vencimento": 4975.67,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Recursos Humanos",
+   "referencia": "REM5",
+   "vencimento": 4975.67,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Saúde Bucal",
+   "referencia": "REM5",
+   "vencimento": 4975.67,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Segurança Do Trabalho",
+   "referencia": "REM5",
+   "vencimento": 4975.67,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Transporte Urbano",
+   "referencia": "REM5",
+   "vencimento": 4975.67,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Enfermagem",
+   "referencia": "REM5",
+   "vencimento": 4975.67,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Enfermagem do Trabalho",
+   "referencia": "REM6",
+   "vencimento": 5402.2,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Análises Clínicas",
+   "referencia": "REM6",
+   "vencimento": 5402.2,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Enfermagem ESF",
+   "referencia": "REM6",
+   "vencimento": 5402.2,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Analista de Contratação",
+   "referencia": "REM6",
+   "vencimento": 5402.2,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Analista de Mobilidade Urbana",
+   "referencia": "REM6",
+   "vencimento": 5402.2,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Analista de Procuradoria",
+   "referencia": "REM6",
+   "vencimento": 5402.2,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Analista Financeiro",
+   "referencia": "REM6",
+   "vencimento": 5402.2,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Orientador Social",
+   "referencia": "REM7",
+   "vencimento": 6195.42,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Arquiteto",
+   "referencia": "REM7",
+   "vencimento": 6195.42,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Desenvolvedor",
+   "referencia": "REM7",
+   "vencimento": 6195.42,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Museólogo",
+   "referencia": "REM7",
+   "vencimento": 6195.42,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Terapeuta em Reabilitação",
+   "referencia": "REM7",
+   "vencimento": 6195.42,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Enfermeiro do Trabalho",
+   "referencia": "REM8",
+   "vencimento": 6709.73,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Fiscal Sanitário",
+   "referencia": "REM8",
+   "vencimento": 6709.73,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Terapeuta Ocupacional",
+   "referencia": "REM8",
+   "vencimento": 6709.73,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Educador Esportivo",
+   "referencia": "REM9",
+   "vencimento": 7171.17,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Analista Clínico",
+   "referencia": "REM9",
+   "vencimento": 7171.17,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Analista de Dados e Infraestrutura",
+   "referencia": "REM9",
+   "vencimento": 7171.17,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Assistente Social",
+   "referencia": "REM10",
+   "vencimento": 7742.79,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Psicólogo",
+   "referencia": "REM10",
+   "vencimento": 7742.79,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Bibliotecário",
+   "referencia": "REM10",
+   "vencimento": 7742.79,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Enfermeiro",
+   "referencia": "REM11",
+   "vencimento": 8063.99,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Biólogo",
+   "referencia": "REM11",
+   "vencimento": 8063.99,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Jornalista",
+   "referencia": "REM12",
+   "vencimento": 8639.21,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Farmacêutico",
+   "referencia": "REM12",
+   "vencimento": 8639.21,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Fisioterapeuta",
+   "referencia": "REM12",
+   "vencimento": 8639.21,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Fonoaudiólogo",
+   "referencia": "REM12",
+   "vencimento": 8639.21,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Nutricionista",
+   "referencia": "REM13",
+   "vencimento": 8982.39,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Advogado do CREAS",
+   "referencia": "REM13",
+   "vencimento": 8982.39,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Médico Veterinário",
+   "referencia": "REM13",
+   "vencimento": 8982.39,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Engenheiro",
+   "referencia": "REM14",
+   "vencimento": 9383.96,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Engenheiro de Segurança do Trabalho",
+   "referencia": "REM14",
+   "vencimento": 9383.96,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Enfermeiro ESF",
+   "referencia": "REM15",
+   "vencimento": 10496.93,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Auditor Fiscal Tributário",
+   "referencia": "REM15",
+   "vencimento": 10496.93,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Contador Público",
+   "referencia": "REM16",
+   "vencimento": 10724.54,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Controlador Interno",
+   "referencia": "REM16",
+   "vencimento": 10724.54,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Economista",
+   "referencia": "REM16",
+   "vencimento": 10724.54,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Procurador",
+   "referencia": "REM16",
+   "vencimento": 10724.54,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Médico do Trabalho",
+   "referencia": "REH1",
+   "vencimento": 79.07,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "– Médico da Família ESF",
+   "referencia": "REH1",
+   "vencimento": 79.07,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Cirurgião Dentista Plantonista",
+   "referencia": "REH1",
+   "vencimento": 79.07,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Médico Plantonista",
+   "referencia": "REH2",
+   "vencimento": 146.02,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "REM - Efetivo Mensalista REH -",
+   "referencia": "REH2",
+   "vencimento": 146.02,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Cirurgião-Dentista Plantonista",
+   "referencia": "REH01",
+   "vencimento": 153.45,
+   "unidade": "hora",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Médico Plantonista",
+   "referencia": "REH01",
+   "vencimento": 153.45,
+   "unidade": "hora",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Médico do Trabalho",
+   "referencia": "REH01",
+   "vencimento": 153.45,
+   "unidade": "hora",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Agente de Apoio Educacional",
+   "referencia": "REM01",
+   "vencimento": 2558.33,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Agente Comunitário de Saúde",
+   "referencia": "REM02",
+   "vencimento": 3369.41,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Orientador Social",
+   "referencia": "REM03",
+   "vencimento": 5402.2,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Analista de Procuradoria",
+   "referencia": "REM03",
+   "vencimento": 5402.2,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Digitador",
+   "referencia": "REM04",
+   "vencimento": 6240.41,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Agente de Fiscalização",
+   "referencia": "REM05",
+   "vencimento": 6325.12,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Telefonista",
+   "referencia": "REM06",
+   "vencimento": 6360.2,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Salva-Vidas",
+   "referencia": "REM07",
+   "vencimento": 6410.34,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Almoxarife",
+   "referencia": "REM08",
+   "vencimento": 6412.45,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico de Laboratório Básico",
+   "referencia": "REM08",
+   "vencimento": 6412.45,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Auxiliar de Educação Infantil",
+   "referencia": "REM08",
+   "vencimento": 6412.45,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Monitor de Práticas Esportivas",
+   "referencia": "REM09",
+   "vencimento": 6449.72,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Eletricista",
+   "referencia": "REM10",
+   "vencimento": 6506.32,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Eletricista de Autos",
+   "referencia": "REM10",
+   "vencimento": 6506.32,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Motorista",
+   "referencia": "REM10",
+   "vencimento": 6506.32,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Instrutor de Música",
+   "referencia": "REM11",
+   "vencimento": 6523.33,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Monitor",
+   "referencia": "REM12",
+   "vencimento": 6570.51,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Agente de Apoio Operacional",
+   "referencia": "REM12",
+   "vencimento": 6570.51,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Mecânico de Autos",
+   "referencia": "REM13",
+   "vencimento": 6570.52,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Mecânico de Máquinas e Caminhões",
+   "referencia": "REM13",
+   "vencimento": 6570.52,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Radiologia",
+   "referencia": "REM14",
+   "vencimento": 6608.87,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Encarregado de Serviço",
+   "referencia": "REM15",
+   "vencimento": 6643.24,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Encarregado de Turma Agente de Controle de Vetor",
+   "referencia": "REM15",
+   "vencimento": 6643.24,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Auxiliar de",
+   "referencia": "REM15",
+   "vencimento": 6643.24,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Enfermagem",
+   "referencia": "REM16",
+   "vencimento": 6709.73,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Auxiliar de Enfermagem do Trabalho",
+   "referencia": "REM16",
+   "vencimento": 6709.73,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Auxiliar Odontológico",
+   "referencia": "REM16",
+   "vencimento": 6709.73,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Fiscal Sanitário",
+   "referencia": "REM16",
+   "vencimento": 6709.73,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Intérprete de LIBRAS",
+   "referencia": "REM16",
+   "vencimento": 6709.73,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Guia Turístico",
+   "referencia": "REM17",
+   "vencimento": 6827.49,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Operador de Microcomputador",
+   "referencia": "REM17",
+   "vencimento": 6827.49,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Agente de Administração Pública",
+   "referencia": "REM17",
+   "vencimento": 6827.49,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Agente de Apoio Administrativo",
+   "referencia": "REM17",
+   "vencimento": 6827.49,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Auxiliar de Apoio Administrativo",
+   "referencia": "REM17",
+   "vencimento": 6827.49,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Programador",
+   "referencia": "REM18",
+   "vencimento": 7152.95,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico de Enfermagem",
+   "referencia": "REM18",
+   "vencimento": 7152.95,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Saúde Bucal",
+   "referencia": "REM18",
+   "vencimento": 7152.95,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Segurança do Trabalho",
+   "referencia": "REM18",
+   "vencimento": 7152.95,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico de Contabilidade",
+   "referencia": "REM18",
+   "vencimento": 7152.95,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Bibliotecário",
+   "referencia": "REM19",
+   "vencimento": 7823.93,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Técnico em Análises Clínicas",
+   "referencia": "REM20",
+   "vencimento": 8193.0,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Educadora Infantil",
+   "referencia": "REM21",
+   "vencimento": 8522.26,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Guarda Patrimonial",
+   "referencia": "REM22",
+   "vencimento": 8657.44,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Terapeuta Ocupacional",
+   "referencia": "REM23",
+   "vencimento": 9355.63,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Fisioterapeuta Analista de Sistemas",
+   "referencia": "REM23",
+   "vencimento": 9355.63,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Assistente Social",
+   "referencia": "REM23",
+   "vencimento": 9355.63,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Biólogo",
+   "referencia": "REM23",
+   "vencimento": 9355.63,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Desenhista Especializado",
+   "referencia": "REM24",
+   "vencimento": 9405.85,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Enfermeiro",
+   "referencia": "REM24",
+   "vencimento": 9405.85,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Enfermeiro do Trabalho",
+   "referencia": "REM24",
+   "vencimento": 9405.85,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Fonoaudiólogo",
+   "referencia": "REM24",
+   "vencimento": 9405.85,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Nutricionista",
+   "referencia": "REM24",
+   "vencimento": 9405.85,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Psicólogo",
+   "referencia": "REM24",
+   "vencimento": 9405.85,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Veterinário",
+   "referencia": "REM25",
+   "vencimento": 10081.76,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Advogado do CREAS",
+   "referencia": "REM25",
+   "vencimento": 10081.76,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Educador Desportivo",
+   "referencia": "REM26",
+   "vencimento": 10183.84,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Analista Clínico",
+   "referencia": "REM27",
+   "vencimento": 11287.03,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Farmacêutico",
+   "referencia": "REM27",
+   "vencimento": 11287.03,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Agente de Licitação",
+   "referencia": "REM28",
+   "vencimento": 16883.04,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Auditor Fiscal Tributário",
+   "referencia": "REM28",
+   "vencimento": 16883.04,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Contador",
+   "referencia": "REM28",
+   "vencimento": 16883.04,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Engenheiro",
+   "referencia": "REM28",
+   "vencimento": 16883.04,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Engenheiro de Segurança do Trabalho",
+   "referencia": "REM28",
+   "vencimento": 16883.04,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  },
+  {
+   "cargo": "Procurador",
+   "referencia": "REM29",
+   "vencimento": 18273.84,
+   "unidade": "mes",
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "revisar": false
+  }
+ ],
+ "cruzamento": {
+  "Motorista - LC 66/2017": {
+   "n": 71,
+   "mediana": 13686.7,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM10",
+   "vencimento": 6506.32,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Tecnico de Enfermagem - LC 66/2017": {
+   "n": 299,
+   "mediana": 10888.46,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM18",
+   "vencimento": 7152.95,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato via alias",
+   "revisar": false
+  },
+  "Assistente Social - LC 66/2017": {
+   "n": 35,
+   "mediana": 13970.25,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM23",
+   "vencimento": 9355.63,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Agente de Apoio Operacional - LC 66/2017": {
+   "n": 826,
+   "mediana": 9839.51,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM12",
+   "vencimento": 6570.51,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Tecnico de Enfermagem (CTD)": {
+   "n": 160,
+   "mediana": 9402.73,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM18",
+   "vencimento": 7152.95,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato via alias",
+   "revisar": false
+  },
+  "Auxiliar Odontologico - LC 66/2017": {
+   "n": 30,
+   "mediana": 10959.05,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM16",
+   "vencimento": 6709.73,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Professor de E. B. II (CTD)": {
+   "n": 104,
+   "mediana": 19137.39,
+   "tabela": "MAGISTÉRIO LC 65-2017 REF. 05-2026",
+   "referencia": "RMH03",
+   "vencimento": 71.59,
+   "vencimento_topo": null,
+   "unidade": "hora-aula",
+   "match": "exato via alias",
+   "revisar": false
+  },
+  "Monitor - LC 66/2017": {
+   "n": 165,
+   "mediana": 10265.4,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM12",
+   "vencimento": 6570.51,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Enfermeiro - LC 66/2017": {
+   "n": 151,
+   "mediana": 14411.14,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM24",
+   "vencimento": 9405.85,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato via alias",
+   "revisar": false
+  },
+  "Professor de E. Básica I (CTD)": {
+   "n": 315,
+   "mediana": 12057.82,
+   "tabela": "MAGISTÉRIO LC 65-2017 REF. 05-2026",
+   "referencia": "RMH02",
+   "vencimento": 63.82,
+   "vencimento_topo": null,
+   "unidade": "hora-aula",
+   "match": "exato via alias",
+   "revisar": false
+  },
+  "Coordenador Pedagogico - LC 65/2017": {
+   "n": 29,
+   "mediana": 16748.45,
+   "tabela": "MAGISTÉRIO LC 65-2017 REF. 05-2026",
+   "referencia": "RMM01",
+   "vencimento": 15545.8,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Professor de Educacao Basica I - PEBI - LC 65/2017": {
+   "n": 492,
+   "mediana": 15257.61,
+   "tabela": "MAGISTÉRIO LC 65-2017 REF. 05-2026",
+   "referencia": "RMH02",
+   "vencimento": 63.82,
+   "vencimento_topo": null,
+   "unidade": "hora-aula",
+   "match": "exato via alias",
+   "revisar": false
+  },
+  "Educadora Infantil - LC 66/2017": {
+   "n": 372,
+   "mediana": 13433.11,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM21",
+   "vencimento": 8522.26,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Auxiliar de Enfermagem - LC 66/2017": {
+   "n": 137,
+   "mediana": 11615.65,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM16",
+   "vencimento": 6709.73,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato via alias",
+   "revisar": false
+  },
+  "Agente de Apoio Educacional - LC 66/2017": {
+   "n": 183,
+   "mediana": 3863.34,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM01",
+   "vencimento": 2558.33,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Agente de Apoio Educacional (CTD)": {
+   "n": 3,
+   "mediana": 3694.93,
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "referencia": "REM1",
+   "vencimento": 2558.33,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato (sem lei no nome)",
+   "revisar": false
+  },
+  "Professor de Educacao Basica II - PEBII - LC 65/2017": {
+   "n": 240,
+   "mediana": 20577.81,
+   "tabela": "MAGISTÉRIO LC 65-2017 REF. 05-2026",
+   "referencia": "RMH03",
+   "vencimento": 71.59,
+   "vencimento_topo": null,
+   "unidade": "hora-aula",
+   "match": "exato via alias",
+   "revisar": false
+  },
+  "Medico Plantonista - LC 66/2017": {
+   "n": 287,
+   "mediana": 27845.41,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REH01",
+   "vencimento": 153.45,
+   "vencimento_topo": null,
+   "unidade": "hora",
+   "match": "exato",
+   "revisar": false
+  },
+  "Orientador Social - LC 66/2017": {
+   "n": 8,
+   "mediana": 7002.12,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM03",
+   "vencimento": 5402.2,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Diretor de Unidade Escolar - LC 65/2017": {
+   "n": 57,
+   "mediana": 20712.32,
+   "tabela": "MAGISTÉRIO LC 65-2017 REF. 05-2026",
+   "referencia": "RMM02",
+   "vencimento": 16958.95,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Agente Comunitario de Saude - LC 66/2017": {
+   "n": 30,
+   "mediana": 4943.2,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM02",
+   "vencimento": 3369.41,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Enfermeiro (CTD)": {
+   "n": 45,
+   "mediana": 11704.66,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM24",
+   "vencimento": 9405.85,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato via alias",
+   "revisar": false
+  },
+  "Auxiliar de Educacao Infantil - LC 66/2017": {
+   "n": 71,
+   "mediana": 8765.67,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM08",
+   "vencimento": 6412.45,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Terapeuta Ocupacional - LC 66/2017": {
+   "n": 12,
+   "mediana": 11596.81,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM23",
+   "vencimento": 9355.63,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Fonoaudiologo - LC 66/2017": {
+   "n": 9,
+   "mediana": 10473.83,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM24",
+   "vencimento": 9405.85,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Agente de Fiscalizacao - LC 66/2017": {
+   "n": 13,
+   "mediana": 9032.19,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM05",
+   "vencimento": 6325.12,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Auxiliar de Apoio Administrativo - LC 66/2017": {
+   "n": 66,
+   "mediana": 13614.9,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM17",
+   "vencimento": 6827.49,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Fisioterapeuta - LC 66/2017": {
+   "n": 25,
+   "mediana": 11775.79,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM23",
+   "vencimento": 9355.63,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato via alias",
+   "revisar": false
+  },
+  "Cirurgiao Dentista Plantonista - LC 66/2017": {
+   "n": 34,
+   "mediana": 32958.43,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REH01",
+   "vencimento": 153.45,
+   "vencimento_topo": null,
+   "unidade": "hora",
+   "match": "exato",
+   "revisar": false
+  },
+  "Tecnico de Analises Clinicas - LC 66/2017": {
+   "n": 18,
+   "mediana": 17030.75,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM20",
+   "vencimento": 8193.0,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "aproximado (TECNICO EM ANALISES CLINICAS)",
+   "revisar": false
+  },
+  "Procurador - LC 66/2017": {
+   "n": 11,
+   "mediana": 27327.3,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM29",
+   "vencimento": 18273.84,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Guarda Civil Municipal": {
+   "n": 208,
+   "mediana": 20764.6,
+   "tabela": "GUARDA CIVIL MUNICIPAL REF. 05-2026",
+   "referencia": "LC 139/2026 (carreira)",
+   "vencimento": 4676.85,
+   "vencimento_topo": 14146.73,
+   "unidade": "mes",
+   "match": "exato (sem lei no nome)",
+   "revisar": false
+  },
+  "Guarda Patrimonial - LC 66/2017": {
+   "n": 43,
+   "mediana": 21174.16,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM22",
+   "vencimento": 8657.44,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Agente de Licitacao - LC 66/2017": {
+   "n": 10,
+   "mediana": 20524.63,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM28",
+   "vencimento": 16883.04,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Farmaceutico - LC 66/2017": {
+   "n": 40,
+   "mediana": 14936.47,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM27",
+   "vencimento": 11287.03,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Guia Turistico - LC 66/2017": {
+   "n": 4,
+   "mediana": 18612.22,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM17",
+   "vencimento": 6827.49,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Tecnico de Radiologia - LC 66/2017": {
+   "n": 28,
+   "mediana": 14709.12,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM14",
+   "vencimento": 6608.87,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "aproximado (TECNICO EM RADIOLOGIA)",
+   "revisar": false
+  },
+  "Psicologo - LC 66/2017": {
+   "n": 35,
+   "mediana": 12250.72,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM24",
+   "vencimento": 9405.85,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Nutricionista - LC 66/2017": {
+   "n": 8,
+   "mediana": 10576.44,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM24",
+   "vencimento": 9405.85,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Monitor de Praticas Esportivas - LC 66/2017": {
+   "n": 10,
+   "mediana": 16309.08,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM09",
+   "vencimento": 6449.72,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Tecnico em Saude Bucal - LC 66/2017": {
+   "n": 8,
+   "mediana": 10387.74,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM18",
+   "vencimento": 7152.95,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Operador de Microcomputador - LC 66/2017": {
+   "n": 8,
+   "mediana": 19590.16,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM17",
+   "vencimento": 6827.49,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Analista Clinico - LC 66/2017": {
+   "n": 15,
+   "mediana": 19902.41,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM27",
+   "vencimento": 11287.03,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Engenheiro - LC 66/2017": {
+   "n": 15,
+   "mediana": 22596.71,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM28",
+   "vencimento": 16883.04,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Encarregado de Servico - LC 66/2017": {
+   "n": 1,
+   "mediana": 12807.09,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM15",
+   "vencimento": 6643.24,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Contador - LC 66/2017": {
+   "n": 7,
+   "mediana": 23650.87,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM28",
+   "vencimento": 16883.04,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Agente de Administracao Publica - LC 66/2017": {
+   "n": 10,
+   "mediana": 12969.09,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM17",
+   "vencimento": 6827.49,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Educador Desportivo - LC 66/2017": {
+   "n": 10,
+   "mediana": 14699.78,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM26",
+   "vencimento": 10183.84,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Fiscal Sanitario - LC 66/2017": {
+   "n": 9,
+   "mediana": 10657.88,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM16",
+   "vencimento": 6709.73,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Mecanico de Autos - LC 66/2017": {
+   "n": 1,
+   "mediana": 10353.72,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM13",
+   "vencimento": 6570.52,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Salva Vidas - LC 66/2017": {
+   "n": 7,
+   "mediana": 15411.68,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM07",
+   "vencimento": 6410.34,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Tecnico em Seguranca do Trabalho - LC 66/2017": {
+   "n": 5,
+   "mediana": 13483.06,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM18",
+   "vencimento": 7152.95,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Desenhista Especializado - LC 66/2017": {
+   "n": 2,
+   "mediana": 19857.71,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM24",
+   "vencimento": 9405.85,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Supervisor Educacional - LC 65/2017": {
+   "n": 5,
+   "mediana": 19358.33,
+   "tabela": "MAGISTÉRIO LC 65-2017 REF. 05-2026",
+   "referencia": "RMM03",
+   "vencimento": 18513.47,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Auditor Fiscal Tributario - LC 66/2017": {
+   "n": 7,
+   "mediana": 22613.76,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM28",
+   "vencimento": 16883.04,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Digitador - LC 66/2017": {
+   "n": 2,
+   "mediana": 14283.17,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM04",
+   "vencimento": 6240.41,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Programador - LC 66/2017": {
+   "n": 3,
+   "mediana": 16603.92,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM18",
+   "vencimento": 7152.95,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Biologo - LC 66/2017": {
+   "n": 2,
+   "mediana": 11080.15,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM23",
+   "vencimento": 9355.63,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Veterinario - LC 66/2017": {
+   "n": 2,
+   "mediana": 14335.01,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM25",
+   "vencimento": 10081.76,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Auxiliar de Enfermagem do Trabalho - LC 66/2017": {
+   "n": 4,
+   "mediana": 9081.23,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM16",
+   "vencimento": 6709.73,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Medico do Trabalho - LC 66/2017": {
+   "n": 2,
+   "mediana": 22423.75,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REH01",
+   "vencimento": 153.45,
+   "vencimento_topo": null,
+   "unidade": "hora",
+   "match": "exato",
+   "revisar": false
+  },
+  "Interprete de LIBRAS - LC 66/2017": {
+   "n": 3,
+   "mediana": 8384.66,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM16",
+   "vencimento": 6709.73,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Agente de Apoio Administrativo - LC 66/2017": {
+   "n": 7,
+   "mediana": 11720.61,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM17",
+   "vencimento": 6827.49,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Advogado do CREAS - LC 66/2017": {
+   "n": 1,
+   "mediana": 11711.09,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM25",
+   "vencimento": 10081.76,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Enfermeiro do Trabalho - LC 66/2017": {
+   "n": 2,
+   "mediana": 12261.33,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM24",
+   "vencimento": 9405.85,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Eletricista - LC 66/2017": {
+   "n": 1,
+   "mediana": 13123.87,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM10",
+   "vencimento": 6506.32,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Mecanico de Maquinas e Caminhoes - LC 66/2017": {
+   "n": 2,
+   "mediana": 13151.3,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM13",
+   "vencimento": 6570.52,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Engenheiro de Seguranca do Trabalho - LC 66/2017": {
+   "n": 1,
+   "mediana": 16390.07,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM28",
+   "vencimento": 16883.04,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Telefonista - LC 66/2017": {
+   "n": 1,
+   "mediana": 10575.34,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM06",
+   "vencimento": 6360.2,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Instrutor de Musica - LC 66/2017": {
+   "n": 1,
+   "mediana": 18067.23,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM11",
+   "vencimento": 6523.33,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Eletricista de Autos - LC 66/2017": {
+   "n": 1,
+   "mediana": 9624.39,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM10",
+   "vencimento": 6506.32,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Bibliotecario - LC 66/2017": {
+   "n": 1,
+   "mediana": 9080.27,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM19",
+   "vencimento": 7823.93,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  },
+  "Medico Plantonista (CTD)": {
+   "n": 1,
+   "mediana": 18346.62,
+   "tabela": "QUADRO GERAL LC 133-2025 REF. 05-2026",
+   "referencia": "REH2",
+   "vencimento": 146.02,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato (sem lei no nome)",
+   "revisar": false
+  },
+  "Tecnico de Laboratorio Basico - LC 66/2017": {
+   "n": 2,
+   "mediana": 16919.25,
+   "tabela": "QUADRO GERAL LC 66-2017  REF. 05-2026",
+   "referencia": "REM08",
+   "vencimento": 6412.45,
+   "vencimento_topo": null,
+   "unidade": "mes",
+   "match": "exato",
+   "revisar": false
+  }
+ }
+}

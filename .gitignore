@@ -12,3 +12,6 @@ data/raw/servidores_*.csv.gz
 # Entrada bruta de outras cidades (tem nome e salário individual)
 data/raw/entrada/
 data/raw/*.csv
+
+# PDFs das tabelas salariais: são públicos e o script rebaixa com --baixar
+data/raw/tabelas/
