@@ -159,13 +159,18 @@ details p{margin:8px 0 0;color:var(--text-2);font-size:15px}
 .gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0 24px}
 footer{color:var(--text-3);font-size:13px;margin-top:24px;line-height:1.6}
 .sr{position:absolute;left:-9999px}
-/* tabela larga: rola de lado; a sombra na borda mostra que ainda há coluna escondida */
-.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;background:
+/* tabela: o cabeçalho gruda no topo da tela enquanto a tabela passa */
+thead th{position:sticky;top:0;z-index:2;background:var(--surface);box-shadow:inset 0 -1px 0 var(--line)}
+/* sem caixa de rolagem por padrão (caixa de rolagem impede o cabeçalho de grudar);
+   a classe .rola só entra quando a tabela realmente não cabe, e aí a sombra na borda avisa */
+.tw{overflow:visible}
+.tw.rola{overflow-x:auto;-webkit-overflow-scrolling:touch;background:
   linear-gradient(to right,var(--surface),transparent) 0 0/24px 100% no-repeat local,
   linear-gradient(to left,var(--surface),transparent) 100% 0/24px 100% no-repeat local,
   linear-gradient(to right,rgba(128,128,128,.35),transparent) 0 0/12px 100% no-repeat scroll,
   linear-gradient(to left,rgba(128,128,128,.35),transparent) 100% 0/12px 100% no-repeat scroll}
 .swipe{display:none;font-size:12px;color:var(--text-3);margin:6px 0 0}
+.tw.rola + .swipe{display:block}
 details.notas{border-top:0;padding:0;margin:12px 0 0}
 details.notas summary{font-size:13px;font-weight:600;color:var(--text-2);padding:4px 0}
 details.notas .note{margin-top:2px}
@@ -204,7 +209,6 @@ details.notas .note{margin-top:2px}
   th{font-size:10.5px;letter-spacing:.02em}
   .sb,td .id,#evolTab .d{font-size:10.5px}
   .emp td.hist{font-size:12px;max-width:260px}
-  .swipe{display:block}
   .moreBtn{width:100%}
   .note{font-size:12.5px}
   .tip{max-width:min(280px,calc(100vw - 24px))}
@@ -674,7 +678,7 @@ function renderExplorador(){
       html+=tabelaEmpenhos(f.e.slice(0,expLimit),false)+(f.e.length>expLimit?`<button class="moreBtn" id="maisEmp">Mostrar mais (${f.e.length-expLimit} restantes)</button>`:'');
       body.innerHTML=html;
       const m=$('#maisEmp'); if(m) m.onclick=()=>{expLimit+=100;renderExplorador();};
-  ajustarCelular();
+  ajustarLayout();
     }
     body.querySelectorAll('.crumbs button').forEach(b=>b.onclick=()=>{expPath=expPath.slice(0,+b.dataset.i+1);expLimit=50;renderExplorador();});
   });
@@ -694,23 +698,17 @@ function renderBuscaGlobal(tree,body){
   body.innerHTML=`<div class="lvl"><span class="t">Resultados para "${esc(expQuery)}"<small>${hits.length} ${hits.length===1?'pagamento':'pagamentos'} · ${abrev(total)}</small></span></div>`+
     (hits.length?tabelaEmpenhos(hits.slice(0,expLimit),true)+(hits.length>expLimit?`<button class="moreBtn" id="maisEmp">Mostrar mais (${hits.length-expLimit} restantes)</button>`:''):`<p class="empty">Nada encontrado. Dica: use só o começo da palavra (ex. "asfalt" acha asfalto e asfáltica). A busca olha a descrição do pagamento, o fornecedor, o tipo de gasto e o serviço.</p>`);
   const m=$('#maisEmp'); if(m) m.onclick=()=>{expLimit+=100;renderExplorador();};
-  ajustarCelular();
+  ajustarLayout();
 }
 let buscaTimer; $('#buscaExp').addEventListener('input',()=>{clearTimeout(buscaTimer);buscaTimer=setTimeout(()=>{expQuery=$('#buscaExp').value.trim();expLimit=50;renderExplorador();},250);});
 
-/* celular: recolhe as notas longas e avisa quando a tabela rola de lado */
-const mqFone = matchMedia('(max-width:560px)');
-function ajustarCelular(){
-  const fone = mqFone.matches;
+/* notas longas recolhidas, aviso quando a tabela rola de lado e cabeçalho fixo quando ela cabe */
+function ajustarLayout(){
   document.querySelectorAll('p.note').forEach(p=>{
-    const dentro = p.parentElement.classList.contains('notas') ? p.parentElement : null;
-    if(fone && p.textContent.length >= 200 && !dentro){        // celular: recolhe (essas notas são longas)
-      const d = document.createElement('details'); d.className = 'notas';
-      d.innerHTML = '<summary>Como ler estes números</summary>';
-      p.parentNode.insertBefore(d, p); d.appendChild(p);
-    } else if(!fone && dentro){                                // computador: volta a nota solta, como era
-      dentro.parentNode.insertBefore(p, dentro); dentro.remove();
-    }
+    if(p.textContent.length < 200 || p.parentElement.classList.contains('notas')) return;
+    const d = document.createElement('details'); d.className = 'notas';
+    d.innerHTML = '<summary>Como ler estes números</summary>';
+    p.parentNode.insertBefore(d, p); d.appendChild(p);   // fica recolhida; quem abrir, continua aberta
   });
   document.querySelectorAll('.tw').forEach(w=>{
     let av = w.nextElementSibling;
@@ -719,11 +717,13 @@ function ajustarCelular(){
       av.textContent = '↔ arraste a tabela para o lado para ver as outras colunas';
       w.parentNode.insertBefore(av, w.nextSibling);
     }
-    // largura 0 = aba escondida: não dá para medir, deixa o aviso quieto
-    av.style.display = (fone && w.clientWidth && w.scrollWidth > w.clientWidth + 4) ? '' : 'none';
+    w.classList.add('rola');                 // mede com a rolagem ligada...
+    const larg = w.clientWidth, precisa = larg > 0 && w.scrollWidth > larg + 4;
+    w.classList.toggle('rola', precisa);     // ...e desliga se a tabela couber, para o cabeçalho poder grudar
+    // largura 0 = aba escondida: não dá para medir agora; mostrarTab() mede de novo ao abrir
   });
 }
-mqFone.addEventListener('change', ajustarCelular);
+addEventListener('resize', ajustarLayout);
 
 /* ===== abas ===== */
 let tabAtual='geral';
@@ -734,7 +734,7 @@ function mostrarTab(t,scroll){
   document.querySelectorAll('#topnav button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.tab===t));
   if(location.hash!=='#'+t) history.replaceState(null,'','#'+t);
   if(scroll) window.scrollTo({top:0,behavior:'smooth'});
-  ajustarCelular();  // só dá para medir a rolagem das tabelas da aba visível
+  ajustarLayout();  // só dá para medir a rolagem das tabelas da aba visível
 }
 document.querySelectorAll('#topnav button').forEach(b=>b.onclick=()=>mostrarTab(b.dataset.tab,true));
 window.addEventListener('hashchange',()=>mostrarTab(location.hash.slice(1)||'geral'));
@@ -831,7 +831,7 @@ function renderServExp(){
     }
     const mb=$('#maisServ'); if(mb) mb.onclick=()=>{sLimit+=100;renderServExp();};
     body.querySelectorAll('.crumbs button').forEach(b=>b.onclick=()=>{sPath=sPath.slice(0,+b.dataset.i+1);sLimit=50;renderServExp();});
-    bindTips(body); ajustarCelular();
+    bindTips(body); ajustarLayout();
   });
 }
 
@@ -861,7 +861,7 @@ function renderEvolucao(){
     items.map((it,i)=>{const pv=items[i-1];return `<tr><td><b>${it.ano}</b></td><td class="num">${abrev(it.ativos)}<span class="d">${pv?dl(it.ativos,pv.ativos):'base'}${i>1?' · desde '+first.ano+' '+dl(it.ativos,first.ativos):''}</span></td><td class="num">${abrev(it.apos)}<span class="d">${pv?dl(it.apos,pv.apos):'base'}${i>1?' · desde '+first.ano+' '+dl(it.apos,first.apos):''}</span></td><td class="num">${abrev(it.total)}<span class="d">${pv?dl(it.total,pv.total):'base'}</span></td><td class="num">${fmtBRL(it.total/it.pop)}</td><td class="num">${pct(100*it.total/it.gasto)}</td><td class="num">${it.rec?pct(100*it.total/it.rec):'—'}</td></tr>`;}).join('')+`</tbody>`;
 }
 
-function renderAll(){ renderYears(); renderHero(); renderFuncoes(); renderNatureza(); renderFolha(); renderServidores(); sPath=[]; sLimit=50; renderServExp(); renderEvolucao(); renderMensal(); renderReceitas(); renderBalanco(); renderFornecedores(); renderRodape(); expPath=[]; expLimit=50; renderExplorador(); ajustarCelular(); }
+function renderAll(){ renderYears(); renderHero(); renderFuncoes(); renderNatureza(); renderFolha(); renderServidores(); sPath=[]; sLimit=50; renderServExp(); renderEvolucao(); renderMensal(); renderReceitas(); renderBalanco(); renderFornecedores(); renderRodape(); expPath=[]; expLimit=50; renderExplorador(); ajustarLayout(); }
 renderAll();
 mostrarTab(location.hash.slice(1)||'geral');
 })();
