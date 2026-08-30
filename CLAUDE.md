@@ -99,26 +99,42 @@ dist/                     o que vai para o ar (gerado por publicar.py, versionad
 
 ## Estrutura do painel (abas)
 
-O painel tem 5 abas (navegação por hash: #geral, #pessoal, #salarios, #detalhe, #entenda), cada uma é um `<div class="tab" data-tab="...">`.
-O hash antigo #comparar continua funcionando: mostrarTab() redireciona para #salarios.
+O painel tem 7 abas, NESTA ordem no menu (navegação por hash): #geral, #detalhe, #pessoal, #salarios,
+#comparar, #reforma, #entenda. Cada uma é um `<div class="tab" data-tab="...">`, e a ordem das divs no
+arquivo acompanha a ordem do menu.
+O #comparar voltou a ser aba própria (só comparação entre cidades), então o redirecionamento que existia
+em mostrarTab() foi removido.
 - geral: números-chave, por área, natureza/órgãos, mês a mês, receitas, receitas x despesas
 - pessoal: folha (composição, por área, mês a mês) · quem são os servidores (agregados) · servidor a servidor (funil
   secretaria › vínculo › cargo › indivíduos anônimos, carregado de data/servidores_{ano}.js) · evolução ativos x aposentados.
   Termina com a ponte "E quanto cada um ganha?" (#irComparar) para a aba salarios.
 - salarios: tudo sobre quanto se ganha. "Quanto ganha cada cargo" (tabela por cargo, veio da aba pessoal) +
-  salário mediano por cargo contra Campinas (segue o seletor de ano; dezembro de cada ano) +
   "De onde vem o salário" (quanto cada cargo recebe acima da tabela de vencimentos de Paulínia)
   e "Por que dois colegas ganham diferente" (mediana e R$/hora por grupo: horas normais,
   contratado para mais horas, turno/escala, chefia). O R$/hora é o que impede a leitura errada:
   jornada maior NÃO é hora extra (a hora vale quase o mesmo); hora valendo muito mais = adicionais.
   A tabela de vencimento-base dos concursos foi removida do painel a pedido do Bruno. Dados de
   data/comparativo_cargos.json, embutido pelo montar_painel.py (opcional: sem o arquivo as seções somem
-  e nada quebra). As duas últimas seções são de dez/2025 e se escondem quando outro ano é escolhido.
+  e nada quebra). "De onde vem o salário" e "Por que dois colegas ganham diferente" são de dez/2025 e se
+  escondem quando outro ano é escolhido (constante REF no template).
+  Fecha com "A folha cabe na arrecadação?": razão folha/receita por ano, calculada direto do painel.json.
+  CUIDADO ao mexer nesse texto: a folha NÃO vem crescendo acima da arrecadação no período. De 2023 a 2025 a
+  receita subiu 30,7% e a folha 28,2%, e a fatia comprometida caiu de 49,8% para 48,8%. Só 2025 isolado teve
+  folha (+9,5%) acima da receita (+1,7%). A nota da seção diz isso; não transforme em tendência.
+- comparar: só comparação entre cidades. Hoje: salário mediano por cargo contra Campinas (segue o seletor
+  de ano; dezembro de cada ano). É onde entra a futura comparação de gasto/receita por morador com as vizinhas.
   ATENÇÃO ao par de professores: a reclassificação de ago/2025 (PEB I -> Educadora Infantil, mesma
   gente) obriga a somar os dois cargos de Paulínia, senão 2025 sai com +68% em vez de +54%. O campo
   'desde' em PARES limita um par aos anos em que ele faz sentido.
+- reforma: dependência do ICMS, calendário da reforma tributária e simulador de queda da cota-parte.
+  Os números do estudo estão no objeto RT do template; o resto sai do painel.json. Fonte: Comissão Especial
+  da Câmara de Paulínia (fev/2024), que cita Afonso, Caiado, Viana e Biasoto (Conjuntura Econômica/FGV,
+  jul/2023) — ano-base 2022, ANTERIOR à LC 214/2025. Queda projetada da cota-parte: 68,4%, gradual entre
+  2029 e 2078. O painel não faz projeção própria: reproduz o estudo e mostra a aritmética.
 - detalhe: explorador em funil + ranking/busca de fornecedores
-- entenda: glossário
+- entenda: "A situação de Paulínia, em resumo" (o ÚNICO lugar em que o painel interpreta em vez de só medir;
+  todos os números são calculados dos mesmos dados das outras abas, nada digitado à mão) + glossário.
+  O fecho aponta a aritmética e diz explicitamente que o painel não recomenda caminho nenhum. Mantenha assim.
 `mostrarTab(nome)` troca de aba; `irPara(caminho)` abre o explorador na aba detalhe.
 
 ## Comparação com outras cidades

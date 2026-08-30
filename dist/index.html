@@ -201,6 +201,24 @@ details.notas .note{margin-top:2px}
 .cmpbase .lin:nth-child(odd){background:var(--surface-2)}
 .cmpbase .lin b{font-variant-numeric:tabular-nums;white-space:nowrap}
 .cmpbase .lin span{color:var(--text-2)}
+/* reforma tributária: linha do tempo e simulador */
+.linha{display:flex;flex-direction:column;gap:2px;margin:4px 0 2px}
+.linha .ev{display:grid;grid-template-columns:104px 1fr;gap:14px;align-items:baseline;padding:11px 8px;border-radius:8px;border-left:3px solid var(--line)}
+.linha .ev:nth-child(odd){background:var(--surface-2)}
+.linha .ev.forte{border-left-color:var(--s2)}
+.linha .ev b{font-variant-numeric:tabular-nums;font-size:15px}
+.linha .ev span{font-size:14px;color:var(--text-2);line-height:1.4}
+.simctl{display:grid;grid-template-columns:auto 1fr 76px;gap:12px;align-items:center;background:var(--surface-2);padding:14px;border-radius:12px;margin:2px 0 16px}
+.simctl label{font-size:14px;font-weight:600}
+.simctl input[type=range]{width:100%;accent-color:var(--s2)}
+.simctl output{font-variant-numeric:tabular-nums;font-size:22px;font-weight:700;text-align:right;color:var(--s2)}
+@media (max-width:560px){.simctl{grid-template-columns:1fr auto}.simctl label{grid-column:1/-1}.simctl input[type=range]{grid-column:1}}
+/* resumo da aba Entenda */
+.resumo h3{margin:20px 0 6px;font-size:16px}
+.resumo h3:first-child{margin-top:4px}
+.resumo p{margin:0 0 10px;font-size:15px;line-height:1.55;color:var(--text-2);max-width:74ch}
+.resumo p b{color:var(--text)}
+.resumo .fecho{border-left:3px solid var(--s2);padding:10px 0 10px 14px;background:var(--surface-2);border-radius:0 8px 8px 0;margin-top:18px}
 /* celular: o painel é pensado para 1080px; aqui tudo encolhe e as barras passam a ocupar a linha inteira */
 @media (max-width:560px){
   .wrap{padding:16px 12px 56px}
@@ -275,9 +293,11 @@ details.notas .note{margin-top:2px}
 
 <nav class="topnav" id="topnav" aria-label="Seções do painel">
   <button data-tab="geral">Visão geral</button>
+  <button data-tab="detalhe">Gasto a gasto</button>
   <button data-tab="pessoal">Pessoal</button>
   <button data-tab="salarios">Salários</button>
-  <button data-tab="detalhe">Gasto a gasto</button>
+  <button data-tab="comparar">Comparação</button>
+  <button data-tab="reforma">Reforma tributária</button>
   <button data-tab="entenda">Entenda</button>
 </nav>
 <div class="tab" data-tab="geral">
@@ -325,6 +345,24 @@ details.notas .note{margin-top:2px}
   <p class="sub">Receitas arrecadadas e despesas pagas, por ano</p>
   <div class="chart-wrap" id="balanco"></div>
   <p class="note">Não exclui repasses internos entre órgãos do lado da despesa (as contribuições da Prefeitura à Paulínia Previ aparecem nos dois). Trata-se de uma visão simplificada de caixa, não do resultado contábil oficial.</p>
+</section>
+</div>
+
+<div class="tab" data-tab="detalhe">
+<section id="explorador">
+  <h2>Explore gasto a gasto</h2>
+  <p class="sub">Da área até a nota: área › serviço › tipo de gasto › fornecedor › cada pagamento, com a descrição do que foi comprado.</p>
+  <input type="search" id="buscaExp" placeholder="Ou procure em todos os pagamentos do ano: ex. asfalt, merenda, medicamento, iluminação, creche…" aria-label="Buscar em todos os pagamentos">
+  <div id="expBody"></div>
+  <p class="note">Somente valores pagos. Um pagamento pode ter várias parcelas no ano; aqui estão somadas por empenho. A descrição é o texto registrado pela própria prefeitura, sem edição.</p>
+</section>
+
+<section>
+  <h2>Para quem a prefeitura paga</h2>
+  <p class="sub" id="fornSub"></p>
+  <input type="search" id="busca" placeholder="Buscar empresa ou CNPJ…" aria-label="Buscar fornecedor">
+  <div class="tw"><table id="fornTab"><thead><tr><th>#</th><th>Fornecedor</th><th>Área principal</th><th class="num">Empenhos</th><th class="num">Pago no ano</th></tr></thead><tbody></tbody></table></div>
+  <p class="note" id="fornNote"></p>
 </section>
 </div>
 
@@ -390,14 +428,6 @@ details.notas .note{margin-top:2px}
   <p class="note" id="cargoNote"></p>
 </section>
 
-<section id="comparativo">
-  <h2>Paulínia paga mais que Campinas?</h2>
-  <p class="sub" id="compSub"></p>
-  <div class="cmpleg"><span class="p">Paulínia</span><span class="c">Campinas</span></div>
-  <div id="compBars"></div>
-  <p class="note" id="compNote"></p>
-</section>
-
 <section id="acimadatabela">
   <h2>De onde vem o salário</h2>
   <p class="sub" id="tabSub"></p>
@@ -411,27 +441,63 @@ details.notas .note{margin-top:2px}
   <div id="decBars"></div>
   <p class="note" id="decNote"></p>
 </section>
+
+<section id="folharec">
+  <h2>A folha cabe na arrecadação?</h2>
+  <p class="sub" id="frSub"></p>
+  <div id="frBars" class="dec"></div>
+  <p class="note" id="frNote"></p>
+</section>
 </div>
 
-<div class="tab" data-tab="detalhe">
-<section id="explorador">
-  <h2>Explore gasto a gasto</h2>
-  <p class="sub">Da área até a nota: área › serviço › tipo de gasto › fornecedor › cada pagamento, com a descrição do que foi comprado.</p>
-  <input type="search" id="buscaExp" placeholder="Ou procure em todos os pagamentos do ano: ex. asfalt, merenda, medicamento, iluminação, creche…" aria-label="Buscar em todos os pagamentos">
-  <div id="expBody"></div>
-  <p class="note">Somente valores pagos. Um pagamento pode ter várias parcelas no ano; aqui estão somadas por empenho. A descrição é o texto registrado pela própria prefeitura, sem edição.</p>
+<div class="tab" data-tab="comparar">
+<section id="comparativo">
+  <h2>Paulínia paga mais que Campinas?</h2>
+  <p class="sub" id="compSub"></p>
+  <div class="cmpleg"><span class="p">Paulínia</span><span class="c">Campinas</span></div>
+  <div id="compBars"></div>
+  <p class="note" id="compNote"></p>
+</section>
+</div>
+
+<div class="tab" data-tab="reforma">
+<section id="dependencia">
+  <h2>Paulínia depende de uma fonte só</h2>
+  <p class="sub" id="depSub"></p>
+  <div class="mini" id="depTiles"></div>
+  <div id="depBars"></div>
+  <p class="note" id="depNote"></p>
 </section>
 
-<section>
-  <h2>Para quem a prefeitura paga</h2>
-  <p class="sub" id="fornSub"></p>
-  <input type="search" id="busca" placeholder="Buscar empresa ou CNPJ…" aria-label="Buscar fornecedor">
-  <div class="tw"><table id="fornTab"><thead><tr><th>#</th><th>Fornecedor</th><th>Área principal</th><th class="num">Empenhos</th><th class="num">Pago no ano</th></tr></thead><tbody></tbody></table></div>
-  <p class="note" id="fornNote"></p>
+<section id="calendario">
+  <h2>O que muda, e quando</h2>
+  <p class="sub">A reforma não chega de uma vez. O ICMS só desaparece por completo em 2033, e a redivisão do dinheiro entre municípios leva 50 anos.</p>
+  <div class="linha" id="calLinha"></div>
+  <p class="note" id="calNote"></p>
+</section>
+
+<section id="simulador">
+  <h2>E se a cota-parte cair?</h2>
+  <p class="sub" id="simSub"></p>
+  <div class="simctl">
+    <label for="simRange">Queda da cota-parte do ICMS</label>
+    <input type="range" id="simRange" min="0" max="100" step="0.1" value="68.4" aria-label="Queda da cota-parte do ICMS, em por cento">
+    <output id="simPct">68,4%</output>
+  </div>
+  <div class="mini" id="simTiles"></div>
+  <div id="simBars"></div>
+  <p class="note" id="simNote"></p>
 </section>
 </div>
 
 <div class="tab" data-tab="entenda">
+<section id="resumo">
+  <h2>A situação de Paulínia, em resumo</h2>
+  <p class="sub">Esta é a única parte do painel em que ele junta as peças e resume. Todos os números citados aqui aparecem, com fonte, nas outras abas.</p>
+  <div id="resumoTxt"></div>
+  <p class="note" id="resumoNote"></p>
+</section>
+
 <section>
   <h2>Entenda os termos</h2>
   <div class="gloss">
@@ -1717,7 +1783,6 @@ addEventListener('resize', ()=>{
 /* ===== abas ===== */
 let tabAtual='geral';
 function mostrarTab(t,scroll){
-  if(t==='comparar') t='salarios';          // link antigo continua funcionando
   if(!document.querySelector(`.tab[data-tab="${t}"]`)) t='geral';
   tabAtual=t;
   document.querySelectorAll('.tab').forEach(el=>el.classList.toggle('on',el.dataset.tab===t));
@@ -1920,6 +1985,185 @@ function renderDecomposicao(){
     'num valor que o portal não separa — é aí que cabe perguntar. Fonte: Quadro de Pessoal de setembro de 2025 cruzado '+
     'com a folha de dezembro de 2025 pela matrícula (99% dos servidores). "Horas" é a jornada mensal designada.';
 }
+function renderFolhaReceita(){
+  const sec=$('#folharec'); if(!sec) return;
+  const linhas=anos.map(a=>{
+    const rec=D.receitas[a]&&D.receitas[a].total, fol=D.despesas[a]&&D.despesas[a].folha&&D.despesas[a].folha.total;
+    return (rec&&fol)?{ano:a,rec,fol,pct:100*fol/rec}:null;
+  }).filter(Boolean);
+  if(linhas.length<2){ sec.style.display='none'; return; }
+  sec.style.display='';
+  const ult=linhas[linhas.length-1], pen=linhas[linhas.length-2];
+  const cf=100*(ult.fol/pen.fol-1), cr=100*(ult.rec/pen.rec-1);
+  const pr=linhas[0];
+  $('#frSub').innerHTML=`Salários e aposentadorias consomem a maior parte do que a cidade arrecada. `+
+    `Em ${ult.ano} a folha cresceu <b>${pct(cf)}</b> e a arrecadação, <b>${pct(cr)}</b>.`;
+  const max=Math.max(...linhas.map(l=>l.pct));
+  $('#frBars').innerHTML=linhas.map((l,i)=>{
+    const ant=i?linhas[i-1]:null, dpp=ant?l.pct-ant.pct:null;
+    const varia=ant?`<span style="color:${dpp>0?'var(--s2)':'var(--good)'}">${dpp>0?'+':'−'}${Math.abs(dpp).toLocaleString('pt-BR',{maximumFractionDigits:1})} p.p.</span> que em ${ant.ano}`:'primeiro ano da série';
+    return `<div class="cmp"><div class="nm">${l.ano}<em>arrecadou ${abrev(l.rec)} · folha ${abrev(l.fol)}</em></div>`+
+      `<div class="duo"><div class="row p"><i>vai para a folha</i><span class="track">`+
+      `<span class="tr" style="width:${100*l.pct/max}%"></span></span><b>${pct(l.pct)}</b>`+
+      `<u>${varia}</u></div></div></div>`;
+  }).join('');
+  const dif=cf-cr;
+  $('#frNote').innerHTML=`<b>Um ano não é uma tendência.</b> Em ${ult.ano} a folha subiu ${pct(Math.abs(cf))} e a `+
+    `arrecadação ${pct(Math.abs(cr))} — a folha cresceu ${Math.abs(dif).toLocaleString('pt-BR',{maximumFractionDigits:1})} `+
+    `ponto${Math.abs(dif)>=2?'s':''} percentuais a mais, `+
+    `e isso merece acompanhamento. Mas olhando os ${linhas.length} anos inteiros a conta se inverte: de ${pr.ano} para `+
+    `${ult.ano} a arrecadação cresceu ${pct(100*(ult.rec/pr.rec-1))} e a folha ${pct(100*(ult.fol/pr.fol-1))}, e a fatia da `+
+    `arrecadação comprometida com a folha hoje (${pct(ult.pct)}) é <b>menor</b> que em ${pr.ano} (${pct(pr.pct)}). `+
+    `O salto de arrecadação de ${linhas[1].ano} (${pct(100*(linhas[1].rec/pr.rec-1))} em um ano) desloca qualquer comparação `+
+    `feita a partir dele. Valores nominais, sem descontar a inflação. Folha = salários, encargos e aposentadorias pagas `+
+    `pela Paulínia Previ; arrecadação = todas as receitas do município no ano.`;
+}
+// ---- Reforma tributária -------------------------------------------------
+// Os números do estudo vêm do relatório da Comissão Especial da Câmara de Paulínia
+// (fev/2024), que cita Afonso, Caiado, Viana e Biasoto (Conjuntura Econômica, FGV,
+// jul/2023). Ano-base 2022 e anterior à LC 214/2025 — está dito na nota.
+const RT = {
+  queda_estudo: 68.4,
+  perda_bi_2022: 1.01e9,
+  pct_receitas_2022: 36.8,
+  icms_pct_paulinia_2022: 60.7,
+  icms_pct_media_sp: 18.8,
+  iptu_pct_paulinia_2022: 0.7,
+  iptu_pct_media_sp: 10,
+  transf_paulinia: 73,
+  transf_media_sp: 49.3,
+  fonte: 'Comissão Especial de Estudos da Câmara Municipal de Paulínia (fev/2024), a partir de Afonso, Caiado, Viana e Biasoto (Conjuntura Econômica/FGV, jul/2023)',
+  calendario: [
+    ['2026', 'Alíquotas de teste, só para o sistema começar a rodar (CBS 0,9%, IBS 0,1%).', false],
+    ['2027', 'PIS e Cofins acabam. A CBS entra no lugar.', false],
+    ['2029 a 2032', 'O ICMS e o ISS vão sendo reduzidos ano a ano, e o IBS ocupa o espaço.', true],
+    ['2033', 'ICMS e ISS deixam de existir. Toda a arrecadação passa pelo IBS.', true],
+    ['2029 a 2078', 'A redivisão entre os municípios acontece aos poucos, ao longo de 50 anos: o peso de onde a riqueza é produzida cai devagar e o peso de onde as pessoas moram sobe.', true],
+  ],
+};
+
+function renderReforma(){
+  const sec=$('#dependencia'); if(!sec) return;
+  const rec=D.receitas[ano], desp=D.despesas[ano];
+  if(!rec||!desp){ return; }
+  const icms=(rec.por_grupo||[]).find(g=>/ICMS/i.test(g.nome));
+  if(!icms) return;
+  const folha=desp.folha.total, inv=(desp.por_natureza||[]).find(x=>/Investiment/i.test(x.nome));
+
+  $('#depSub').innerHTML=`Mais da metade de tudo o que entra no caixa de Paulínia vem do repasse do ICMS — `+
+    `dinheiro gerado pela refinaria e pelas indústrias. É essa fatia que a reforma tributária muda de lugar.`;
+  $('#depTiles').innerHTML=
+    `<div class="tile"><div class="lbl">Veio do ICMS em ${ano}</div><div class="val">${abrev(icms.valor)}</div>`+
+    `<div class="ctx">${pct(icms.pct)} de tudo o que a cidade arrecadou</div></div>`+
+    `<div class="tile"><div class="lbl">Por morador</div><div class="val">${fmtBRL(icms.por_habitante)}</div>`+
+    `<div class="ctx">só de ICMS, por ano</div></div>`;
+  const barras=[['Paulínia', RT.icms_pct_paulinia_2022], ['Média dos municípios de SP', RT.icms_pct_media_sp]];
+  const maxb=Math.max(...barras.map(b=>b[1]));
+  $('#depBars').innerHTML=`<h3>Quanto da receita vem do ICMS<small>Paulínia contra a média paulista, em 2022</small></h3>`+
+    barras.map(([nome,v],i)=>`<div class="cmp"><div class="nm">${nome}</div><div class="duo">`+
+      `<div class="row ${i?'c':'p'}"><span class="track"><span class="tr" style="width:${100*v/maxb}%"></span></span>`+
+      `<b>${pct(v)}</b></div></div><div class="dif"></div></div>`).join('');
+  $('#depNote').innerHTML=`A outra ponta da mesma moeda: o IPTU é ${pct(RT.iptu_pct_paulinia_2022)} da receita de Paulínia `+
+    `contra ${pct(RT.iptu_pct_media_sp)} na média dos municípios paulistas, e as transferências de outros governos são `+
+    `${pct(RT.transf_paulinia)} do orçamento daqui contra ${pct(RT.transf_media_sp)} na média. A cidade arrecada pouco `+
+    `de imposto próprio porque recebe muito de fora — o que também significa poucas alternativas se o repasse encolher. `+
+    `Percentuais de 2022, do estudo citado abaixo; os valores em reais são da arrecadação de ${ano}.`;
+
+  $('#calLinha').innerHTML=RT.calendario.map(([q,txt,forte])=>
+    `<div class="ev${forte?' forte':''}"><b>${q}</b><span>${txt}</span></div>`).join('');
+  $('#calNote').innerHTML=`Calendário conforme o relatório da Câmara Municipal de Paulínia. A regra de divisão do novo `+
+    `imposto troca o critério: hoje ${pct(75)} da cota-parte do ICMS segue o valor adicionado pela atividade econômica `+
+    `no município; no IBS, ${pct(80)} passa a seguir a população. Paulínia produz muito e tem pouca gente, e é daí que `+
+    `vem a perda projetada.`;
+
+  const simular=()=>{
+    const q=+$('#simRange').value;
+    $('#simPct').textContent=pct(q);
+    const perda=icms.valor*q/100;
+    const sobra=rec.total-perda;
+    $('#simTiles').innerHTML=
+      `<div class="tile"><div class="lbl">Deixaria de entrar</div><div class="val">${abrev(perda)}</div>`+
+      `<div class="ctx">por ano, sobre a arrecadação de ${ano}</div></div>`+
+      `<div class="tile"><div class="lbl">Sobraria</div><div class="val">${abrev(sobra)}</div>`+
+      `<div class="ctx">${pct(100*sobra/rec.total)} do que a cidade arrecada hoje</div></div>`+
+      `<div class="tile"><div class="lbl">Por morador</div><div class="val">${fmtBRL(sobra/desp.populacao)}</div>`+
+      `<div class="ctx">contra ${fmtBRL(rec.total/desp.populacao)} hoje</div></div>`;
+    const refs=[['O que deixaria de entrar', perda], ['Folha de pagamento de '+ano, folha]];
+    if(inv) refs.push(['Tudo que a cidade investiu em '+ano, inv.valor]);
+    const maxr=Math.max(...refs.map(r=>r[1]));
+    $('#simBars').innerHTML=`<h3>Para comparar<small>o buraco ao lado das maiores contas da cidade</small></h3>`+
+      refs.map(([nome,v],i)=>`<div class="cmp"><div class="nm">${nome}</div><div class="duo">`+
+        `<div class="row ${i?'p':'c'}"><span class="track"><span class="tr" style="width:${100*v/maxr}%"></span></span>`+
+        `<b>${abrev(v)}</b></div></div><div class="dif"></div></div>`).join('');
+    const perdaEstudo=icms.valor*RT.queda_estudo/100;
+    $('#simSub').innerHTML=`Arraste para simular. O estudo da Câmara projeta uma queda de <b>${pct(RT.queda_estudo)}</b> na `+
+      `cota-parte do ICMS. Aplicada à arrecadação de ${ano}, ela tiraria <b>${abrev(perdaEstudo)}</b> por ano do caixa — `+
+      `o equivalente a <b>${pct(100*perdaEstudo/folha)}</b> de toda a folha de pagamento da Prefeitura.`;
+  };
+  $('#simRange').oninput=simular;
+  $('#simRange').value=RT.queda_estudo;   // o controle começa exatamente no número do estudo
+  simular();
+  $('#simNote').innerHTML=`<b>Isto é uma conta, não uma previsão.</b> A queda de ${pct(RT.queda_estudo)} é a estimativa do `+
+    `estudo citado, e aqui ela é aplicada sobre a arrecadação de ${ano} para dar escala — a perda real acontece aos poucos, `+
+    `entre 2029 e 2078, e depende de leis, do crescimento da economia e da população de Paulínia até lá. O estudo usa `+
+    `ano-base 2022, projeta R$ ${(RT.perda_bi_2022/1e9).toLocaleString('pt-BR',{minimumFractionDigits:2})} bilhões de perda `+
+    `(${pct(RT.pct_receitas_2022)} das receitas daquele ano) e é <b>anterior à Lei Complementar 214/2025</b>, que regulamentou `+
+    `a reforma. Fonte: ${RT.fonte}. Este painel não faz projeção própria: reproduz o estudo e mostra a aritmética.`;
+}
+function renderResumo(){
+  const alvo=$('#resumoTxt'); if(!alvo) return;
+  const rec=D.receitas[ano], desp=D.despesas[ano];
+  if(!rec||!desp){ alvo.innerHTML=''; return; }
+  const icms=(rec.por_grupo||[]).find(g=>/ICMS/i.test(g.nome));
+  const iptu=(rec.por_grupo||[]).find(g=>/IPTU/i.test(g.nome));
+  const folha=desp.folha.total, folhaPct=100*folha/rec.total;
+  const anosNum=anos.map(Number), a0=String(Math.min(...anosNum));
+  const rec0=D.receitas[a0], desp0=D.despesas[a0];
+  const C=(typeof COMPARATIVO!=='undefined'&&COMPARATIVO)||{};
+  const par=(C.pares||[]).find(p=>/T[ée]cnico de enfermagem/i.test(p.nome)&&p.dados&&p.dados[ano]);
+  const acima=(C.tabela_vs_folha||[]);
+  const mediana=acima.length?acima.map(x=>x.acima).sort((a,b)=>a-b)[Math.floor(acima.length/2)]:null;
+  const topo=acima[0];
+  const perda=icms?icms.valor*RT.queda_estudo/100:0;
+
+  let h='<div class="resumo">';
+  h+=`<h3>Uma cidade rica, dependente de uma fonte só</h3>`+
+     `<p>Paulínia arrecadou <b>${abrev(rec.total)}</b> em ${ano}, ou <b>${fmtBRL(rec.total/desp.populacao)} por morador</b> — muito acima do que se vê em cidades do mesmo tamanho. `+
+     (icms?`Mas <b>${pct(icms.pct)}</b> desse dinheiro vem de uma única origem: o repasse do ICMS gerado pela refinaria e pelas indústrias. Na média dos municípios paulistas, o ICMS é ${pct(RT.icms_pct_media_sp)} da receita. `:'')+
+     (iptu?`Na outra ponta, o IPTU responde por ${pct(iptu.pct)} do que entra aqui, contra cerca de ${pct(RT.iptu_pct_media_sp)} na média do estado: a cidade quase não cobra imposto próprio porque nunca precisou.`:'')+`</p>`;
+
+  h+=`<h3>Salários acima da região e acima da própria tabela</h3><p>`+
+     (par?`No mesmo cargo e no mesmo mês, um ${par.nome.toLowerCase()} de Paulínia recebe <b>${fmtBRL(par.dados[ano].paulinia.mediana)}</b> contra <b>${fmtBRL(par.dados[ano].campinas.mediana)}</b> em Campinas. `:'')+
+     (mediana?`E, dentro da própria Prefeitura, o servidor típico recebe cerca de <b>${mediana.toLocaleString('pt-BR',{maximumFractionDigits:1})} vezes</b> o vencimento que a lei fixa para o cargo dele`+
+       (topo?`, chegando a ${topo.acima.toLocaleString('pt-BR',{maximumFractionDigits:2})} vezes no caso do ${topo.cargo.toLowerCase()}`:'')+`. `:'')+
+     `A diferença não vem de tempo de casa — a progressão prevista em lei é pequena — e sim de jornada contratada, escala e adicionais. `+
+     `Uma parte se explica por trabalho a mais, e nesse caso o valor da hora fica parecido; outra parte não, e o painel não consegue separar quanto é hora extra e quanto é gratificação, porque a Prefeitura não publica as verbas.</p>`;
+
+  h+=`<h3>A folha consome quase metade do que a cidade arrecada</h3>`+
+     `<p>Em ${ano}, <b>${pct(folhaPct)}</b> da arrecadação foi para salários, encargos e aposentadorias. `+
+     (rec0&&desp0?`Entre ${a0} e ${ano} a arrecadação cresceu ${pct(100*(rec.total/rec0.total-1))} e a folha ${pct(100*(folha/desp0.folha.total-1))}, `+
+       `mas só no último ano a folha subiu bem mais rápido que a receita. `:'')+
+     `É a maior despesa da cidade, e a mais difícil de mudar de um ano para o outro.</p>`;
+
+  h+=`<h3>E a fonte principal vai mudar</h3>`+
+     `<p>A reforma tributária substitui o ICMS pelo IBS e troca o critério de divisão entre municípios: sai o valor produzido, entra a população. `+
+     `O estudo citado pela Comissão Especial da Câmara Municipal projeta uma queda de <b>${pct(RT.queda_estudo)}</b> na cota-parte de Paulínia, `+
+     `com efeitos graduais entre <b>2029 e 2078</b>. Aplicada à arrecadação de ${ano}, essa queda equivaleria a <b>${abrev(perda)}</b> a menos por ano — `+
+     `<b>${pct(100*perda/folha)}</b> de toda a folha de pagamento.</p>`;
+
+  h+=`<div class="fecho"><p><b>O que isso quer dizer.</b> Não é um abismo com data marcada: a transição se estende por décadas, `+
+     `e o que acontecer com a economia e com a população de Paulínia até lá muda o resultado. Mas a aritmética é simples de enunciar: `+
+     `a maior receita da cidade tende a encolher e a maior despesa é rígida. Alguma combinação de decisões terá que ser tomada ao longo `+
+     `dos próximos anos — ampliar outras receitas, rever gastos, ou as duas coisas — e quanto mais cedo essa conversa começar, `+
+     `mais opções existem.</p><p><b>Este painel não diz qual caminho seguir.</b> Ele mostra os números para que a discussão aconteça `+
+     `com eles à mesa, e não sem eles.</p></div>`;
+  h+='</div>';
+  alvo.innerHTML=h;
+  $('#resumoNote').innerHTML=`Resumo escrito a partir dos dados das outras abas: arrecadação e despesas do TCE-SP, folha do portal da `+
+    `Prefeitura, tabelas de vencimento publicadas pela própria Prefeitura, folha de Campinas publicada por aquela Prefeitura e o `+
+    `estudo da Comissão Especial da Câmara Municipal de Paulínia. Valores nominais, sem descontar a inflação. A projeção da reforma `+
+    `é do estudo citado, não deste painel, tem ano-base 2022 e é anterior à Lei Complementar 214/2025.`;
+}
 function renderEvolucao(){
   const items=anos.map(a=>{const f=D.despesas[a].folha;const ap=(f.grupos.find(g=>g.nome==='Aposentadorias e pensões')||{valor:0}).valor;return {ano:a,ativos:f.ativos,apos:ap,total:f.total,gasto:D.despesas[a].totais.pago,rec:D.receitas[a]?D.receitas[a].total:null,pop:D.despesas[a].populacao};});
   const {W,H,L,R,T,B}=geo({W:900,H:260,L:64,R:20,T:28,B:36},{W:360,H:230,L:48,R:8,B:32});
@@ -1946,7 +2190,7 @@ function renderEvolucao(){
     items.map((it,i)=>{const pv=items[i-1];return `<tr><td><b>${it.ano}</b></td><td class="num">${abrev(it.ativos)}<span class="d">${pv?dl(it.ativos,pv.ativos):'base'}${i>1?' · desde '+first.ano+' '+dl(it.ativos,first.ativos):''}</span></td><td class="num">${abrev(it.apos)}<span class="d">${pv?dl(it.apos,pv.apos):'base'}${i>1?' · desde '+first.ano+' '+dl(it.apos,first.apos):''}</span></td><td class="num">${abrev(it.total)}<span class="d">${pv?dl(it.total,pv.total):'base'}</span></td><td class="num">${fmtBRL(it.total/it.pop)}</td><td class="num">${pct(100*it.total/it.gasto)}</td><td class="num">${it.rec?pct(100*it.total/it.rec):'—'}</td></tr>`;}).join('')+`</tbody>`;
 }
 
-function renderAll(){ renderYears(); renderHero(); renderFuncoes(); renderNatureza(); renderFolha(); renderServidores(); renderComparativo(); renderTabela(); renderDecomposicao(); sPath=[]; sLimit=50; renderServExp(); renderEvolucao(); renderMensal(); renderReceitas(); renderBalanco(); renderFornecedores(); renderRodape(); expPath=[]; expLimit=50; renderExplorador(); ajustarLayout(); }
+function renderAll(){ renderYears(); renderHero(); renderFuncoes(); renderNatureza(); renderFolha(); renderServidores(); renderComparativo(); renderTabela(); renderDecomposicao(); renderFolhaReceita(); renderReforma(); renderResumo(); sPath=[]; sLimit=50; renderServExp(); renderEvolucao(); renderMensal(); renderReceitas(); renderBalanco(); renderFornecedores(); renderRodape(); expPath=[]; expLimit=50; renderExplorador(); ajustarLayout(); }
 renderAll();
 mostrarTab(location.hash.slice(1)||'geral');
 })();

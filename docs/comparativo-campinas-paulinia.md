@@ -154,12 +154,12 @@ Conferências feitas nesta revisão, sobre as 23 linhas publicadas:
 - o casamento de nomes é exato em 22 delas; a única aproximação é "Tecnico de Radiologia" ↔
   "TECNICO EM RADIOLOGIA". Nenhuma linha está marcada para revisar.
 
-**Ponto em aberto:** o denominador é a referência (REM) que a tabela dá para o cargo, e no quadro
-geral cada cargo aparece com uma referência só. Se a evolução funcional da LC 66/2017 mover o
-servidor para uma referência mais alta ao longo da carreira, parte da distância entre a folha e a
-tabela é **progressão de carreira**, não adicional — e a frase "adicionais, gratificações, horas
-extras e jornada ampliada entram por cima" ficaria incompleta. Vale conferir no texto da lei antes
-de usar esse número numa discussão pública.
+**Sobre a progressão de carreira:** o denominador é a referência (REM) que a tabela dá para o cargo,
+e no quadro geral cada cargo aparece com uma referência só. A pergunta natural é se parte da
+distância entre a folha e a tabela seria progressão de carreira, e não adicional. O resumo do painel
+afirma que não ("a progressão prevista em lei é pequena"). Como o texto da LC 66/2017 não está no
+repositório, essa é a única afirmação daqui que não dá para reconferir só com os dados — quem for
+usá-la numa discussão pública deve ter a lei à mão.
 
 ## 6. Limites que continuam de pé
 
