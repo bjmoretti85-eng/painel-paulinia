@@ -25,5 +25,12 @@ assert "/*__COMPARATIVO__*/null" in html, "placeholder do comparativo não encon
 html = html.replace("/*__COMPARATIVO__*/null", comp)
 print("comparativo:", "embutido" if COMP.exists() else "ausente (seção oculta)")
 
+# comparativo com as cidades da região (MUNIC + receitas do TCE), também opcional
+CID = BASE / "data" / "comparativo_cidades.json"
+cid = CID.read_text(encoding="utf-8").replace("</script", "<\\/script") if CID.exists() else "null"
+assert "/*__CIDADES__*/null" in html, "placeholder das cidades não encontrado"
+html = html.replace("/*__CIDADES__*/null", cid)
+print("cidades:", "embutido" if CID.exists() else "ausente (seção oculta)")
+
 SAIDA.write_text(html, encoding="utf-8")
 print(f"-> {SAIDA} ({SAIDA.stat().st_size/1024:.0f} KB)")

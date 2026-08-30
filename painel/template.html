@@ -101,13 +101,7 @@ section{background:var(--surface);border:1px solid var(--line);border-radius:var
 .moreBtn{border:1px solid var(--line);background:var(--surface);color:var(--text-2);font:600 13px inherit;padding:8px 14px;border-radius:999px;cursor:pointer;margin-top:10px}
 .bar.open + .detail{display:block}
 /* navegação por abas */
-.topnav{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:-8px 0 22px;overflow-x:auto;
-  scrollbar-width:none;background:
-  linear-gradient(to right,var(--bg),transparent) 0 0/20px 100% no-repeat local,
-  linear-gradient(to left,var(--bg),transparent) 100% 0/20px 100% no-repeat local,
-  linear-gradient(to right,rgba(128,128,128,.3),transparent) 0 0/10px 100% no-repeat scroll,
-  linear-gradient(to left,rgba(128,128,128,.3),transparent) 100% 0/10px 100% no-repeat scroll}
-.topnav::-webkit-scrollbar{display:none}
+.topnav{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:-8px 0 22px;overflow-x:auto}
 .topnav button{border:0;background:transparent;color:var(--text-2);font:600 15px inherit;padding:12px 16px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap}
 .topnav button:hover{color:var(--text)}
 .topnav button[aria-pressed="true"]{color:var(--text);border-bottom-color:var(--accent)}
@@ -202,6 +196,31 @@ details.notas .note{margin-top:2px}
 .cmpleg span{display:inline-flex;align-items:center}
 .cmpleg span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px;background:var(--s1)}
 .cmpleg .c::before{background:var(--s2)}
+.reg td,.reg th{vertical-align:middle}
+.reg .cid{font-weight:600;white-space:nowrap}
+.reg .cid em{display:block;font-style:normal;font-weight:400;font-size:11.5px;color:var(--text-3);margin-top:2px}
+.reg .cel.c span.bt{background:var(--s2)}
+.reg .pl{font-variant-numeric:tabular-nums;font-weight:600}
+.reg tr.eu{background:var(--accent-soft)}
+.reg tr.eu .cid{font-weight:700}
+.reg tr.med td{border-top:2px solid var(--line);color:var(--text-2);font-style:italic}
+.reg .cel{display:flex;align-items:center;gap:9px;justify-content:flex-end}
+.reg .cel span.bt{display:block;height:11px;border-radius:0 3px 3px 0;min-width:2px;background:var(--s1);opacity:.55}
+.reg .cel.b span.bt{background:var(--s3)}
+.reg tr.eu .cel span.bt{opacity:1}
+.reg .cel b{font-variant-numeric:tabular-nums;font-weight:600;width:76px;text-align:right;flex:none;white-space:nowrap}
+.reg th{white-space:nowrap}
+.reg .barw{flex:1;min-width:40px;display:block}
+.reg .sm{display:none}
+@media(max-width:640px){
+  .reg .barw,.reg .lg,.reg .cid em{display:none}
+  .reg .sm{display:inline}
+  .reg .cid{white-space:normal;line-height:1.3}
+  .reg td,.reg th{padding-left:6px;padding-right:6px}
+  .reg .cel b{width:auto}
+  .reg{font-size:12.5px}
+  .reg .med .cid{font-size:11.5px}
+}
 .cmpbase{display:flex;flex-direction:column;gap:2px}
 .cmpbase .lin{display:grid;grid-template-columns:1fr auto 1fr auto;gap:8px 14px;align-items:baseline;padding:8px;border-radius:8px;font-size:14px}
 .cmpbase .lin:nth-child(odd){background:var(--surface-2)}
@@ -236,7 +255,7 @@ details.notas .note{margin-top:2px}
   h3 small{display:block;margin:3px 0 0;margin-left:0;font-size:12.5px;line-height:1.35}
   .sub{font-size:13.5px;margin-bottom:14px}
   .years{padding:3px}.years button{padding:7px 13px;font-size:14px}
-  .topnav{margin:-4px 0 16px}.topnav button{padding:10px 9px;font-size:13.5px}
+  .topnav{margin:-4px 0 16px}.topnav button{padding:10px 12px;font-size:14px}
   .hero{grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
   .tile{padding:12px 13px}
   .tile .lbl{font-size:11px}.tile .val{font-size:21px;margin:4px 0 2px}.tile .ctx{font-size:12.5px}
@@ -252,12 +271,13 @@ details.notas .note{margin-top:2px}
   .cmpbase .lin{grid-template-columns:1fr auto;font-size:13px}
   .cmp.dec{grid-template-columns:1fr}
   /* rótulo + valor na 1ª linha, barra + horas na 2ª: enfileirados, sobravam 4px para a barra */
-  .cmp.dec .row{display:grid;grid-template-columns:1fr auto;gap:3px 10px;align-items:center}
-  .cmp.dec .row i{grid-column:1;grid-row:1;width:auto}
-  .cmp.dec .row b{grid-column:2;grid-row:1;width:auto}
-  .cmp.dec .row .track{grid-column:1;grid-row:2}
-  .cmp.dec .row u{grid-column:2;grid-row:2;width:auto}
-  .cmp .row u{width:104px;font-size:10.5px}
+  /* qualquer linha com a coluna extra (horas, contagem de servidores): rótulo+valor em cima,
+     barra+extra embaixo — enfileirados, a coluna extra comia o trilho da barra (54px) */
+  .cmp .row:has(u){display:grid;grid-template-columns:1fr auto;gap:3px 10px;align-items:center}
+  .cmp .row:has(u) i{grid-column:1;grid-row:1;width:auto}
+  .cmp .row:has(u) b{grid-column:2;grid-row:1;width:auto}
+  .cmp .row:has(u) .track{grid-column:1;grid-row:2}
+  .cmp .row u{grid-column:2;grid-row:2;width:auto;font-size:10.5px}
   /* barra: nome e valor na 1ª linha, a barra inteira na 2ª (antes sobravam 2px para a barra) */
   .bar,.bar.wide,.hbar{grid-template-columns:1fr auto;gap:4px 10px;padding:9px 4px;min-height:0}
   .bar .nm,.bar.wide .nm,.hbar .nm{grid-column:1;grid-row:1;white-space:normal;font-size:14px;line-height:1.3}
@@ -303,7 +323,7 @@ details.notas .note{margin-top:2px}
   <button data-tab="pessoal">Pessoal</button>
   <button data-tab="salarios">Salários</button>
   <button data-tab="comparar">Comparação</button>
-  <button data-tab="reforma" data-curto="Reforma">Reforma tributária</button>
+  <button data-tab="reforma">Reforma tributária</button>
   <button data-tab="entenda">Entenda</button>
 </nav>
 <div class="tab" data-tab="geral">
@@ -457,11 +477,27 @@ details.notas .note{margin-top:2px}
 </div>
 
 <div class="tab" data-tab="comparar">
+<section id="regiao">
+  <h2>Paulínia e as cidades da região</h2>
+  <p class="sub" id="regSub"></p>
+  <div class="tw"><table class="reg" id="regTab"></table></div>
+  <p class="note" id="regNote"></p>
+</section>
+
+<section id="quantos">
+  <h2>Em que áreas está essa diferença</h2>
+  <p class="sub" id="qtSub"></p>
+  <div id="qtBars"></div>
+  <p class="note" id="qtNote"></p>
+</section>
+
 <section id="comparativo">
   <h2>Paulínia paga mais que Campinas?</h2>
   <p class="sub" id="compSub"></p>
   <div class="cmpleg"><span class="p">Paulínia</span><span class="c">Campinas</span></div>
   <div id="compBars"></div>
+  <h3 id="jpTit" hidden>E se for só jornada?<small id="jpSub"></small></h3>
+  <div id="jpBars"></div>
   <p class="note" id="compNote"></p>
 </section>
 </div>
@@ -527,6 +563,7 @@ details.notas .note{margin-top:2px}
 <script>
 const DADOS = /*__DADOS__*/null;
 const COMPARATIVO = /*__COMPARATIVO__*/null;
+const CIDADES = /*__CIDADES__*/null;
 </script>
 <script>
 (function(){
@@ -612,9 +649,8 @@ function renderFuncoes(){
     const w=100*f.valor/max;
     const pf=prev&&prev.por_funcao.find(x=>x.nome===f.nome);
     const main = funcMode==='valor'?abrev(f.valor):funcMode==='pct'?pct(f.pct):fmtBRL(f.por_habitante);
-    const sec = funcMode==='valor'?pct(f.pct)+' do total':funcMode==='pct'?abrev(f.valor)
-              :fmtBRL(f.por_habitante/12)+' por mês';   // o ano inteiro é abstrato; o mês, não
-    const tipHtml=`<b>${f.icone} ${esc(f.nome)}</b>${esc(f.descricao)}<br>${fmtBRL(f.valor)} · ${pct(f.pct)} · ${fmtBRL(f.por_habitante)}/morador por ano (${fmtBRL(f.por_habitante/12)}/mês)`;
+    const sec = funcMode==='valor'?pct(f.pct)+' do total':funcMode==='pct'?abrev(f.valor):'por habitante';
+    const tipHtml=`<b>${f.icone} ${esc(f.nome)}</b>${esc(f.descricao)}<br>${fmtBRL(f.valor)} · ${pct(f.pct)} · ${fmtBRL(f.por_habitante)}/morador`;
     return `<div class="bar" data-tip="${esc(tipHtml)}" role="button" tabindex="0" aria-expanded="false">
       <div class="nm"><span>${f.icone}</span>${esc(f.nome)}</div>
       <div class="tr"><div class="fl" style="width:${w}%"></div></div>
@@ -734,7 +770,7 @@ function renderReceitas(){
   const list=outros?[...top,outros]:top;
   $('#recBars').innerHTML=list.map(g=>{
     const pg=g.nome==='Outras receitas'?null:(prev&&prev.por_grupo.find(x=>x.nome===g.nome));
-    return `<div class="bar" data-tip="<b>${esc(g.nome)}</b>${esc(g.descricao)}<br>${fmtBRL(g.valor)} · ${pct(g.pct)} · ${fmtBRL(g.por_habitante||0)}/morador por ano (${fmtBRL((g.por_habitante||0)/12)}/mês)">
+    return `<div class="bar" data-tip="<b>${esc(g.nome)}</b>${esc(g.descricao)}<br>${fmtBRL(g.valor)} · ${pct(g.pct)} · ${fmtBRL(g.por_habitante||0)}/morador">
       <div class="nm">${esc(g.nome)}</div>
       <div class="tr"><div class="fl" style="width:${100*g.valor/max}%;background:var(--s3)"></div></div>
       <div class="vl">${abrev(g.valor)}<small>${pct(g.pct)} ${pg?delta(g.valor,pg.valor,true):''}</small></div></div>`;
@@ -888,12 +924,6 @@ function congelarColunas(w){
 
 /* notas longas recolhidas, aviso quando a tabela rola de lado e cabeçalho fixo quando ela cabe */
 function ajustarLayout(){
-  // com 7 abas o menu rola de lado no celular; o rótulo curto ajuda a caber mais
-  const fone2 = matchMedia('(max-width:560px)').matches;
-  document.querySelectorAll('#topnav button[data-curto]').forEach(b=>{
-    if(!b.dataset.longo) b.dataset.longo = b.textContent;
-    b.textContent = fone2 ? b.dataset.curto : b.dataset.longo;
-  });
   document.querySelectorAll('p.note').forEach(p=>{
     if(p.textContent.length < 200 || p.parentElement.classList.contains('notas')) return;
     const d = document.createElement('details'); d.className = 'notas';
@@ -1038,6 +1068,116 @@ function renderServExp(){
   });
 }
 
+function renderCidades(){
+  const sec=$('#regiao'); if(!sec) return;
+  const C=(typeof CIDADES!=='undefined'&&CIDADES)||null;
+  const REF=((typeof COMPARATIVO!=='undefined'&&COMPARATIVO&&COMPARATIVO.anos)||[2025]).slice(-1)[0];
+  if(!C||!C.cidades||!C.cidades.length||String(ano)!==String(REF)){ sec.style.display='none'; return; }
+  sec.style.display='';
+  const R=C.referencia, L=C.cidades.slice();
+  const eu=L.find(x=>x.cidade.indexOf('Paulínia')===0)||{};
+  const n1=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
+  const vez=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})+'×';
+  const maxS=Math.max(...L.map(x=>x.por_mil), R.mediana_por_mil);
+  const maxR=Math.max(...L.map(x=>x.receita_hab||0), R.mediana_receita_hab||0);
+  const maxC=Math.max(...L.map(x=>x.custo_medio||0), R.mediana_custo_medio||0);
+  const cel=(v,max,txt,cls)=>`<div class="cel ${cls||''}"><span class="barw"><span class="bt" style="width:${max?100*v/max:0}%"></span></span><b>${txt}</b></div>`;
+  const acima=L.filter(x=>x.por_mil<eu.por_mil).length;
+
+  $('#regSub').innerHTML=`Quantos servidores uma cidade tem depende muito do tamanho dela: no estado de São Paulo, `+
+    `a mediana vai de 67 por mil habitantes nos municípios com menos de 10 mil moradores a 14 por mil nos que passam de 500 mil. `+
+    `Comparar Paulínia só com Campinas mede sobretudo essa diferença de porte. Por isso a tabela põe as vizinhas lado a lado `+
+    `e, na última linha, a <b>mediana dos ${fmtN(R.municipios_na_faixa)} municípios paulistas do mesmo porte de Paulínia</b> `+
+    `(entre ${fmtN(R.faixa[0])} e ${fmtN(R.faixa[1])} habitantes). As quatro colunas respondem quatro perguntas diferentes: `+
+    `quanta gente, quanto custa cada um, quanto do orçamento isso consome e quanto a cidade tem para gastar.`;
+
+  const linha=x=>{
+    const cls=x===eu?' class="eu"':'';
+    return `<tr${cls}><td class="cid">${esc(x.cidade)}<em>${fmtN(x.pop)} moradores</em></td>`+
+      `<td>${cel(x.por_mil,maxS,n1(x.por_mil))}</td>`+
+      `<td>${cel(x.custo_medio||0,maxC,x.custo_medio?fmtBRL(x.custo_medio):'—','c')}</td>`+
+      `<td class="num pl">${x.folha_pct?n1(x.folha_pct)+'%':'—'}</td>`+
+      `<td>${cel(x.receita_hab||0,maxR,x.receita_hab?fmtBRL(x.receita_hab):'—','b')}</td></tr>`;
+  };
+  $('#regTab').innerHTML=`<thead><tr><th>Cidade</th>`+
+    `<th class="num">Servidores<br>por mil hab.</th>`+
+    `<th class="num">Custo médio<br>por servidor</th>`+
+    `<th class="num">Folha<br>% do gasto</th>`+
+    `<th class="num">Arrecadação<br>por morador</th></tr></thead><tbody>`+
+    L.map(linha).join('')+
+    `<tr class="med"><td class="cid">Mediana <span class="lg">dos ${fmtN(R.municipios_na_faixa)} municípios de SP do porte de Paulínia</span>`+
+    `<span class="sm">das cidades do mesmo porte</span><em>${fmtN(R.faixa[0])} a ${fmtN(R.faixa[1])} moradores</em></td>`+
+    `<td>${cel(R.mediana_por_mil,maxS,n1(R.mediana_por_mil))}</td>`+
+    `<td>${cel(R.mediana_custo_medio||0,maxC,R.mediana_custo_medio?fmtBRL(R.mediana_custo_medio):'—','c')}</td>`+
+    `<td class="num pl">${R.mediana_folha_pct?n1(R.mediana_folha_pct)+'%':'—'}</td>`+
+    `<td>${cel(R.mediana_receita_hab||0,maxR,R.mediana_receita_hab?fmtBRL(R.mediana_receita_hab):'—','b')}</td></tr>`+
+    `</tbody>`;
+
+  $('#regNote').innerHTML=`<b>O que a tabela diz.</b> Paulínia tem <b>${n1(eu.por_mil)} servidores por mil moradores</b>, `+
+    `contra ${n1(R.mediana_por_mil)} na mediana das cidades do mesmo porte — <b>${vez(eu.por_mil/R.mediana_por_mil)}</b>, e mais `+
+    `${acima===L.length-1?'que todas as '+fmtN(acima)+' vizinhas':'que '+fmtN(acima)+' das '+fmtN(L.length-1)+' vizinhas'} da tabela`+
+    `${R.pct_abaixo_por_mil?', e acima de '+R.pct_abaixo_por_mil+'% dos municípios do seu porte no estado':''}. `+
+    `É bem menos do que a comparação direta com Campinas sugere, porque lá o que pesa é o tamanho.`+
+    (eu.custo_medio&&R.mediana_custo_medio?` <b>A diferença maior está no custo de cada servidor</b>: ${fmtBRL(eu.custo_medio)} por mês `+
+      `contra ${fmtBRL(R.mediana_custo_medio)} na mediana do mesmo porte — <b>${vez(eu.custo_medio/R.mediana_custo_medio)}</b>, `+
+      `acima de ${R.pct_abaixo_custo_medio}% delas. É o número mais fora da curva do painel.`:'')+
+    (eu.folha_pct&&R.mediana_folha_pct?` <b>E, mesmo assim, a folha não sufoca o orçamento:</b> consome ${n1(eu.folha_pct)}% do que `+
+      `a cidade gasta, contra ${n1(R.mediana_folha_pct)}% na mediana — praticamente o normal, e menos que Santa Bárbara d'Oeste. `+
+      `Não é contradição: a folha cabe porque o orçamento é enorme. Paulínia arrecada <b>${fmtBRL(eu.receita_hab)} por morador</b>, `+
+      `${vez(eu.receita_hab/R.mediana_receita_hab)} a mediana do mesmo porte e mais que ${R.pct_abaixo_receita_hab}% delas.`:'')+
+    ` As três cidades com mais servidores por morador (Paulínia, Vinhedo e Jaguariúna) são exatamente as três mais ricas por morador. `+
+    `<b>É a arrecadação que sustenta a folha</b> — e é a arrecadação que a reforma tributária muda.<br><br>`+
+    `<b>De onde vêm os números.</b> Pessoal e população: ${esc(C.fonte_pessoal)} — a mesma pesquisa e a mesma definição para todas as `+
+    `cidades, o que é o que torna a comparação possível. A coluna de servidores por mil moradores conta só a administração direta `+
+    `(Campinas, por exemplo, tem outras ${fmtN((L.find(x=>x.cidade==='Campinas')||{}).indireta||0)} pessoas em autarquias e empresas municipais). `+
+    `Arrecadação e despesa: ${esc(C.fonte_receita)} e as despesas pagas do mesmo ano.<br><br>`+
+    `<b>Custo médio não é salário.</b> É a folha de servidor ativo — fora aposentadorias, precatórios e consórcios — dividida pelo `+
+    `efetivo da cidade e por 12. Inclui encargos patronais, hora extra, 13º e férias, por isso é maior que o contracheque. Aqui o `+
+    `divisor é administração direta <i>mais</i> indireta, porque a despesa do TCE cobre todos os órgãos do município. Serve para `+
+    `comparar cidades entre si, não para dizer quanto um servidor recebe.`;
+}
+
+function renderPorHabitante(){
+  const sec=$('#quantos'); if(!sec) return;
+  const P=(typeof COMPARATIVO!=='undefined'&&COMPARATIVO&&COMPARATIVO.por_habitante)||null;
+  const REF=((typeof COMPARATIVO!=='undefined'&&COMPARATIVO&&COMPARATIVO.anos)||[2025]).slice(-1)[0];
+  if(!P||!P.areas||!P.areas.length||String(ano)!==String(REF)){ sec.style.display='none'; return; }
+  sec.style.display='';
+  const f=P.folha_por_habitante, T=P.total;
+  const num=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
+  const vez=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})+'×';
+  $('#qtSub').innerHTML=`A tabela acima mostra o total. Aqui é onde ele se concentra, área por área, contra Campinas — `+
+    `a única vizinha que publica a folha aberta servidor a servidor. Como boa parte da diferença no total é porte, `+
+    `o que interessa nesta seção não é o tamanho de cada barra, e sim <b>quais áreas puxam</b> e quais não.`;
+  const linhas=P.areas.concat([{area:'Todas as áreas',paulinia:T.paulinia,campinas:T.campinas,vezes:T.vezes,
+    paulinia_n:T.paulinia_n,campinas_n:T.campinas_n,total:true}]);
+  const max=Math.max(...linhas.map(x=>x.paulinia));
+  $('#qtBars').innerHTML=linhas.map(x=>{
+    const linha=(cls,rot,v,n_)=>`<div class="row ${cls}"><i>${rot}</i><span class="track">`+
+      `<span class="tr" style="width:${100*v/max}%"></span></span><b>${num(v)}</b><u>${fmtN(n_)} serv.</u></div>`;
+    const destaque=x.total?' style="border-top:2px solid var(--line);margin-top:8px;padding-top:16px"':'';
+    return `<div class="cmp"${destaque}><div class="nm">${esc(x.area)}<em>por mil moradores</em></div>`+
+      `<div class="duo">${linha('p','Paulínia',x.paulinia,x.paulinia_n)}${linha('c','Campinas',x.campinas,x.campinas_n)}</div>`+
+      `<div class="dif" style="color:${x.vezes>=1?'var(--s1)':'var(--s2)'}">${vez(x.vezes)}</div></div>`;
+  }).join('')+
+  `<p class="sub" style="margin:14px 0 0">${(function(){
+    const C=(typeof CIDADES!=='undefined'&&CIDADES)||null;
+    const eu=C&&C.cidades.find(x=>x.cidade.indexOf('Paulínia')===0), R=C&&C.referencia;
+    const ef=(eu&&R)?eu.por_mil/R.mediana_por_mil:f.vezes_efetivo;
+    return `<b>Ter mais gente e pagar mais são coisas diferentes, e o custo é o produto das duas.</b> Contra Campinas, `+
+      `a folha de um mês custa ${fmtBRL(f.paulinia)} por morador em Paulínia e ${fmtBRL(f.campinas)} lá — mas esse ${vez(f.vezes)} `+
+      `mistura porte com excesso. Usando a referência justa da tabela acima, Paulínia tem <b>${vez(ef)} mais servidores</b> que as `+
+      `cidades do seu porte e paga <b>${vez(f.vezes_salario)} mais por servidor</b> que Campinas. Os dois pesam parecido; `+
+      `multiplicados, dão em torno de ${vez(ef*f.vezes_salario)} o custo de pessoal por morador.`;})()}</p>`;
+  $('#qtNote').innerHTML=`Folha de dezembro de 2025 nas duas cidades, contando só quem estava na ativa — por isso os `+
+    `totais aqui não batem exatamente com os da tabela acima, que vem da MUNIC. População: `+
+    `${fmtN(P.populacao.paulinia)} em Paulínia e ${fmtN(P.populacao.campinas)} em Campinas (estimativas do IBGE). `+
+    `<b>A comparação tem um limite:</b> cada cidade coloca coisas diferentes dentro da própria folha. Campinas mantém `+
+    `empresas e autarquias fora dela (saneamento, informática, previdência), e as duas terceirizam serviços em graus `+
+    `diferentes — repare que em obras e serviços públicos, a única área em que Paulínia não tem mais gente, a proporção `+
+    `é praticamente igual. Por isso as áreas comparáveis (educação, saúde, segurança) dizem mais do que o total.`;
+}
+
 function renderComparativo(){
   const sec=$('#comparativo');
   const C=(typeof COMPARATIVO!=='undefined')&&COMPARATIVO;
@@ -1059,8 +1199,32 @@ function renderComparativo(){
       `<div class="dif" style="color:${d.dif_pct>=0?'var(--s1)':'var(--s2)'}">${d.dif_pct>=0?'+':''}${Math.round(d.dif_pct)}%</div>`+
     `</div>`;
   }).join('');
-  $('#compNote').innerHTML='Usamos a mediana (o servidor do meio), e não a média, para que poucos salários muito altos não distorçam. Os valores não incluem 13º, férias nem outras verbas que não se repetem todo mês. Cargos com o mesmo nome nem sempre são a mesma coisa nas duas cidades: em Paulínia o "PEB I" cobre da creche ao 5º ano, em Campinas só a educação infantil — por isso somamos PEB I e PEB II de Campinas. As educadoras infantis de Paulínia foram comparadas com os professores de educação infantil de Campinas, e não com os agentes, que são cargo de apoio. Paulínia paga o professor por hora-aula de 50 minutos e Campinas por hora de relógio, e a jornada contratada difere: parte da diferença é jornada, não preço da hora. As carreiras da educação infantil estão mudando nos dois municípios por causa da Lei federal 15.326/2026. Fonte: folha de dezembro de 2025 publicada por cada prefeitura.';
+  $('#compNote').innerHTML='Usamos a mediana (o servidor do meio), e não a média, para que poucos salários muito altos não distorçam. Os valores não incluem 13º, férias nem outras verbas que não se repetem todo mês. Cargos com o mesmo nome nem sempre são a mesma coisa nas duas cidades: em Paulínia o "PEB I" cobre da creche ao 5º ano, em Campinas só a educação infantil — por isso somamos PEB I e PEB II de Campinas. As educadoras infantis de Paulínia foram comparadas com os professores de educação infantil de Campinas, e não com os agentes, que são cargo de apoio. Paulínia paga o professor por hora-aula de 50 minutos e Campinas por hora de relógio, o que atrapalha a comparação nesse cargo. As carreiras da educação infantil estão mudando nos dois municípios por causa da Lei federal 15.326/2026. Fonte: folha de dezembro de 2025 publicada por cada prefeitura.';
 }
+function renderJornadaPadrao(){
+  const L=(typeof COMPARATIVO!=='undefined'&&COMPARATIVO&&COMPARATIVO.jornada_padrao)||[];
+  const tit=$('#jpTit'), alvo=$('#jpBars');
+  if(!alvo) return;
+  // mesma regra das outras seções de dez/2025 (o REF de cada uma é local)
+  const REF=((typeof COMPARATIVO!=='undefined'&&COMPARATIVO&&COMPARATIVO.anos)||[2025]).slice(-1)[0];
+  if(!L.length||String(ano)!==String(REF)){ if(tit) tit.hidden=true; alvo.innerHTML=''; return; }
+  tit.hidden=false;
+  $('#jpSub').textContent='só os servidores de Paulínia na jornada padrão do cargo, sem função de chefia';
+  const max=Math.max(...L.map(x=>Math.max(x.paulinia,x.campinas)));
+  alvo.innerHTML=L.map(x=>{
+    const linha=(cls,rot,v)=>`<div class="row ${cls}"><i>${rot}</i><span class="track">`+
+      `<span class="tr" style="width:${100*v/max}%"></span></span><b>${fmtBRL(v)}</b></div>`;
+    return `<div class="cmp"><div class="nm">${esc(x.cargo)}<em>${fmtN(x.n)} servidores · ${fmtN(x.horas)}h por mês`+
+      (x.horas_necessarias?` · precisariam de ${fmtN(x.horas_necessarias)}h para a diferença ser só jornada`:'')+`</em></div>`+
+      `<div class="duo">${linha('p','Paulínia',x.paulinia)}${linha('c','Campinas',x.campinas)}</div>`+
+      `<div class="dif">+${Math.round(x.dif_pct)}%</div></div>`;
+  }).join('')+
+  `<p class="sub" style="margin:14px 0 0">Sem hora a mais e sem gratificação de comando, a diferença permanece. `+
+  `Para explicá-la só com jornada, um agente de apoio operacional de Paulínia teria de trabalhar `+
+  `${fmtN((L.find(x=>/Agente de Apoio/i.test(x.cargo))||{}).horas_necessarias||0)} horas por mês — cerca de `+
+  `${(((L.find(x=>/Agente de Apoio/i.test(x.cargo))||{}).horas_necessarias||0)/22).toLocaleString('pt-BR',{maximumFractionDigits:0})} horas por dia útil.</p>`;
+}
+
 function renderTabela(){
   const sec=$('#acimadatabela');
   const REF=((typeof COMPARATIVO!=='undefined'&&COMPARATIVO&&COMPARATIVO.anos)||[2025]).slice(-1)[0];
@@ -1264,6 +1428,9 @@ function renderResumo(){
   const anosNum=anos.map(Number), a0=String(Math.min(...anosNum));
   const rec0=D.receitas[a0], desp0=D.despesas[a0];
   const C=(typeof COMPARATIVO!=='undefined'&&COMPARATIVO)||{};
+  const CID=(typeof CIDADES!=='undefined'&&CIDADES)||null;
+  const EU=CID?CID.cidades.find(x=>x.cidade.indexOf('Paulínia')===0):null;
+  const um=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
   const par=(C.pares||[]).find(p=>/T[ée]cnico de enfermagem/i.test(p.nome)&&p.dados&&p.dados[ano]);
   const acima=(C.tabela_vs_folha||[]);
   const mediana=acima.length?acima.map(x=>x.acima).sort((a,b)=>a-b)[Math.floor(acima.length/2)]:null;
@@ -1272,18 +1439,46 @@ function renderResumo(){
 
   let h='<div class="resumo">';
   h+=`<h3>Uma cidade rica, dependente de uma fonte só</h3>`+
-     `<p>Paulínia arrecadou <b>${abrev(rec.total)}</b> em ${ano}, ou <b>${fmtBRL(rec.total/desp.populacao)} por morador</b> — muito acima do que se vê em cidades do mesmo tamanho. `+
+     `<p>Paulínia arrecadou <b>${abrev(rec.total)}</b> em ${ano}, ou <b>${fmtBRL(EU?EU.receita_hab:rec.total/desp.populacao)} por morador</b>`+
+     (EU?` — <b>${um(EU.receita_hab/CID.referencia.mediana_receita_hab)} vezes</b> a mediana dos municípios paulistas do mesmo porte, e mais que ${CID.referencia.pct_abaixo_receita_hab}% deles. `:` — muito acima do que se vê em cidades do mesmo tamanho. `)+
      (icms?`Mas <b>${pct(icms.pct)}</b> desse dinheiro vem de uma única origem: o repasse do ICMS gerado pela refinaria e pelas indústrias. Na média dos municípios paulistas, o ICMS é ${pct(RT.icms_pct_media_sp)} da receita. `:'')+
      (iptu?`Na outra ponta, o IPTU responde por ${pct(iptu.pct)} do que entra aqui, contra cerca de ${pct(RT.iptu_pct_media_sp)} na média do estado: a cidade quase não cobra imposto próprio porque nunca precisou.`:'')+`</p>`;
 
-  h+=`<h3>Salários acima da região e acima da própria tabela</h3><p>`+
-     (par?`No mesmo cargo e no mesmo mês, um ${par.nome.toLowerCase()} de Paulínia recebe <b>${fmtBRL(par.dados[ano].paulinia.mediana)}</b> contra <b>${fmtBRL(par.dados[ano].campinas.mediana)}</b> em Campinas. `:'')+
-     (mediana?`E, dentro da própria Prefeitura, o servidor típico recebe cerca de <b>${mediana.toLocaleString('pt-BR',{maximumFractionDigits:1})} vezes</b> o vencimento que a lei fixa para o cargo dele`+
-       (topo?`, chegando a ${topo.acima.toLocaleString('pt-BR',{maximumFractionDigits:2})} vezes no caso do ${topo.cargo.toLowerCase()}`:'')+`. `:'')+
-     `Parte dessa diferença é tempo de casa — no mesmo cargo e na mesma jornada, quem está há mais tempo na `+
-     `Prefeitura recebe mais — e parte vem de jornada contratada, escala e adicionais. `+
-     `Uma parte se explica por trabalho a mais, e nesse caso o valor da hora fica parecido; outra parte não, e o painel não consegue separar quanto é hora extra e quanto é gratificação, porque a Prefeitura não publica as verbas.</p>`;
-
+  const PH=(C.por_habitante)||null;
+  h+=`<h3>Mais gente na folha — e ganhando mais</h3>`;
+  if(CID&&CID.cidades){
+    const eu=EU||{}, R=CID.referencia;
+    h+=`<p>Paulínia tem <b>${um(eu.por_mil)} servidores para cada mil moradores</b>. Comparar isso com Campinas engana, `+
+       `porque cidade grande sempre tem menos servidores por morador. A referência justa são os <b>${fmtN(R.municipios_na_faixa)} municípios `+
+       `paulistas do mesmo porte</b>, onde a mediana é ${um(R.mediana_por_mil)} — Paulínia tem cerca de `+
+       `<b>${um(eu.por_mil/R.mediana_por_mil)} vezes mais</b>, acima de ${R.pct_abaixo_por_mil}% deles. `+
+       `Não é um exagero absurdo, mas é bem mais do que a maioria.`;
+    if(PH&&PH.areas&&PH.areas.length){
+      const destaques=PH.areas.filter(a=>a.vezes>=2).slice(0,3)
+        .map(a=>a.area.toLowerCase().replace(' e defesa civil','')).join(', ');
+      const igual=PH.areas.find(a=>a.vezes<1.2);
+      h+=` Na comparação com Campinas, área por área, a diferença se concentra em ${destaques}`+
+         (igual?`, e desaparece em ${igual.area.toLowerCase()}, onde as duas cidades têm a mesma proporção`:'')+`.`;
+    }
+    h+=`</p>`;
+  }
+  h+=`<p>`+
+     (par?`Os salários também são maiores: no mesmo cargo e no mesmo mês, um ${par.nome.toLowerCase()} de Paulínia recebe `+
+       `<b>${fmtBRL(par.dados[ano].paulinia.mediana)}</b> contra <b>${fmtBRL(par.dados[ano].campinas.mediana)}</b> em Campinas. `:'')+
+     (mediana?`Dentro da própria Prefeitura, o servidor típico recebe cerca de <b>${mediana.toLocaleString('pt-BR',{maximumFractionDigits:1})} vezes</b> `+
+       `o vencimento que a lei fixa para o cargo dele. `:'')+
+     `Isso não vem de tempo de casa — a progressão prevista em lei é pequena — e sim de jornada, escala e adicionais, `+
+     `que a Prefeitura não detalha na folha.</p>`;
+  if(PH&&PH.folha_por_habitante){
+    const f=PH.folha_por_habitante;
+    const eu=EU;
+    const ef=(eu&&CID)?eu.por_mil/CID.referencia.mediana_por_mil:f.vezes_efetivo;
+    h+=`<p>As duas coisas se multiplicam: cerca de <b>${um(ef)}× mais servidores</b> que as cidades do mesmo porte, `+
+       `vezes <b>${um(f.vezes_salario)}× o salário médio</b> de Campinas, dão em torno de ${um(ef*f.vezes_salario)}× o custo de `+
+       `pessoal por morador. <b>Nenhum dos dois fatores explica sozinho — pesam parecido.</b> `+
+       `Hoje a conta fecha porque a arrecadação por morador é ${um(eu?eu.receita_hab/CID.referencia.mediana_receita_hab:0)}× a dessas mesmas cidades. `+
+       `É esse lado da conta que a reforma tributária muda.</p>`;
+  }
   h+=`<h3>A folha consome quase metade do que a cidade arrecada</h3>`+
      `<p>Em ${ano}, <b>${pct(folhaPct)}</b> da arrecadação foi para salários, encargos e aposentadorias. `+
      (rec0&&desp0?`Entre ${a0} e ${ano} a arrecadação cresceu ${pct(100*(rec.total/rec0.total-1))} e a folha ${pct(100*(folha/desp0.folha.total-1))}, `+
@@ -1335,7 +1530,7 @@ function renderEvolucao(){
     items.map((it,i)=>{const pv=items[i-1];return `<tr><td><b>${it.ano}</b></td><td class="num">${abrev(it.ativos)}<span class="d">${pv?dl(it.ativos,pv.ativos):'base'}${i>1?' · desde '+first.ano+' '+dl(it.ativos,first.ativos):''}</span></td><td class="num">${abrev(it.apos)}<span class="d">${pv?dl(it.apos,pv.apos):'base'}${i>1?' · desde '+first.ano+' '+dl(it.apos,first.apos):''}</span></td><td class="num">${abrev(it.total)}<span class="d">${pv?dl(it.total,pv.total):'base'}</span></td><td class="num">${fmtBRL(it.total/it.pop)}</td><td class="num">${pct(100*it.total/it.gasto)}</td><td class="num">${it.rec?pct(100*it.total/it.rec):'—'}</td></tr>`;}).join('')+`</tbody>`;
 }
 
-function renderAll(){ renderYears(); renderHero(); renderFuncoes(); renderNatureza(); renderFolha(); renderServidores(); renderComparativo(); renderTabela(); renderDecomposicao(); renderFolhaReceita(); renderReforma(); renderResumo(); sPath=[]; sLimit=50; renderServExp(); renderEvolucao(); renderMensal(); renderReceitas(); renderBalanco(); renderFornecedores(); renderRodape(); expPath=[]; expLimit=50; renderExplorador(); ajustarLayout(); }
+function renderAll(){ renderYears(); renderHero(); renderFuncoes(); renderNatureza(); renderFolha(); renderServidores(); renderCidades(); renderPorHabitante(); renderComparativo(); renderJornadaPadrao(); renderTabela(); renderDecomposicao(); renderFolhaReceita(); renderReforma(); renderResumo(); sPath=[]; sLimit=50; renderServExp(); renderEvolucao(); renderMensal(); renderReceitas(); renderBalanco(); renderFornecedores(); renderRodape(); expPath=[]; expLimit=50; renderExplorador(); ajustarLayout(); }
 renderAll();
 mostrarTab(location.hash.slice(1)||'geral');
 })();

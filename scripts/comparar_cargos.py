@@ -219,6 +219,130 @@ def decomposicao():
     return json.loads(arq.read_text(encoding="utf-8"))
 
 
+# Cargos de Paulínia -> cargos de Campinas, para o teste da jornada padrão.
+# Os nomes de Paulínia são os que saem de scripts/quadro_pessoal.py (sem o "- LC ...").
+EQUIVALENTES_JP = {
+    "Auxiliar de Apoio Administrativo": ["AG.ADMINISTRATIVO"],
+    "Agente de Apoio Operacional": ["AG. APOIO OPERACIONAL"],
+    "Monitor": ["MONITOR INFANTO JUVENIL I"],
+    "Guarda Civil Municipal": ["__PREFIXO__GM "],
+    "Farmaceutico": ["FARMACEUTICO"],
+    "Medico Plantonista": ["MEDICO GERAL"],
+}
+
+
+def jornada_padrao(ano=2025):
+    """A pergunta que a comparação cargo a cargo deixa em aberto: e se a diferença for só
+    jornada? Este bloco compara com Campinas SOMENTE os servidores de Paulínia que estão
+    na jornada padrão do cargo e sem função de chefia — sem hora a mais, sem gratificação
+    de comando. Se a diferença sobrevive a isso, jornada não explica a distância.
+
+    Vem de data/decomposicao_folha.json (grupo "base") cruzado com a folha de Campinas.
+    """
+    arq = RAIZ / "data/decomposicao_folha.json"
+    if not arq.exists():
+        return []
+    dec = {c["cargo"]: c for c in json.loads(arq.read_text(encoding="utf-8")).get("cargos", [])}
+    campinas = ler_cidade("campinas", ano)
+    if not campinas:
+        return []
+    linhas = []
+    for cargo, chaves in EQUIVALENTES_JP.items():
+        item = dec.get(cargo)
+        if not item or "base" not in item["grupos"]:
+            continue
+        base = item["grupos"]["base"]
+        valores = juntar(campinas, chaves)
+        if not valores:
+            continue
+        mc = statistics.median(valores)
+        linhas.append({
+            "cargo": cargo, "n": base["n"], "horas": base.get("horas"),
+            "paulinia": base["mediana"], "campinas": round(mc, 2),
+            "dif_pct": round(100 * (base["mediana"] / mc - 1), 1),
+            # quantas horas por mês Paulínia teria que trabalhar para a diferença ser só jornada
+            "horas_necessarias": round(base["horas"] * base["mediana"] / mc) if base.get("horas") else None,
+        })
+    linhas.sort(key=lambda x: -x["dif_pct"])
+    return linhas
+
+
+# População para o cálculo por habitante. Paulínia sai do painel.json; Campinas é
+# constante porque não temos os dados do TCE dela carregados aqui.
+POPULACAO = {"campinas": 1_189_761}       # estimativa IBGE, cidades-e-estados
+
+# Secretaria de Paulínia -> secretaria(s) de Campinas. Julgamento explícito, como a
+# tabela PARES: os nomes vêm exatamente como aparecem em cada folha.
+AREAS = {
+    "Educação": (["SECRETARIA MUNICIPAL DE EDUCACAO"], ["EDUCACAO"]),
+    "Saúde": (["SECRETARIA MUNICIPAL DE SAUDE"], ["SAUDE", "REDE MARIO GATTI"]),
+    "Segurança e defesa civil": (["SECRETARIA MUNICIPAL DE SEGURANCA PUBLICA",
+                                  "SECRETARIA MUNICIPAL DE PROTECAO E DEFESA CIVIL"],
+                                 ["SEGURANCA PUBLICA"]),
+    "Assistência social": (["SECRETARIA MUNICIPAL DE ASSISTENCIA SOCIAL E PROTECAO A PESSOA"],
+                           ["DESENVOLVIMENTO E ASSISTENCIA SOCIAL"]),
+    "Obras e serviços públicos": (["SECRETARIA MUNICIPAL DE OBRAS E SERVICOS PUBLICOS"],
+                                  ["SERVICOS PUBLICOS", "INFRAESTRUTURA"]),
+}
+
+
+def contar_por_secretaria(ano=2025):
+    """Servidores e folha do mês por secretaria, nas duas cidades."""
+    pau_n, pau_v = Counter(), defaultdict(float)
+    with gzip.open(RAIZ / f"data/raw/servidores_{ano}.csv.gz", "rt", encoding="utf-8") as f:
+        for r in csv.DictReader(f, delimiter=";"):
+            v = float(r["vencimentos"] or 0)
+            if (r["mes"] == "12" and r["tipo_folha"] == "9" and v > 0
+                    and "Inativo" not in r["cargo"] and "Pensionista" not in r["cargo"]):
+                pau_n[norm(r["secretaria"])] += 1
+                pau_v[norm(r["secretaria"])] += v
+    cam_n, cam_v = Counter(), defaultdict(float)
+    caminho = RAIZ / f"data/raw/servidores_campinas_{ano}_12.csv.gz"
+    if caminho.exists():
+        with gzip.open(caminho, "rt", encoding="utf-8") as f:
+            for r in csv.DictReader(f, delimiter=";"):
+                v = float(r["bruto_recorrente"] or r["vencimentos"] or 0)
+                if v > 0:
+                    cam_n[norm(r["secretaria"])] += 1
+                    cam_v[norm(r["secretaria"])] += v
+    return (pau_n, pau_v), (cam_n, cam_v)
+
+
+def por_habitante(ano=2025):
+    """Servidores por mil habitantes, por área. Separa 'paga mais' de 'tem mais gente':
+    são duas perguntas diferentes e o total gasto é o produto das duas."""
+    painel = json.loads((RAIZ / "data/painel.json").read_text(encoding="utf-8"))
+    pop_pau = painel["despesas"][str(ano)]["populacao"]
+    pop_cam = POPULACAO["campinas"]
+    (pau_n, pau_v), (cam_n, cam_v) = contar_por_secretaria(ano)
+    if not cam_n:
+        return {}
+    def soma(c, chaves):
+        return sum(c.get(k, 0) for k in chaves)
+    areas = []
+    for nome, (kp, kc) in AREAS.items():
+        a, b = soma(pau_n, kp), soma(cam_n, kc)
+        if not a or not b:
+            continue
+        ra, rb = 1000 * a / pop_pau, 1000 * b / pop_cam
+        areas.append({"area": nome, "paulinia_n": a, "campinas_n": b,
+                      "paulinia": round(ra, 2), "campinas": round(rb, 2),
+                      "vezes": round(ra / rb, 2)})
+    areas.sort(key=lambda x: -x["vezes"])
+    ta, tb = sum(pau_n.values()), sum(cam_n.values())
+    ra, rb = 1000 * ta / pop_pau, 1000 * tb / pop_cam
+    fa, fb = sum(pau_v.values()) / pop_pau, sum(cam_v.values()) / pop_cam
+    return {"populacao": {"paulinia": pop_pau, "campinas": pop_cam},
+            "areas": areas,
+            "total": {"paulinia_n": ta, "campinas_n": tb,
+                      "paulinia": round(ra, 2), "campinas": round(rb, 2),
+                      "vezes": round(ra / rb, 2)},
+            "folha_por_habitante": {"paulinia": round(fa, 2), "campinas": round(fb, 2),
+                                    "vezes": round(fa / fb, 2),
+                                    "vezes_efetivo": round(ra / rb, 2),
+                                    "vezes_salario": round((fa / fb) / (ra / rb), 2)}}
+
+
 def brl(v):
     return ("R$ " + f"{v:,.0f}").replace(",", ".")
 
@@ -266,7 +390,9 @@ def main():
 
     saida = {"gerado_em": date.today().isoformat(), "anos": ANOS,
              "tabela_vs_folha": tabela_vs_folha(),
-             "decomposicao": decomposicao(), "pares": []}
+             "decomposicao": decomposicao(),
+             "jornada_padrao": jornada_padrao(),
+             "por_habitante": por_habitante(), "pares": []}
 
     print(f"Paulínia × Campinas — dezembro/{args.ano}, mediana do bruto mensal")
     print("(Paulínia: folha mensal, ativos. Campinas: bruto sem verbas de uma vez só.)\n")

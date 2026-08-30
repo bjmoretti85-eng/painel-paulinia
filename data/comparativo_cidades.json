@@ -1,0 +1,190 @@
+{
+ "ano": 2025,
+ "fonte_pessoal": "IBGE, MUNIC 2024 (administração direta)",
+ "fonte_receita": "TCE-SP, receitas 2025 (sem intra-orçamentárias)",
+ "cidades": [
+  {
+   "cidade": "Paulínia",
+   "pop": 115690,
+   "servidores": 5065,
+   "indireta": 29,
+   "por_mil": 43.78,
+   "receita": 2863521652.24,
+   "receita_hab": 24751.68,
+   "folha_pct": 50.16,
+   "custo_medio": 16647.0
+  },
+  {
+   "cidade": "Vinhedo",
+   "pop": 79235,
+   "servidores": 3217,
+   "indireta": 192,
+   "por_mil": 40.6,
+   "receita": 1035422892.26,
+   "receita_hab": 13067.75,
+   "folha_pct": 36.34,
+   "custo_medio": 9188.53
+  },
+  {
+   "cidade": "Jaguariúna",
+   "pop": 61801,
+   "servidores": 2561,
+   "indireta": 0,
+   "por_mil": 41.44,
+   "receita": 770622306.61,
+   "receita_hab": 12469.41,
+   "folha_pct": 38.5,
+   "custo_medio": 7808.56
+  },
+  {
+   "cidade": "Indaiatuba",
+   "pop": 267796,
+   "servidores": 5895,
+   "indireta": 1015,
+   "por_mil": 22.01,
+   "receita": 2565322766.1,
+   "receita_hab": 9579.39,
+   "folha_pct": 38.64,
+   "custo_medio": 8473.45
+  },
+  {
+   "cidade": "Campinas",
+   "pop": 1185977,
+   "servidores": 14613,
+   "indireta": 6546,
+   "por_mil": 12.32,
+   "receita": 10066559441.91,
+   "receita_hab": 8487.99,
+   "folha_pct": 41.06,
+   "custo_medio": 11063.0
+  },
+  {
+   "cidade": "Valinhos",
+   "pop": 131277,
+   "servidores": 3019,
+   "indireta": 193,
+   "por_mil": 23.0,
+   "receita": 1100011802.91,
+   "receita_hab": 8379.32,
+   "folha_pct": 45.7,
+   "custo_medio": 11009.38
+  },
+  {
+   "cidade": "Monte Mor",
+   "pop": 67296,
+   "servidores": 2486,
+   "indireta": 0,
+   "por_mil": 36.94,
+   "receita": 444796700.67,
+   "receita_hab": 6609.56,
+   "folha_pct": 45.62,
+   "custo_medio": 6299.63
+  },
+  {
+   "cidade": "Hortolândia",
+   "pop": 247331,
+   "servidores": 5163,
+   "indireta": 20,
+   "por_mil": 20.87,
+   "receita": 1629256383.86,
+   "receita_hab": 6587.35,
+   "folha_pct": 48.71,
+   "custo_medio": 10171.8
+  },
+  {
+   "cidade": "Pedreira",
+   "pop": 44332,
+   "servidores": 1372,
+   "indireta": 210,
+   "por_mil": 30.95,
+   "receita": 284643272.5,
+   "receita_hab": 6420.72,
+   "folha_pct": 39.94,
+   "custo_medio": 6198.05
+  },
+  {
+   "cidade": "Americana",
+   "pop": 246655,
+   "servidores": 4476,
+   "indireta": 781,
+   "por_mil": 18.15,
+   "receita": 1505487756.45,
+   "receita_hab": 6103.62,
+   "folha_pct": 40.34,
+   "custo_medio": 8905.31
+  },
+  {
+   "cidade": "Artur Nogueira",
+   "pop": 53157,
+   "servidores": 1568,
+   "indireta": 143,
+   "por_mil": 29.5,
+   "receita": 320552782.81,
+   "receita_hab": 6030.3,
+   "folha_pct": 48.83,
+   "custo_medio": 6715.79
+  },
+  {
+   "cidade": "Nova Odessa",
+   "pop": 64228,
+   "servidores": 1879,
+   "indireta": 163,
+   "por_mil": 29.26,
+   "receita": 384744095.63,
+   "receita_hab": 5990.29,
+   "folha_pct": 46.34,
+   "custo_medio": 6437.41
+  },
+  {
+   "cidade": "Cosmópolis",
+   "pop": 61204,
+   "servidores": 1747,
+   "indireta": 0,
+   "por_mil": 28.54,
+   "receita": 342284163.84,
+   "receita_hab": 5592.51,
+   "folha_pct": 47.78,
+   "custo_medio": 6588.74
+  },
+  {
+   "cidade": "Santa Bárbara d'Oeste",
+   "pop": 189338,
+   "servidores": 4511,
+   "indireta": 379,
+   "por_mil": 23.83,
+   "receita": 986426546.75,
+   "receita_hab": 5209.87,
+   "folha_pct": 51.23,
+   "custo_medio": 7771.45
+  },
+  {
+   "cidade": "Sumaré",
+   "pop": 289787,
+   "servidores": 4108,
+   "indireta": 0,
+   "por_mil": 14.18,
+   "receita": 1329326976.86,
+   "receita_hab": 4587.26,
+   "folha_pct": 48.15,
+   "custo_medio": 10034.11
+  }
+ ],
+ "referencia": {
+  "faixa": [
+   50000,
+   200000
+  ],
+  "municipios_na_faixa": 96,
+  "mediana_por_mil": 29.26,
+  "municipios_na_faixa_com_receita": 96,
+  "pct_abaixo_por_mil": 94,
+  "pct_abaixo_receita_hab": 99,
+  "mediana_receita_hab": 6059.6,
+  "mediana_folha_pct": 47.24,
+  "mediana_custo_medio": 6772.32,
+  "pct_abaixo_folha_pct": 75,
+  "pct_abaixo_custo_medio": 99,
+  "mediana_por_mil_regiao": 28.54,
+  "mediana_receita_hab_regiao": 6587.35
+ }
+}

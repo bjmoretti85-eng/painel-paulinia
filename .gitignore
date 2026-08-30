@@ -12,6 +12,13 @@ data/raw/servidores_*.csv.gz
 # Entrada bruta de outras cidades (tem nome e salário individual)
 data/raw/entrada/
 data/raw/*.csv
+# ...menos os totais agregados por município (públicos, sem dado individual, e caros de refazer:
+# o de despesas exige streamar 2 GB do TCE)
+!data/raw/receitas_sp_totais_*.csv
+!data/raw/despesas_sp_totais_*.csv
 
 # PDFs das tabelas salariais: são públicos e o script rebaixa com --baixar
 data/raw/tabelas/
+
+# Base bruta da MUNIC (25 MB, pública; comparar_cidades.py --baixar refaz)
+data/raw/ibge/

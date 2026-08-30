@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-08-29",
+ "gerado_em": "2026-08-30",
  "anos": [
   2023,
   2024,
@@ -405,6 +405,124 @@
     }
    }
   ]
+ },
+ "jornada_padrao": [
+  {
+   "cargo": "Auxiliar de Apoio Administrativo",
+   "n": 38,
+   "horas": 200,
+   "paulinia": 11892.92,
+   "campinas": 4189.91,
+   "dif_pct": 183.8,
+   "horas_necessarias": 568
+  },
+  {
+   "cargo": "Agente de Apoio Operacional",
+   "n": 625,
+   "horas": 200,
+   "paulinia": 9341.18,
+   "campinas": 4528.9,
+   "dif_pct": 106.3,
+   "horas_necessarias": 413
+  },
+  {
+   "cargo": "Monitor",
+   "n": 138,
+   "horas": 200,
+   "paulinia": 9986.69,
+   "campinas": 5308.82,
+   "dif_pct": 88.1,
+   "horas_necessarias": 376
+  },
+  {
+   "cargo": "Guarda Civil Municipal",
+   "n": 21,
+   "horas": 200,
+   "paulinia": 17865.58,
+   "campinas": 9955.87,
+   "dif_pct": 79.4,
+   "horas_necessarias": 359
+  },
+  {
+   "cargo": "Farmaceutico",
+   "n": 22,
+   "horas": 200,
+   "paulinia": 14869.58,
+   "campinas": 10034.33,
+   "dif_pct": 48.2,
+   "horas_necessarias": 296
+  },
+  {
+   "cargo": "Medico Plantonista",
+   "n": 70,
+   "horas": 120,
+   "paulinia": 20990.54,
+   "campinas": 17642.48,
+   "dif_pct": 19.0,
+   "horas_necessarias": 143
+  }
+ ],
+ "por_habitante": {
+  "populacao": {
+   "paulinia": 116674,
+   "campinas": 1189761
+  },
+  "areas": [
+   {
+    "area": "Segurança e defesa civil",
+    "paulinia_n": 322,
+    "campinas_n": 715,
+    "paulinia": 2.76,
+    "campinas": 0.6,
+    "vezes": 4.59
+   },
+   {
+    "area": "Educação",
+    "paulinia_n": 2322,
+    "campinas_n": 6207,
+    "paulinia": 19.9,
+    "campinas": 5.22,
+    "vezes": 3.81
+   },
+   {
+    "area": "Saúde",
+    "paulinia_n": 1659,
+    "campinas_n": 5933,
+    "paulinia": 14.22,
+    "campinas": 4.99,
+    "vezes": 2.85
+   },
+   {
+    "area": "Assistência social",
+    "paulinia_n": 125,
+    "campinas_n": 597,
+    "paulinia": 1.07,
+    "campinas": 0.5,
+    "vezes": 2.14
+   },
+   {
+    "area": "Obras e serviços públicos",
+    "paulinia_n": 58,
+    "campinas_n": 644,
+    "paulinia": 0.5,
+    "campinas": 0.54,
+    "vezes": 0.92
+   }
+  ],
+  "total": {
+   "paulinia_n": 5039,
+   "campinas_n": 16223,
+   "paulinia": 43.19,
+   "campinas": 13.64,
+   "vezes": 3.17
+  },
+  "folha_por_habitante": {
+   "paulinia": 631.96,
+   "campinas": 136.93,
+   "vezes": 4.62,
+   "vezes_efetivo": 3.17,
+   "vezes_salario": 1.46
+  }
  },
  "pares": [
   {

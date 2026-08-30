@@ -33,6 +33,17 @@ scripts/comparar_cargos.py  compara salário por cargo entre Paulínia e as cida
                           A tabela PARES no topo do arquivo é o julgamento (quais cargos equivalem a quais,
                           com nível de confiança e ressalva); pares de confiança 'baixa' ficam FORA do JSON
                           por padrão. --listar mostra cargos grandes ainda sem par -> data/comparativo_cargos.json
+scripts/comparar_cidades.py  Paulínia x as cidades da região: servidores por mil habitantes (IBGE MUNIC
+                          2024, administração DIRETA, mesma definição para todos) e arrecadação por
+                          habitante (receitas do TCE, sem intra-orçamentárias). --baixar traz a MUNIC e
+                          filtra o receitas-{ano}.zip; --refazer rebaixa. O download também grava
+                          data/raw/receitas_sp_totais_{ano}.csv (total de TODOS os 644 municípios de SP),
+                          que é o que permite a mediana da faixa de porte.
+                          --despesas streama o despesas-{ano}.zip (~2 GB, 28 mi de linhas, ~3 min) e grava
+                          data/raw/despesas_sp_totais_{ano}.csv: pago, pessoal (elemento 31xx) e folha de
+                          ATIVO por município. Mesma régua do processar.py - confere com o painel de Paulínia
+                          até o centavo. Rode num terminal de verdade: leva mais que o limite de uma chamada.
+                          -> data/comparativo_cidades.json
 scripts/importar_servidores.py  importa a folha de OUTRAS cidades a partir do CSV que a prefeitura
                           fornece (download manual: Campinas exige captcha). Mapeia as colunas do portal
                           para o formato de Paulínia -> data/raw/servidores_{cidade}_{ano}_{mes}.csv.gz
@@ -142,6 +153,33 @@ em mostrarTab() foi removido.
 `mostrarTab(nome)` troca de aba; `irPara(caminho)` abre o explorador na aba detalhe.
 
 ## Comparação com outras cidades
+
+- **Servidores por habitante depende muito do porte da cidade** (mediana paulista: 67/mil abaixo de 10 mil
+  habitantes, 14/mil acima de 500 mil). Por isso "Paulínia tem 3,2x mais servidores que Campinas" mede
+  sobretudo tamanho e **não deve ser usado**. A referência honesta é a mediana dos 96 municípios de SP na
+  faixa de Paulínia (50-200 mil): 29,3/mil contra 43,8/mil, ou **~1,5x**, acima de 94% deles. O painel usa
+  essa referência; a comparação com Campinas fica só para o **formato** (quais áreas puxam) e para o
+  **salário**, onde o porte não distorce.
+- O outro lado da conta: Paulínia arrecada **R$ 24.752 por morador**, 4,1x a mediana das cidades do mesmo
+  porte. As três cidades da região com mais servidores por morador (Paulínia, Vinhedo, Jaguariúna) são
+  exatamente as três mais ricas por morador. É assim que a conta fecha hoje - e é esse lado que a reforma muda.
+- Custo de pessoal por morador = ~1,5x mais servidores x ~1,5x o salário médio de Campinas = ~2,2x.
+  **Os dois fatores pesam parecido**; a versão antiga do texto dizia "o efetivo pesa mais que o salário",
+  o que vinha da comparação distorcida com Campinas. Não voltar a isso.
+- Nomes de município divergem entre as fontes ("Santa Bárbara d Oeste" no TCE, "Santa Bárbara dOeste" na
+  MUNIC, "Santa Barbara D'Oeste" à mão): `norm()` do comparar_cidades.py tira acento, pontuação **e espaços**.
+  O dicionário GRAFIA conserta só a exibição.
+- **A folha de Paulínia NÃO sufoca o orçamento**: 50,2% do que a cidade gasta, contra 47,2% na mediana da faixa
+  de porte (acima de só 75% delas). Não é o número de alarme e não deve ser usado como tal. O que está fora da
+  curva é o **custo médio por servidor: R$ 16.647/mês contra R$ 6.772 na mediana (2,5x), acima de 99% delas**.
+  A folha cabe porque o orçamento é 4x maior, não porque seja barata.
+- **Custo médio não é salário**: folha de ativo (31xx menos 319001/319003/319091/319094/3171) / efetivo / 12.
+  Inclui encargos patronais, hora extra, 13º e férias - ~12% acima do bruto médio da folha de Paulínia.
+  Divisor = MUNIC direta + indireta - estagiários (bolsa não sai no 31xx), porque a despesa do TCE cobre todos
+  os órgãos do município. A coluna de servidores/mil usa só a DIRETA (é a medida comparável por porte), então
+  as duas colunas têm divisores diferentes de propósito - não multiplique uma pela outra.
+- A MUNIC conta administração DIRETA. Campinas tem outras 6.546 pessoas na indireta, fora da conta - por isso
+  a nota da seção diz isso na cara.
 
 - O TCE **não** publica dados de pessoal (conferido: os 10 conjuntos são despesas, receitas, RCL, dívida ativa,
   licitações, pareceres, planejamento e afins). Folha por servidor só vem do portal de cada prefeitura.
