@@ -133,6 +133,10 @@ em mostrarTab() foi removido.
   2029 e 2078. O painel não faz projeção própria: reproduz o estudo e mostra a aritmética.
 - detalhe: explorador em funil + ranking/busca de fornecedores
 - entenda: "A situação de Paulínia, em resumo" (o ÚNICO lugar em que o painel interpreta em vez de só medir;
+  CUIDADO: a frase sobre tempo de casa já esteve errada. Dizia que a progressão não explica a distância entre
+  folha e tabela; medindo, o tempo de casa vale de +7% a +33% dentro do mesmo cargo E da mesma jornada
+  (tabela em docs/comparativo-campinas-paulinia.md). Hoje a frase é qualitativa porque a regra da seção é não
+  exibir número que os scripts não calculem;
   todos os números são calculados dos mesmos dados das outras abas, nada digitado à mão) + glossário.
   O fecho aponta a aritmética e diz explicitamente que o painel não recomenda caminho nenhum. Mantenha assim.
 `mostrarTab(nome)` troca de aba; `irPara(caminho)` abre o explorador na aba detalhe.

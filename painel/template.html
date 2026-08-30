@@ -101,7 +101,13 @@ section{background:var(--surface);border:1px solid var(--line);border-radius:var
 .moreBtn{border:1px solid var(--line);background:var(--surface);color:var(--text-2);font:600 13px inherit;padding:8px 14px;border-radius:999px;cursor:pointer;margin-top:10px}
 .bar.open + .detail{display:block}
 /* navegação por abas */
-.topnav{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:-8px 0 22px;overflow-x:auto}
+.topnav{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:-8px 0 22px;overflow-x:auto;
+  scrollbar-width:none;background:
+  linear-gradient(to right,var(--bg),transparent) 0 0/20px 100% no-repeat local,
+  linear-gradient(to left,var(--bg),transparent) 100% 0/20px 100% no-repeat local,
+  linear-gradient(to right,rgba(128,128,128,.3),transparent) 0 0/10px 100% no-repeat scroll,
+  linear-gradient(to left,rgba(128,128,128,.3),transparent) 100% 0/10px 100% no-repeat scroll}
+.topnav::-webkit-scrollbar{display:none}
 .topnav button{border:0;background:transparent;color:var(--text-2);font:600 15px inherit;padding:12px 16px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap}
 .topnav button:hover{color:var(--text)}
 .topnav button[aria-pressed="true"]{color:var(--text);border-bottom-color:var(--accent)}
@@ -230,7 +236,7 @@ details.notas .note{margin-top:2px}
   h3 small{display:block;margin:3px 0 0;margin-left:0;font-size:12.5px;line-height:1.35}
   .sub{font-size:13.5px;margin-bottom:14px}
   .years{padding:3px}.years button{padding:7px 13px;font-size:14px}
-  .topnav{margin:-4px 0 16px}.topnav button{padding:10px 12px;font-size:14px}
+  .topnav{margin:-4px 0 16px}.topnav button{padding:10px 9px;font-size:13.5px}
   .hero{grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
   .tile{padding:12px 13px}
   .tile .lbl{font-size:11px}.tile .val{font-size:21px;margin:4px 0 2px}.tile .ctx{font-size:12.5px}
@@ -297,7 +303,7 @@ details.notas .note{margin-top:2px}
   <button data-tab="pessoal">Pessoal</button>
   <button data-tab="salarios">Salários</button>
   <button data-tab="comparar">Comparação</button>
-  <button data-tab="reforma">Reforma tributária</button>
+  <button data-tab="reforma" data-curto="Reforma">Reforma tributária</button>
   <button data-tab="entenda">Entenda</button>
 </nav>
 <div class="tab" data-tab="geral">
@@ -606,8 +612,9 @@ function renderFuncoes(){
     const w=100*f.valor/max;
     const pf=prev&&prev.por_funcao.find(x=>x.nome===f.nome);
     const main = funcMode==='valor'?abrev(f.valor):funcMode==='pct'?pct(f.pct):fmtBRL(f.por_habitante);
-    const sec = funcMode==='valor'?pct(f.pct)+' do total':funcMode==='pct'?abrev(f.valor):'por habitante';
-    const tipHtml=`<b>${f.icone} ${esc(f.nome)}</b>${esc(f.descricao)}<br>${fmtBRL(f.valor)} · ${pct(f.pct)} · ${fmtBRL(f.por_habitante)}/morador`;
+    const sec = funcMode==='valor'?pct(f.pct)+' do total':funcMode==='pct'?abrev(f.valor)
+              :fmtBRL(f.por_habitante/12)+' por mês';   // o ano inteiro é abstrato; o mês, não
+    const tipHtml=`<b>${f.icone} ${esc(f.nome)}</b>${esc(f.descricao)}<br>${fmtBRL(f.valor)} · ${pct(f.pct)} · ${fmtBRL(f.por_habitante)}/morador por ano (${fmtBRL(f.por_habitante/12)}/mês)`;
     return `<div class="bar" data-tip="${esc(tipHtml)}" role="button" tabindex="0" aria-expanded="false">
       <div class="nm"><span>${f.icone}</span>${esc(f.nome)}</div>
       <div class="tr"><div class="fl" style="width:${w}%"></div></div>
@@ -727,7 +734,7 @@ function renderReceitas(){
   const list=outros?[...top,outros]:top;
   $('#recBars').innerHTML=list.map(g=>{
     const pg=g.nome==='Outras receitas'?null:(prev&&prev.por_grupo.find(x=>x.nome===g.nome));
-    return `<div class="bar" data-tip="<b>${esc(g.nome)}</b>${esc(g.descricao)}<br>${fmtBRL(g.valor)} · ${pct(g.pct)} · ${fmtBRL(g.por_habitante||0)}/morador">
+    return `<div class="bar" data-tip="<b>${esc(g.nome)}</b>${esc(g.descricao)}<br>${fmtBRL(g.valor)} · ${pct(g.pct)} · ${fmtBRL(g.por_habitante||0)}/morador por ano (${fmtBRL((g.por_habitante||0)/12)}/mês)">
       <div class="nm">${esc(g.nome)}</div>
       <div class="tr"><div class="fl" style="width:${100*g.valor/max}%;background:var(--s3)"></div></div>
       <div class="vl">${abrev(g.valor)}<small>${pct(g.pct)} ${pg?delta(g.valor,pg.valor,true):''}</small></div></div>`;
@@ -881,6 +888,12 @@ function congelarColunas(w){
 
 /* notas longas recolhidas, aviso quando a tabela rola de lado e cabeçalho fixo quando ela cabe */
 function ajustarLayout(){
+  // com 7 abas o menu rola de lado no celular; o rótulo curto ajuda a caber mais
+  const fone2 = matchMedia('(max-width:560px)').matches;
+  document.querySelectorAll('#topnav button[data-curto]').forEach(b=>{
+    if(!b.dataset.longo) b.dataset.longo = b.textContent;
+    b.textContent = fone2 ? b.dataset.curto : b.dataset.longo;
+  });
   document.querySelectorAll('p.note').forEach(p=>{
     if(p.textContent.length < 200 || p.parentElement.classList.contains('notas')) return;
     const d = document.createElement('details'); d.className = 'notas';
@@ -1267,7 +1280,8 @@ function renderResumo(){
      (par?`No mesmo cargo e no mesmo mês, um ${par.nome.toLowerCase()} de Paulínia recebe <b>${fmtBRL(par.dados[ano].paulinia.mediana)}</b> contra <b>${fmtBRL(par.dados[ano].campinas.mediana)}</b> em Campinas. `:'')+
      (mediana?`E, dentro da própria Prefeitura, o servidor típico recebe cerca de <b>${mediana.toLocaleString('pt-BR',{maximumFractionDigits:1})} vezes</b> o vencimento que a lei fixa para o cargo dele`+
        (topo?`, chegando a ${topo.acima.toLocaleString('pt-BR',{maximumFractionDigits:2})} vezes no caso do ${topo.cargo.toLowerCase()}`:'')+`. `:'')+
-     `A diferença não vem de tempo de casa — a progressão prevista em lei é pequena — e sim de jornada contratada, escala e adicionais. `+
+     `Parte dessa diferença é tempo de casa — no mesmo cargo e na mesma jornada, quem está há mais tempo na `+
+     `Prefeitura recebe mais — e parte vem de jornada contratada, escala e adicionais. `+
      `Uma parte se explica por trabalho a mais, e nesse caso o valor da hora fica parecido; outra parte não, e o painel não consegue separar quanto é hora extra e quanto é gratificação, porque a Prefeitura não publica as verbas.</p>`;
 
   h+=`<h3>A folha consome quase metade do que a cidade arrecada</h3>`+

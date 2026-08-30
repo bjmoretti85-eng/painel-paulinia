@@ -155,11 +155,28 @@ Conferências feitas nesta revisão, sobre as 23 linhas publicadas:
   "TECNICO EM RADIOLOGIA". Nenhuma linha está marcada para revisar.
 
 **Sobre a progressão de carreira:** o denominador é a referência (REM) que a tabela dá para o cargo,
-e no quadro geral cada cargo aparece com uma referência só. A pergunta natural é se parte da
-distância entre a folha e a tabela seria progressão de carreira, e não adicional. O resumo do painel
-afirma que não ("a progressão prevista em lei é pequena"). Como o texto da LC 66/2017 não está no
-repositório, essa é a única afirmação daqui que não dá para reconferir só com os dados — quem for
-usá-la numa discussão pública deve ter a lei à mão.
+e no quadro geral cada cargo aparece com uma referência só. A pergunta era se parte da distância
+entre a folha e a tabela seria progressão de carreira, e não adicional. **Sim, é** — e dá para medir
+sem a lei, comparando o salário por tempo de casa dentro do mesmo cargo e da mesma jornada
+designada (folha de dez/2025 cruzada com o Quadro de Pessoal de set/2025, 2.645 servidores):
+
+| Cargo · grupo de jornada | menos de 10 anos | mais de 20 anos | Diferença |
+|---|---|---|---|
+| Professor de Educação Básica II · ampliada | R$ 19.098 | R$ 25.463 | +33% |
+| Médico Plantonista · ampliada | R$ 23.130 | R$ 30.361 | +31% |
+| Técnico de Enfermagem · ampliada | R$ 9.981 | R$ 11.382 | +14% |
+| Professor de Educação Básica I · ampliada | R$ 13.978 | R$ 15.562 | +11% |
+| Educadora Infantil · base | R$ 12.884 | R$ 14.062 | +9% |
+| Agente de Apoio Operacional · base | R$ 9.035 | R$ 9.676 | +7% |
+
+Ou seja: o tempo de casa pesa, e pesa muito mais no magistério e na medicina do que nos cargos de
+apoio. Sem controlar pela jornada a diferença chega a +57% (técnico de enfermagem), porque quem tem
+mais tempo também tende a estar em escala ou com função designada — por isso o controle importa.
+
+Esses números **não estão no painel**: o resumo diz apenas que "quem está há mais tempo recebe mais",
+porque a regra da seção é não exibir número que não seja calculado pelos scripts. Para publicá-los,
+o `quadro_pessoal.py` precisaria gravar a quebra por tempo de casa no
+`data/decomposicao_folha.json`.
 
 ## 6. Limites que continuam de pé
 
