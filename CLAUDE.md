@@ -28,6 +28,10 @@ scripts/quadro_pessoal.py  lê o Quadro de Pessoal (PDF do mesmo módulo) e sepa
                           abril/2026 não tem matrícula e traz a admissão como número de série.
                           CUIDADO: jornada designada MENOR que a do cargo (200->180) NÃO significa ganhar
                           menos - esse grupo ganha mais (escala de turno com adicionais).
+                          Também mede o TEMPO DE CASA dentro do mesmo cargo E da mesma jornada (a folha dá a
+                          admissão, o Quadro dá a jornada): sem controlar a jornada a diferença sai inflada,
+                          porque quem tem mais tempo também tende a estar em escala. Cargos fechados a novos
+                          concursos (Educadora Infantil, ninguém desde 2007) não têm faixa nova e ficam fora.
                           -> data/decomposicao_folha.json
 scripts/comparar_cargos.py  compara salário por cargo entre Paulínia e as cidades importadas.
                           A tabela PARES no topo do arquivo é o julgamento (quais cargos equivalem a quais,
@@ -144,10 +148,13 @@ em mostrarTab() foi removido.
   2029 e 2078. O painel não faz projeção própria: reproduz o estudo e mostra a aritmética.
 - detalhe: explorador em funil + ranking/busca de fornecedores
 - entenda: "A situação de Paulínia, em resumo" (o ÚNICO lugar em que o painel interpreta em vez de só medir;
-  CUIDADO: a frase sobre tempo de casa já esteve errada. Dizia que a progressão não explica a distância entre
-  folha e tabela; medindo, o tempo de casa vale de +7% a +33% dentro do mesmo cargo E da mesma jornada
-  (tabela em docs/comparativo-campinas-paulinia.md). Hoje a frase é qualitativa porque a regra da seção é não
-  exibir número que os scripts não calculem;
+  CUIDADO: a frase sobre tempo de casa já esteve errada DUAS vezes, sempre no mesmo sentido - dizendo que a
+  progressão não explica a distância entre folha e tabela. Explica em parte: dentro do mesmo cargo E da mesma
+  jornada, quem passou dos 20 anos de casa recebe +18% na mediana (9 comparações,
+  de +2% a +40%; grupos com menos de 8 pessoas em uma das faixas ficam fora, o que derrubou
+  as comparações infladas de uma rodada antiga do script). Agora isso é CALCULADO pelo quadro_pessoal.py (bloco tempo_de_casa em
+  decomposicao_folha.json) e renderizado na seção #tempocasa da aba Salários, então a frase do resumo lê o
+  número do JSON e não pode mais divergir. Se alguém reescrever a frase, o número tem que continuar vindo de TC;
   todos os números são calculados dos mesmos dados das outras abas, nada digitado à mão) + glossário.
   O fecho aponta a aritmética e diz explicitamente que o painel não recomenda caminho nenhum. Mantenha assim.
 `mostrarTab(nome)` troca de aba; `irPara(caminho)` abre o explorador na aba detalhe.

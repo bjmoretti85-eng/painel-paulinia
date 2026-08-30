@@ -220,7 +220,7 @@
    {
     "cargo": "Agente de Apoio Operacional",
     "n_folha": 826,
-    "n_casado": 825,
+    "n_casado": 411,
     "rotulos": {
      "base": "trabalha as horas normais do cargo",
      "ampliada": "foi contratado para mais horas",
@@ -229,29 +229,103 @@
     },
     "grupos": {
      "base": {
-      "n": 625,
-      "mediana": 9341.18,
+      "n": 141,
+      "mediana": 9588.21,
       "horas": 200,
-      "por_hora": 46.71
-     },
-     "funcao": {
-      "n": 75,
-      "mediana": 14163.78,
-      "horas": 200,
-      "por_hora": 71.69
+      "por_hora": 47.97
      },
      "designada_menor": {
-      "n": 125,
-      "mediana": 14173.45,
+      "n": 218,
+      "mediana": 10578.88,
+      "horas": 150,
+      "por_hora": 73.39
+     },
+     "ampliada": {
+      "n": 31,
+      "mediana": 9657.28,
+      "horas": 200,
+      "por_hora": 47.24
+     },
+     "funcao": {
+      "n": 21,
+      "mediana": 11137.75,
+      "horas": 200,
+      "por_hora": 55.69
+     }
+    }
+   },
+   {
+    "cargo": "Educadora Infantil",
+    "n_folha": 372,
+    "n_casado": 180,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "funcao": {
+      "n": 15,
+      "mediana": 13152.77,
+      "horas": 200,
+      "por_hora": 65.76
+     },
+     "designada_menor": {
+      "n": 55,
+      "mediana": 13596.52,
+      "horas": 150,
+      "por_hora": 96.97
+     },
+     "base": {
+      "n": 61,
+      "mediana": 13461.38,
       "horas": 180,
-      "por_hora": 78.74
+      "por_hora": 73.08
+     },
+     "ampliada": {
+      "n": 49,
+      "mediana": 13280.82,
+      "horas": 200,
+      "por_hora": 67.84
+     }
+    }
+   },
+   {
+    "cargo": "Tecnico de Enfermagem",
+    "n_folha": 299,
+    "n_casado": 143,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "ampliada": {
+      "n": 74,
+      "mediana": 11484.59,
+      "horas": 200,
+      "por_hora": 59.64
+     },
+     "base": {
+      "n": 39,
+      "mediana": 10888.46,
+      "horas": 150,
+      "por_hora": 72.59
+     },
+     "designada_menor": {
+      "n": 23,
+      "mediana": 10463.33,
+      "horas": 135,
+      "por_hora": 79.44
      }
     }
    },
    {
     "cargo": "Medico Plantonista",
     "n_folha": 287,
-    "n_casado": 281,
+    "n_casado": 142,
     "rotulos": {
      "base": "trabalha as horas normais do cargo",
      "ampliada": "foi contratado para mais horas",
@@ -259,24 +333,92 @@
      "funcao": "chefia uma equipe"
     },
     "grupos": {
-     "base": {
-      "n": 70,
-      "mediana": 20990.54,
-      "horas": 120,
-      "por_hora": 174.92
-     },
      "ampliada": {
-      "n": 206,
-      "mediana": 30273.97,
-      "horas": 160,
-      "por_hora": 189.21
+      "n": 115,
+      "mediana": 27849.85,
+      "horas": 180,
+      "por_hora": 150.2
+     },
+     "designada_menor": {
+      "n": 11,
+      "mediana": 30268.81,
+      "horas": 108,
+      "por_hora": 227.09
+     },
+     "base": {
+      "n": 9,
+      "mediana": 26336.8,
+      "horas": 120,
+      "por_hora": 165.55
+     }
+    }
+   },
+   {
+    "cargo": "Agente de Apoio Educacional",
+    "n_folha": 183,
+    "n_casado": 99,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "ampliada": {
+      "n": 27,
+      "mediana": 3916.26,
+      "horas": 200,
+      "por_hora": 20.12
+     },
+     "designada_menor": {
+      "n": 17,
+      "mediana": 3860.05,
+      "horas": 135,
+      "por_hora": 30.96
+     },
+     "base": {
+      "n": 54,
+      "mediana": 3902.67,
+      "horas": 150,
+      "por_hora": 26.02
      }
     }
    },
    {
     "cargo": "Guarda Civil Municipal",
     "n_folha": 208,
-    "n_casado": 207,
+    "n_casado": 99,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "base": {
+      "n": 35,
+      "mediana": 21393.57,
+      "horas": 200,
+      "por_hora": 106.97
+     },
+     "designada_menor": {
+      "n": 46,
+      "mediana": 20172.37,
+      "horas": 160,
+      "por_hora": 126.5
+     },
+     "ampliada": {
+      "n": 13,
+      "mediana": 21084.85,
+      "horas": 200,
+      "por_hora": 102.9
+     }
+    }
+   },
+   {
+    "cargo": "Tecnico de Enfermagem (CTD)",
+    "n_folha": 160,
+    "n_casado": 93,
     "rotulos": {
      "base": "trabalha as horas normais do cargo",
      "ampliada": "foi contratado para mais horas",
@@ -285,29 +427,60 @@
     },
     "grupos": {
      "designada_menor": {
-      "n": 150,
-      "mediana": 20764.6,
-      "horas": 180,
-      "por_hora": 115.36
+      "n": 14,
+      "mediana": 9386.67,
+      "horas": 135,
+      "por_hora": 72.47
      },
-     "funcao": {
-      "n": 36,
-      "mediana": 21693.1,
-      "horas": 180,
-      "por_hora": 114.9
+     "ampliada": {
+      "n": 15,
+      "mediana": 9948.73,
+      "horas": 200,
+      "por_hora": 55.32
      },
      "base": {
-      "n": 21,
-      "mediana": 17865.58,
-      "horas": 200,
-      "por_hora": 89.33
+      "n": 61,
+      "mediana": 9453.2,
+      "horas": 150,
+      "por_hora": 62.84
+     }
+    }
+   },
+   {
+    "cargo": "Enfermeiro",
+    "n_folha": 151,
+    "n_casado": 88,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "base": {
+      "n": 26,
+      "mediana": 14131.42,
+      "horas": 150,
+      "por_hora": 90.11
+     },
+     "designada_menor": {
+      "n": 18,
+      "mediana": 14090.92,
+      "horas": 122,
+      "por_hora": 122.95
+     },
+     "ampliada": {
+      "n": 40,
+      "mediana": 14323.72,
+      "horas": 180,
+      "por_hora": 79.06
      }
     }
    },
    {
     "cargo": "Monitor",
     "n_folha": 165,
-    "n_casado": 163,
+    "n_casado": 78,
     "rotulos": {
      "base": "trabalha as horas normais do cargo",
      "ampliada": "foi contratado para mais horas",
@@ -316,23 +489,135 @@
     },
     "grupos": {
      "base": {
-      "n": 138,
-      "mediana": 9986.69,
+      "n": 29,
+      "mediana": 10087.56,
       "horas": 200,
-      "por_hora": 49.93
+      "por_hora": 50.89
      },
-     "funcao": {
-      "n": 23,
-      "mediana": 15146.55,
+     "designada_menor": {
+      "n": 35,
+      "mediana": 10645.39,
+      "horas": 160,
+      "por_hora": 68.44
+     },
+     "ampliada": {
+      "n": 8,
+      "mediana": 9343.81,
       "horas": 200,
-      "por_hora": 75.73
+      "por_hora": 44.97
+     }
+    }
+   },
+   {
+    "cargo": "Auxiliar de Enfermagem",
+    "n_folha": 137,
+    "n_casado": 73,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "designada_menor": {
+      "n": 15,
+      "mediana": 11517.62,
+      "horas": 120,
+      "por_hora": 92.7
+     },
+     "base": {
+      "n": 27,
+      "mediana": 10442.69,
+      "horas": 150,
+      "por_hora": 67.82
+     },
+     "ampliada": {
+      "n": 28,
+      "mediana": 11325.29,
+      "horas": 200,
+      "por_hora": 61.38
+     }
+    }
+   },
+   {
+    "cargo": "Assessor de Política Institucional II",
+    "n_folha": 57,
+    "n_casado": 38,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "base": {
+      "n": 20,
+      "mediana": 10081.71,
+      "horas": 200,
+      "por_hora": 50.41
+     },
+     "designada_menor": {
+      "n": 12,
+      "mediana": 10081.71,
+      "horas": 150,
+      "por_hora": 67.21
+     }
+    }
+   },
+   {
+    "cargo": "Auxiliar de Educacao Infantil",
+    "n_folha": 71,
+    "n_casado": 36,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "designada_menor": {
+      "n": 18,
+      "mediana": 8732.34,
+      "horas": 150,
+      "por_hora": 58.87
+     },
+     "base": {
+      "n": 12,
+      "mediana": 8533.9,
+      "horas": 200,
+      "por_hora": 42.67
      }
     }
    },
    {
     "cargo": "Motorista",
     "n_folha": 71,
-    "n_casado": 71,
+    "n_casado": 35,
+    "rotulos": {
+     "base": "trabalha as horas normais do cargo",
+     "ampliada": "foi contratado para mais horas",
+     "designada_menor": "trabalha em turno ou escala",
+     "funcao": "chefia uma equipe"
+    },
+    "grupos": {
+     "designada_menor": {
+      "n": 24,
+      "mediana": 12686.27,
+      "horas": 150,
+      "por_hora": 87.65
+     },
+     "base": {
+      "n": 9,
+      "mediana": 13781.08,
+      "horas": 200,
+      "por_hora": 68.91
+     }
+    }
+   },
+   {
+    "cargo": "Diretor de Unidade Escolar",
+    "n_folha": 57,
+    "n_casado": 34,
     "rotulos": {
      "base": "trabalha as horas normais do cargo",
      "ampliada": "foi contratado para mais horas",
@@ -341,23 +626,23 @@
     },
     "grupos": {
      "base": {
-      "n": 38,
-      "mediana": 11601.3,
+      "n": 12,
+      "mediana": 20632.12,
       "horas": 200,
-      "por_hora": 58.01
+      "por_hora": 103.16
      },
      "designada_menor": {
-      "n": 31,
-      "mediana": 14904.2,
-      "horas": 180,
-      "por_hora": 82.8
+      "n": 17,
+      "mediana": 20962.47,
+      "horas": 135,
+      "por_hora": 142.74
      }
     }
    },
    {
     "cargo": "Auxiliar de Apoio Administrativo",
     "n_folha": 66,
-    "n_casado": 66,
+    "n_casado": 33,
     "rotulos": {
      "base": "trabalha as horas normais do cargo",
      "ampliada": "foi contratado para mais horas",
@@ -366,23 +651,23 @@
     },
     "grupos": {
      "base": {
-      "n": 38,
-      "mediana": 11892.92,
+      "n": 10,
+      "mediana": 13500.94,
       "horas": 200,
-      "por_hora": 59.46
+      "por_hora": 67.5
      },
-     "funcao": {
-      "n": 25,
-      "mediana": 18059.6,
-      "horas": 200,
-      "por_hora": 90.3
+     "designada_menor": {
+      "n": 19,
+      "mediana": 13235.44,
+      "horas": 150,
+      "por_hora": 91.16
      }
     }
    },
    {
-    "cargo": "Farmaceutico",
-    "n_folha": 40,
-    "n_casado": 40,
+    "cargo": "Assessor de Política Institucional I",
+    "n_folha": 38,
+    "n_casado": 25,
     "rotulos": {
      "base": "trabalha as horas normais do cargo",
      "ampliada": "foi contratado para mais horas",
@@ -391,75 +676,167 @@
     },
     "grupos": {
      "base": {
-      "n": 22,
-      "mediana": 14869.58,
+      "n": 13,
+      "mediana": 15679.88,
       "horas": 200,
-      "por_hora": 74.35
+      "por_hora": 78.4
      },
      "designada_menor": {
-      "n": 13,
-      "mediana": 13608.25,
-      "horas": 180,
-      "por_hora": 75.6
+      "n": 11,
+      "mediana": 15679.88,
+      "horas": 150,
+      "por_hora": 109.33
      }
     }
    }
-  ]
+  ],
+  "tempo_de_casa": {
+   "corte_novo": 10,
+   "corte_antigo": 20,
+   "referencia": "12/2025",
+   "min_pct": 1.7,
+   "max_pct": 40.2,
+   "mediana_pct": 17.8,
+   "n_combinacoes": 9,
+   "linhas": [
+    {
+     "cargo": "Guarda Civil Municipal",
+     "grupo": "base",
+     "rotulo": "trabalha as horas normais do cargo",
+     "n_novos": 8,
+     "n_antigos": 25,
+     "mediana_novos": 15871.75,
+     "mediana_antigos": 22258.87,
+     "dif_pct": 40.2
+    },
+    {
+     "cargo": "Professor de Educacao Basica II - PEBII",
+     "grupo": "ampliada",
+     "rotulo": "foi contratado para mais horas",
+     "n_novos": 68,
+     "n_antigos": 32,
+     "mediana_novos": 19098.39,
+     "mediana_antigos": 25463.46,
+     "dif_pct": 33.3
+    },
+    {
+     "cargo": "Medico Plantonista",
+     "grupo": "ampliada",
+     "rotulo": "foi contratado para mais horas",
+     "n_novos": 49,
+     "n_antigos": 25,
+     "mediana_novos": 23130.16,
+     "mediana_antigos": 30361.19,
+     "dif_pct": 31.3
+    },
+    {
+     "cargo": "Enfermeiro",
+     "grupo": "ampliada",
+     "rotulo": "foi contratado para mais horas",
+     "n_novos": 8,
+     "n_antigos": 14,
+     "mediana_novos": 12539.73,
+     "mediana_antigos": 15099.55,
+     "dif_pct": 20.4
+    },
+    {
+     "cargo": "Auxiliar de Enfermagem",
+     "grupo": "base",
+     "rotulo": "trabalha as horas normais do cargo",
+     "n_novos": 16,
+     "n_antigos": 11,
+     "mediana_novos": 9862.35,
+     "mediana_antigos": 11615.65,
+     "dif_pct": 17.8
+    },
+    {
+     "cargo": "Guarda Civil Municipal",
+     "grupo": "designada_menor",
+     "rotulo": "trabalha em turno ou escala",
+     "n_novos": 9,
+     "n_antigos": 33,
+     "mediana_novos": 18400.52,
+     "mediana_antigos": 21024.09,
+     "dif_pct": 14.3
+    },
+    {
+     "cargo": "Professor de Educacao Basica I - PEBI",
+     "grupo": "ampliada",
+     "rotulo": "foi contratado para mais horas",
+     "n_novos": 78,
+     "n_antigos": 90,
+     "mediana_novos": 13978.33,
+     "mediana_antigos": 15562.11,
+     "dif_pct": 11.3
+    },
+    {
+     "cargo": "Professor de Educacao Basica I - PEBI",
+     "grupo": "designada_menor",
+     "rotulo": "trabalha em turno ou escala",
+     "n_novos": 22,
+     "n_antigos": 16,
+     "mediana_novos": 14337.76,
+     "mediana_antigos": 14627.24,
+     "dif_pct": 2.0
+    },
+    {
+     "cargo": "Motorista",
+     "grupo": "designada_menor",
+     "rotulo": "trabalha em turno ou escala",
+     "n_novos": 9,
+     "n_antigos": 13,
+     "mediana_novos": 12578.96,
+     "mediana_antigos": 12793.59,
+     "dif_pct": 1.7
+    }
+   ]
+  }
  },
  "jornada_padrao": [
   {
    "cargo": "Auxiliar de Apoio Administrativo",
-   "n": 38,
+   "n": 10,
    "horas": 200,
-   "paulinia": 11892.92,
+   "paulinia": 13500.94,
    "campinas": 4189.91,
-   "dif_pct": 183.8,
-   "horas_necessarias": 568
-  },
-  {
-   "cargo": "Agente de Apoio Operacional",
-   "n": 625,
-   "horas": 200,
-   "paulinia": 9341.18,
-   "campinas": 4528.9,
-   "dif_pct": 106.3,
-   "horas_necessarias": 413
-  },
-  {
-   "cargo": "Monitor",
-   "n": 138,
-   "horas": 200,
-   "paulinia": 9986.69,
-   "campinas": 5308.82,
-   "dif_pct": 88.1,
-   "horas_necessarias": 376
+   "dif_pct": 222.2,
+   "horas_necessarias": 644
   },
   {
    "cargo": "Guarda Civil Municipal",
-   "n": 21,
+   "n": 35,
    "horas": 200,
-   "paulinia": 17865.58,
+   "paulinia": 21393.57,
    "campinas": 9955.87,
-   "dif_pct": 79.4,
-   "horas_necessarias": 359
+   "dif_pct": 114.9,
+   "horas_necessarias": 430
   },
   {
-   "cargo": "Farmaceutico",
-   "n": 22,
+   "cargo": "Agente de Apoio Operacional",
+   "n": 141,
    "horas": 200,
-   "paulinia": 14869.58,
-   "campinas": 10034.33,
-   "dif_pct": 48.2,
-   "horas_necessarias": 296
+   "paulinia": 9588.21,
+   "campinas": 4528.9,
+   "dif_pct": 111.7,
+   "horas_necessarias": 423
+  },
+  {
+   "cargo": "Monitor",
+   "n": 29,
+   "horas": 200,
+   "paulinia": 10087.56,
+   "campinas": 5308.82,
+   "dif_pct": 90.0,
+   "horas_necessarias": 380
   },
   {
    "cargo": "Medico Plantonista",
-   "n": 70,
+   "n": 9,
    "horas": 120,
-   "paulinia": 20990.54,
+   "paulinia": 26336.8,
    "campinas": 17642.48,
-   "dif_pct": 19.0,
-   "horas_necessarias": 143
+   "dif_pct": 49.3,
+   "horas_necessarias": 179
   }
  ],
  "por_habitante": {

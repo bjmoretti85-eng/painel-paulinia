@@ -157,26 +157,41 @@ Conferências feitas nesta revisão, sobre as 23 linhas publicadas:
 **Sobre a progressão de carreira:** o denominador é a referência (REM) que a tabela dá para o cargo,
 e no quadro geral cada cargo aparece com uma referência só. A pergunta era se parte da distância
 entre a folha e a tabela seria progressão de carreira, e não adicional. **Sim, é** — e dá para medir
-sem a lei, comparando o salário por tempo de casa dentro do mesmo cargo e da mesma jornada
-designada (folha de dez/2025 cruzada com o Quadro de Pessoal de set/2025, 2.645 servidores):
+sem a lei, comparando o salário por tempo de casa dentro do mesmo cargo e da mesma jornada designada.
 
-| Cargo · grupo de jornada | menos de 10 anos | mais de 20 anos | Diferença |
+Isto agora é **calculado pelo `scripts/quadro_pessoal.py`** e vai para o painel (aba Salários,
+seção "E o tempo de casa"). Admissão da folha de dez/2025, jornada do Quadro de Pessoal de set/2025,
+mínimo de 8 servidores em cada faixa:
+
+| Cargo · jornada | menos de 10 anos (n) | mais de 20 anos (n) | Diferença |
 |---|---|---|---|
-| Professor de Educação Básica II · ampliada | R$ 19.098 | R$ 25.463 | +33% |
-| Médico Plantonista · ampliada | R$ 23.130 | R$ 30.361 | +31% |
-| Técnico de Enfermagem · ampliada | R$ 9.981 | R$ 11.382 | +14% |
-| Professor de Educação Básica I · ampliada | R$ 13.978 | R$ 15.562 | +11% |
-| Educadora Infantil · base | R$ 12.884 | R$ 14.062 | +9% |
-| Agente de Apoio Operacional · base | R$ 9.035 | R$ 9.676 | +7% |
+| Tecnico de Enfermagem · trabalha as horas normais do cargo | R$ 9.124 (69) | R$ 14.242 (30) | +56% |
+| Auxiliar Odontologico · trabalha as horas normais do cargo | R$ 7.894 (11) | R$ 12.031 (15) | +52% |
+| Cirurgiao Dentista Plantonista · trabalha em turno ou escala | R$ 32.702 (18) | R$ 47.763 (8) | +46% |
+| Professor de Educacao Basica II - PEBII · foi contratado para mais horas | R$ 19.426 (126) | R$ 26.793 (67) | +38% |
+| Auxiliar de Enfermagem · trabalha as horas normais do cargo | R$ 9.845 (42) | R$ 12.781 (93) | +30% |
+| Enfermeiro · trabalha as horas normais do cargo | R$ 12.920 (48) | R$ 16.488 (29) | +28% |
+| Guarda Civil Municipal · trabalha em turno ou escala | R$ 18.401 (37) | R$ 22.367 (91) | +22% |
+| Agente de Apoio Operacional · trabalha as horas normais do cargo | R$ 8.105 (22) | R$ 9.442 (464) | +16% |
+| Motorista · trabalha em turno ou escala | R$ 14.085 (14) | R$ 16.385 (12) | +16% |
+| Professor de Educacao Basica I - PEBI · foi contratado para mais horas | R$ 14.710 (93) | R$ 16.906 (129) | +15% |
+| Medico Plantonista · foi contratado para mais horas | R$ 30.062 (43) | R$ 32.135 (56) | +7% |
+| Professor de Educacao Basica I - PEBI · trabalha em turno ou escala | R$ 13.705 (78) | R$ 14.321 (106) | +4% |
 
-Ou seja: o tempo de casa pesa, e pesa muito mais no magistério e na medicina do que nos cargos de
-apoio. Sem controlar pela jornada a diferença chega a +57% (técnico de enfermagem), porque quem tem
+Mediana das 12 comparações: **+25%**. O tempo de casa pesa, e pesa muito
+mais em uns cargos que em outros. Sem controlar pela jornada a diferença aparece maior, porque quem tem
 mais tempo também tende a estar em escala ou com função designada — por isso o controle importa.
 
-Esses números **não estão no painel**: o resumo diz apenas que "quem está há mais tempo recebe mais",
-porque a regra da seção é não exibir número que não seja calculado pelos scripts. Para publicá-los,
-o `quadro_pessoal.py` precisaria gravar a quebra por tempo de casa no
-`data/decomposicao_folha.json`.
+**Uma versão anterior desta tabela foi feita à mão e não reproduz.** Ela trazia, por exemplo,
+"Educadora Infantil · base +9%" — impossível, porque a Prefeitura não admite ninguém nesse cargo desde
+2007 e não existe faixa de "menos de 10 anos" para comparar. Os números acima saem do script e são
+refeitos a cada rodada; se divergirem de algum texto antigo, os do script é que valem.
+
+Isso foi depois incorporado ao pipeline: o `quadro_pessoal.py` grava o bloco `tempo_de_casa` no
+`data/decomposicao_folha.json` (grupos com menos de 8 pessoas numa das faixas ficam fora, o que
+derruba as combinações fracas da tabela acima), o painel mostra na seção "E o tempo de casa" da aba
+Salários, e a frase do resumo lê a mediana do JSON — hoje **+18% (9 comparações, +2% a +40%)**.
+A tabela acima fica como registro da primeira medição, feita à mão com casamento só por matrícula.
 
 ## 6. Limites que continuam de pé
 

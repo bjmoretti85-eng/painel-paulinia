@@ -468,6 +468,13 @@ details.notas .note{margin-top:2px}
   <p class="note" id="decNote"></p>
 </section>
 
+<section id="tempocasa">
+  <h2>E o tempo de casa</h2>
+  <p class="sub" id="tcSub"></p>
+  <div id="tcBars"></div>
+  <p class="note" id="tcNote"></p>
+</section>
+
 <section id="folharec">
   <h2>A folha cabe na arrecadação?</h2>
   <p class="sub" id="frSub"></p>
@@ -1234,8 +1241,9 @@ function renderTabela(){
   if(!L.length){ if(sec) sec.style.display='none'; return; }
   sec.style.display='';
   $('#tabSub').innerHTML='A lei fixa um vencimento para cada cargo. O que cai na conta costuma ser bem mais: '+
-    'adicionais, gratificações, horas extras e jornada ampliada entram por cima. Abaixo, quantas vezes o salário '+
-    'mediano de dezembro de 2025 supera o vencimento da tabela oficial da própria Prefeitura.';
+    'progressão por tempo de casa, adicionais, gratificações, horas extras e jornada ampliada entram por cima. '+
+    'Abaixo, quantas vezes o salário mediano de dezembro de 2025 supera o vencimento da tabela oficial da '+
+    'própria Prefeitura.';
   const max=Math.max(...L.map(x=>x.acima));
   $('#tabBars').innerHTML=L.map(x=>{
     const extra=x.mediana-x.vencimento;
@@ -1293,6 +1301,37 @@ function renderDecomposicao(){
     'num valor que o portal não separa — é aí que cabe perguntar. Fonte: Quadro de Pessoal de setembro de 2025 cruzado '+
     'com a folha de dezembro de 2025 pela matrícula (99% dos servidores). "Horas" é a jornada mensal designada.';
 }
+function renderTempoCasa(){
+  const sec=$('#tempocasa'); if(!sec) return;
+  const REF=((typeof COMPARATIVO!=='undefined'&&COMPARATIVO&&COMPARATIVO.anos)||[2025]).slice(-1)[0];
+  const D=(typeof COMPARATIVO!=='undefined'&&COMPARATIVO&&COMPARATIVO.decomposicao)||{};
+  const T=D.tempo_de_casa;
+  if(!T||!T.linhas||!T.linhas.length||String(ano)!==String(REF)){ sec.style.display='none'; return; }
+  sec.style.display='';
+  const pc=v=>(v>=0?'+':'')+v.toLocaleString('pt-BR',{maximumFractionDigits:0})+'%';
+  $('#tcSub').innerHTML=`Parte do salário acima da tabela é simplesmente tempo de serviço: quinquênio, sexta-parte e `+
+    `a progressão da carreira. Dá para medir sem a lei — basta comparar, <b>dentro do mesmo cargo e da mesma jornada</b>, `+
+    `quem tem menos de ${T.corte_novo} anos de casa com quem já passou dos ${T.corte_antigo}. `+
+    `Na mediana das ${T.n_combinacoes} comparações possíveis, a diferença é de <b>${pc(T.mediana_pct)}</b>.`;
+  const max=Math.max(...T.linhas.map(x=>x.mediana_antigos));
+  $('#tcBars').innerHTML=T.linhas.map(x=>{
+    const linha=(cls,rot,v,n_)=>`<div class="row ${cls}"><i>${rot}</i><span class="track">`+
+      `<span class="tr" style="width:${100*v/max}%"></span></span><b>${fmtBRL(v)}</b><u>${fmtN(n_)} serv.</u></div>`;
+    return `<div class="cmp"><div class="nm">${esc(x.cargo)}<em>${esc(x.rotulo)}</em></div>`+
+      `<div class="duo">`+
+      linha('c',`até ${T.corte_novo} anos`,x.mediana_novos,x.n_novos)+
+      linha('p',`${T.corte_antigo}+ anos`,x.mediana_antigos,x.n_antigos)+
+      `</div><div class="dif">${pc(x.dif_pct)}</div></div>`;
+  }).join('');
+  $('#tcNote').innerHTML=`<b>Por que controlar a jornada.</b> Sem separar por jornada a diferença aparece maior, porque `+
+    `quem tem mais tempo de casa também tende a estar em escala ou com função designada — seria contar duas vezes a `+
+    `mesma coisa. Cada linha acima compara pessoas do mesmo cargo <i>e</i> do mesmo grupo de jornada.<br><br>`+
+    `<b>Só aparecem os cargos em que há os dois grupos.</b> Vários cargos grandes ficam de fora porque a Prefeitura `+
+    `parou de contratar para eles: em Educadora Infantil, por exemplo, ninguém entrou depois de 2007, então não existe `+
+    `com quem comparar. Mínimo de ${fmtN(8)} servidores em cada faixa. Admissão da folha de dezembro de 2025, jornada do `+
+    `Quadro de Pessoal de setembro de 2025.`;
+}
+
 function renderFolhaReceita(){
   const sec=$('#folharec'); if(!sec) return;
   const linhas=anos.map(a=>{
@@ -1431,6 +1470,7 @@ function renderResumo(){
   const CID=(typeof CIDADES!=='undefined'&&CIDADES)||null;
   const EU=CID?CID.cidades.find(x=>x.cidade.indexOf('Paulínia')===0):null;
   const um=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
+  const TC=(C.decomposicao&&C.decomposicao.tempo_de_casa)||null;
   const par=(C.pares||[]).find(p=>/T[ée]cnico de enfermagem/i.test(p.nome)&&p.dados&&p.dados[ano]);
   const acima=(C.tabela_vs_folha||[]);
   const mediana=acima.length?acima.map(x=>x.acima).sort((a,b)=>a-b)[Math.floor(acima.length/2)]:null;
@@ -1467,8 +1507,11 @@ function renderResumo(){
        `<b>${fmtBRL(par.dados[ano].paulinia.mediana)}</b> contra <b>${fmtBRL(par.dados[ano].campinas.mediana)}</b> em Campinas. `:'')+
      (mediana?`Dentro da própria Prefeitura, o servidor típico recebe cerca de <b>${mediana.toLocaleString('pt-BR',{maximumFractionDigits:1})} vezes</b> `+
        `o vencimento que a lei fixa para o cargo dele. `:'')+
-     `Isso não vem de tempo de casa — a progressão prevista em lei é pequena — e sim de jornada, escala e adicionais, `+
-     `que a Prefeitura não detalha na folha.</p>`;
+     `Vem de tempo de casa, jornada ampliada, escala e adicionais — nenhum deles detalhado na folha. `+
+     (TC?`Dentro do mesmo cargo e da mesma jornada, quem já passou dos ${TC.corte_antigo} anos de casa recebe, `+
+       `na mediana, <b>${(TC.mediana_pct>=0?'+':'')+TC.mediana_pct.toLocaleString('pt-BR',{maximumFractionDigits:0})}%</b> `+
+       `a mais que quem tem menos de ${TC.corte_novo}; o resto é jornada e função.`
+      :`Dentro do mesmo cargo e da mesma jornada, quem tem mais tempo de casa recebe bem mais.`)+`</p>`;
   if(PH&&PH.folha_por_habitante){
     const f=PH.folha_por_habitante;
     const eu=EU;
@@ -1530,7 +1573,7 @@ function renderEvolucao(){
     items.map((it,i)=>{const pv=items[i-1];return `<tr><td><b>${it.ano}</b></td><td class="num">${abrev(it.ativos)}<span class="d">${pv?dl(it.ativos,pv.ativos):'base'}${i>1?' · desde '+first.ano+' '+dl(it.ativos,first.ativos):''}</span></td><td class="num">${abrev(it.apos)}<span class="d">${pv?dl(it.apos,pv.apos):'base'}${i>1?' · desde '+first.ano+' '+dl(it.apos,first.apos):''}</span></td><td class="num">${abrev(it.total)}<span class="d">${pv?dl(it.total,pv.total):'base'}</span></td><td class="num">${fmtBRL(it.total/it.pop)}</td><td class="num">${pct(100*it.total/it.gasto)}</td><td class="num">${it.rec?pct(100*it.total/it.rec):'—'}</td></tr>`;}).join('')+`</tbody>`;
 }
 
-function renderAll(){ renderYears(); renderHero(); renderFuncoes(); renderNatureza(); renderFolha(); renderServidores(); renderCidades(); renderPorHabitante(); renderComparativo(); renderJornadaPadrao(); renderTabela(); renderDecomposicao(); renderFolhaReceita(); renderReforma(); renderResumo(); sPath=[]; sLimit=50; renderServExp(); renderEvolucao(); renderMensal(); renderReceitas(); renderBalanco(); renderFornecedores(); renderRodape(); expPath=[]; expLimit=50; renderExplorador(); ajustarLayout(); }
+function renderAll(){ renderYears(); renderHero(); renderFuncoes(); renderNatureza(); renderFolha(); renderServidores(); renderCidades(); renderPorHabitante(); renderComparativo(); renderJornadaPadrao(); renderTabela(); renderDecomposicao(); renderTempoCasa(); renderFolhaReceita(); renderReforma(); renderResumo(); sPath=[]; sLimit=50; renderServExp(); renderEvolucao(); renderMensal(); renderReceitas(); renderBalanco(); renderFornecedores(); renderRodape(); expPath=[]; expLimit=50; renderExplorador(); ajustarLayout(); }
 renderAll();
 mostrarTab(location.hash.slice(1)||'geral');
 })();

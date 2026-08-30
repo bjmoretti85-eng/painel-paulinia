@@ -36,6 +36,9 @@ PDFS = RAIZ / "data/raw/tabelas"
 SAIDA = RAIZ / "data/decomposicao_folha.json"
 MIN_CARGO = 25          # cargos com menos servidores que isso não entram
 MIN_GRUPO = 8           # grupos menores que isso não viram mediana publicada
+MIN_FAIXA = 8           # idem para cada faixa de tempo de casa
+REF_TEMPO = (2025, 12)  # data de referência da folha, para contar o tempo de casa
+NOVO, ANTIGO = 10, 20   # "menos de 10 anos de casa" x "mais de 20 anos de casa"
 
 # Os dois Quadros publicados têm cabeçalhos diferentes: o de setembro/2025 traz
 # MATRÍCULA (que é a melhor chave para casar com a folha) e o de abril/2026 não.
@@ -90,8 +93,21 @@ def folha(ano=2025, mes="12"):
                 continue
             v = float(r["vencimentos"] or 0)
             if v > 0:
-                por_cargo[r["cargo"]].append((norm(r["nome"]), r["matricula"].strip().lstrip("0"), v))
+                por_cargo[r["cargo"]].append((norm(r["nome"]), r["matricula"].strip().lstrip("0"),
+                                              v, r["data_admissao"]))
     return por_cargo
+
+
+def anos_de_casa(admissao):
+    """Anos entre a admissão e o mês da folha. A data vem da FOLHA (AAAA-MM-DD), que a
+    tem para todo mundo; o Quadro de Pessoal entra só para a jornada e a função."""
+    m = re.match(r"(\d{4})-(\d{2})-(\d{2})", admissao or "")
+    if not m:
+        return None
+    ano, mes = int(m.group(1)), int(m.group(2))
+    if not (1 <= mes <= 12) or not (1900 < ano <= REF_TEMPO[0]):
+        return None
+    return (REF_TEMPO[0] - ano) + (REF_TEMPO[1] - mes) / 12
 
 
 def grupo_do_servidor(reg):
@@ -147,39 +163,52 @@ def main():
         por_matricula.setdefault(reg["matricula"], reg)
     print(f"  matrículas distintas: {len(por_matricula)}")
 
-    por_cargo, saida = folha(), []
+    por_cargo, saida, tempo = folha(), [], []
     def achar(nome, matricula):
         return por_matricula.get(matricula)
 
-    casados = sum(1 for c in por_cargo for n, mat, _ in por_cargo[c] if achar(n, mat))
+    casados = sum(1 for c in por_cargo for n, mat, _, _ in por_cargo[c] if achar(n, mat))
     total = sum(len(v) for v in por_cargo.values())
     print(f"  casaram com a folha de dez/2025: {casados}/{total} ({100*casados/total:.0f}%)\n")
 
     for cargo, pessoas in por_cargo.items():
-        ligados = [(achar(n, mat), v) for n, mat, v in pessoas if achar(n, mat)]
+        ligados = [(achar(n, mat), v, adm) for n, mat, v, adm in pessoas if achar(n, mat)]
         if len(ligados) < MIN_CARGO:
             continue
         grupos = defaultdict(list)
-        for reg, v in ligados:
+        for reg, v, adm in ligados:
             horas = numero(reg["jornada_designacao"]) or numero(reg["jornada"])
-            grupos[grupo_do_servidor(reg)].append((v, horas))
+            grupos[grupo_do_servidor(reg)].append((v, horas, anos_de_casa(adm)))
         item = {"cargo": re.sub(r"\s*-\s*LC\s*[\d/]+", "", cargo).strip(),
                 "n_folha": len(pessoas), "n_casado": len(ligados),
                 "rotulos": ROTULOS_PUBLICOS, "grupos": {}}
         for nome, vals in grupos.items():
             if len(vals) < MIN_GRUPO:
                 continue
-            salarios = [v for v, _ in vals]
-            horas = [h for _, h in vals if h]
+            salarios = [v for v, _, _ in vals]
+            horas = [h for _, h, _ in vals if h]
             # o valor da hora é o que desarma a leitura errada: mostra se a diferença
             # é quantidade de trabalho ou outra coisa
-            por_hora = [v / h for v, h in vals if h]
+            por_hora = [v / h for v, h, _ in vals if h]
             item["grupos"][nome] = {
                 "n": len(vals),
                 "mediana": round(statistics.median(salarios), 2),
                 "horas": round(statistics.median(horas)) if horas else None,
                 "por_hora": round(statistics.median(por_hora), 2) if por_hora else None,
             }
+            # tempo de casa DENTRO do mesmo cargo e do mesmo grupo de jornada: sem esse
+            # controle a diferença aparece inflada, porque quem tem mais tempo também
+            # tende a estar em escala ou com função designada
+            novos = [v for v, _, t in vals if t is not None and t < NOVO]
+            antigos = [v for v, _, t in vals if t is not None and t >= ANTIGO]
+            if len(novos) >= MIN_FAIXA and len(antigos) >= MIN_FAIXA:
+                mn, ma = statistics.median(novos), statistics.median(antigos)
+                if mn > 0:
+                    tempo.append({
+                        "cargo": item["cargo"], "grupo": nome, "rotulo": ROTULOS_PUBLICOS[nome],
+                        "n_novos": len(novos), "n_antigos": len(antigos),
+                        "mediana_novos": round(mn, 2), "mediana_antigos": round(ma, 2),
+                        "dif_pct": round(100 * (ma / mn - 1), 1)})
         if "base" in item["grupos"] and len(item["grupos"]) > 1:
             saida.append(item)
 
@@ -196,9 +225,33 @@ def main():
                       f"{('R$ ' + format(g['por_hora'] or 0, ',.2f')).replace(',', '@').replace('.', ',').replace('@', '.'):>9s}")
         print()
 
-    SAIDA.write_text(json.dumps({"quadro": escolhido.name, "cargos": saida},
-                                ensure_ascii=False, indent=1), encoding="utf-8")
-    print(f"-> {SAIDA.relative_to(RAIZ)}  ({len(saida)} cargos)")
+    tempo.sort(key=lambda x: -x["dif_pct"])
+    if tempo:
+        difs = [x["dif_pct"] for x in tempo]
+        print(f"tempo de casa, dentro do mesmo cargo E da mesma jornada "
+              f"(menos de {NOVO} anos x mais de {ANTIGO}):")
+        print(f"{'cargo · jornada':52s} {'<10 anos':>11s} {'20+ anos':>11s} {'dif':>7s}")
+        print("-" * 84)
+        for x in tempo:
+            rot = f"{x['cargo'][:34]} · {x['rotulo']}"
+            print(f"{rot[:52]:52s} "
+                  f"{('R$ ' + format(x['mediana_novos'], ',.0f')).replace(',', '.'):>11s} "
+                  f"{('R$ ' + format(x['mediana_antigos'], ',.0f')).replace(',', '.'):>11s} "
+                  f"{('+' if x['dif_pct'] >= 0 else '') + format(x['dif_pct'], '.0f') + '%':>7s}")
+        print(f"\nmediana: {statistics.median(difs):+.0f}%  ·  faixa: {min(difs):+.0f}% a "
+              f"{max(difs):+.0f}%  ({len(tempo)} combinações)\n")
+
+    conteudo = {"quadro": escolhido.name, "cargos": saida}
+    if tempo:
+        conteudo["tempo_de_casa"] = {
+            "corte_novo": NOVO, "corte_antigo": ANTIGO,
+            "referencia": f"{REF_TEMPO[1]:02d}/{REF_TEMPO[0]}",
+            "min_pct": min(difs), "max_pct": max(difs),
+            "mediana_pct": round(statistics.median(difs), 1),
+            "n_combinacoes": len(tempo), "linhas": tempo}
+    SAIDA.write_text(json.dumps(conteudo, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"-> {SAIDA.relative_to(RAIZ)}  ({len(saida)} cargos, "
+          f"{len(tempo)} linhas de tempo de casa)")
 
 
 if __name__ == "__main__":
